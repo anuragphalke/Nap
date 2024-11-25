@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_25_141517) do
   create_table "averages", force: :cascade do |t|
     t.bigint "price_id", null: false
     t.date "day"
-    t.time "time"
+    t.time "time" # Should this be time (duration) OR two starttime and endtime columns?
     t.float "average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
