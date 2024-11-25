@@ -1,0 +1,2 @@
+class AveragesController < ApplicationController
+end
