@@ -9,5 +9,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  #
+  get '/proxy', to: 'proxy#proxy_request'
+
 
 end
