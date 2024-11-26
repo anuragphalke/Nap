@@ -1,27 +1,30 @@
 class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
   def change
+    add_column :users, :username, :string, null: false
+    add_index :users, :username, unique: true
+
     create_table :appliances do |t|
       t.references :user, null: true, foreign_key: { to_table: :users }
-      t.string :name, null: true, limit: 1
+      t.string :name
       t.text :category, null: true
-      t.decimal :wattage, precision: 10, scale: 2, null: true
+      t.decimal :wattage, precision: 10, scale: 4
 
       t.timestamps
     end
 
     create_table :routines do |t|
       t.references :appliance, null: true, foreign_key: true
-      t.decimal :cost, precision: 10, scale: 2, null: true
+      t.decimal :cost, precision: 10, scale: 4, null: true
       t.time :starttime, null: true
       t.time :endtime, null: true
-      t.string :day, null: true, limit: 255
+      t.string :day
 
       t.timestamps
     end
 
     create_table :recommendations do |t|
       t.references :routine, null: true, foreign_key: true
-      t.decimal :cost, precision: 10, scale: 2, null: true
+      t.decimal :cost, precision: 10, scale: 4
       t.time :starttime, null: true
       t.time :endtime, null: true
 
@@ -29,16 +32,16 @@ class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
     end
 
     create_table :prices do |t|
-      t.date :date, null: true
-      t.time :starttime, null: true
-      t.decimal :price, precision: 10, scale: 2, null: true
+      t.datetime :datetime
+      t.decimal :price, precision: 10, scale: 4
 
       t.timestamps
     end
 
     create_table :averages do |t|
-      t.datetime :datetime
-      t.decimal :average, null: true
+      t.string :day
+      t.time :time
+      t.decimal :average
 
       t.timestamps
     end

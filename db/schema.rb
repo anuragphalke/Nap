@@ -16,9 +16,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
 
   create_table "appliances", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "name", limit: 1
+    t.string "name"
     t.text "category"
-    t.decimal "wattage", precision: 10, scale: 2
+    t.decimal "wattage", precision: 10, scale: 4
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_appliances_on_user_id"
@@ -33,23 +33,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
   end
 
   create_table "averages", force: :cascade do |t|
-    t.datetime "datetime", precision: nil
+    t.string "day"
+    t.time "time"
     t.decimal "average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "prices", force: :cascade do |t|
-    t.date "date"
-    t.time "starttime"
-    t.decimal "price", precision: 10, scale: 2
+    t.datetime "datetime", precision: nil
+    t.decimal "price", precision: 10, scale: 4
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "recommendations", force: :cascade do |t|
     t.bigint "routine_id"
-    t.decimal "cost", precision: 10, scale: 2
+    t.decimal "cost", precision: 10, scale: 4
     t.time "starttime"
     t.time "endtime"
     t.datetime "created_at", null: false
@@ -59,10 +59,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
 
   create_table "routines", force: :cascade do |t|
     t.bigint "appliance_id"
-    t.decimal "cost", precision: 10, scale: 2
+    t.decimal "cost", precision: 10, scale: 4
     t.time "starttime"
     t.time "endtime"
-    t.string "day", limit: 255
+    t.string "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["appliance_id"], name: "index_routines_on_appliance_id"
@@ -74,8 +74,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "appliances", "users"
