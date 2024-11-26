@@ -5,7 +5,6 @@ class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
       t.string :name, null: true, limit: 1
       t.text :category, null: true
       t.decimal :wattage, precision: 10, scale: 2, null: true
-      t.decimal :total_cost, precision: 10, scale: 2, null: true
 
       t.timestamps
     end
@@ -38,9 +37,8 @@ class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
     end
 
     create_table :averages do |t|
-      t.string :day, null: true, limit: 255
-      t.time :time, null: true
-      t.integer :average, null: true
+      t.datetime :datetime
+      t.decimal :average, null: true
 
       t.timestamps
     end

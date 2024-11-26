@@ -19,7 +19,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
     t.string "name", limit: 1
     t.text "category"
     t.decimal "wattage", precision: 10, scale: 2
-    t.decimal "total_cost", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_appliances_on_user_id"
@@ -34,9 +33,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
   end
 
   create_table "averages", force: :cascade do |t|
-    t.string "day", limit: 255
-    t.time "time"
-    t.integer "average"
+    t.datetime "datetime", precision: nil
+    t.decimal "average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
