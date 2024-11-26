@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # Associations
-  has_many :devices, dependent: :destroy
+  has_many :appliances, dependent: :destroy
 
   # Validations
   validates :username, presence: true, uniqueness: true, format: { with: /\A\w+\z/, message: "must contain only letters, numbers, and underscores without spaces" }

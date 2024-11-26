@@ -1,5 +1,5 @@
 # rubocop:disable Layout/LineLength
-class Device < ApplicationRecord
+class Appliance < ApplicationRecord
   # Associations
   belongs_to :user
   has_many :routines, dependent: :destroy
