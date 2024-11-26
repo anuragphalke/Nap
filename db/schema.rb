@@ -10,65 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_26_084041) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_26_135318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appliances", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "name"
-    t.string "category"
-    t.boolean "state"
-    t.float "total_cost"
+    t.bigint "user_id"
+    t.string "name", limit: 1
+    t.text "category"
+    t.decimal "wattage", precision: 10, scale: 2
+    t.decimal "total_cost", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_appliances_on_user_id"
   end
 
-  create_table "averages", force: :cascade do |t|
-    t.bigint "price_id", null: false
-    t.date "day"
-    t.time "time"
-    t.float "average"
+  create_table "articles", force: :cascade do |t|
+    t.text "title"
+    t.text "content"
+    t.text "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["price_id"], name: "index_averages_on_price_id"
+  end
+
+  create_table "averages", force: :cascade do |t|
+    t.string "day", limit: 255
+    t.time "time"
+    t.integer "average"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "prices", force: :cascade do |t|
     t.date "date"
-    t.float "hour00"
-    t.float "hour01"
-    t.float "hour02"
-    t.float "hour03"
-    t.float "hour04"
-    t.float "hour05"
-    t.float "hour06"
-    t.float "hour07"
-    t.float "hour08"
-    t.float "hour09"
-    t.float "hour10"
-    t.float "hour11"
-    t.float "hour12"
-    t.float "hour13"
-    t.float "hour14"
-    t.float "hour15"
-    t.float "hour16"
-    t.float "hour17"
-    t.float "hour18"
-    t.float "hour19"
-    t.float "hour20"
-    t.float "hour21"
-    t.float "hour22"
-    t.float "hour23"
+    t.time "starttime"
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "recommendations", force: :cascade do |t|
-    t.bigint "routine_id", null: false
-    t.float "cost"
-    t.text "content"
+    t.bigint "routine_id"
+    t.decimal "cost", precision: 10, scale: 2
     t.time "starttime"
     t.time "endtime"
     t.datetime "created_at", null: false
@@ -77,11 +60,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_084041) do
   end
 
   create_table "routines", force: :cascade do |t|
-    t.bigint "appliance_id", null: false
-    t.float "cost"
+    t.bigint "appliance_id"
+    t.decimal "cost", precision: 10, scale: 2
     t.time "starttime"
     t.time "endtime"
-    t.date "day"
+    t.string "day", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["appliance_id"], name: "index_routines_on_appliance_id"
@@ -93,15 +76,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_084041) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "appliances", "users"
-  add_foreign_key "averages", "prices"
   add_foreign_key "recommendations", "routines"
   add_foreign_key "routines", "appliances"
 end
