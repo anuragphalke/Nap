@@ -14,6 +14,6 @@ class PricesController < ApplicationController
   private
 
   def price_params
-    params.require(:price).permit(:datetime, :price)
+    params.require(:price).permit(:datetime, :cost)
   end
 end
