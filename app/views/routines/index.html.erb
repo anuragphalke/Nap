@@ -1,0 +1,9 @@
+<ul>
+  <% @routines.each do |routine| %>
+    <li><%= routine.appliance_id %></li>
+    <li><%= routine.cost %></li>
+    <li><%= routine.starttime %></li>
+    <li><%= routine.endtime %></li>
+    <li><%= routine.day %></li>
+  <% end %>
+</ul>
