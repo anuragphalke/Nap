@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   #
   get '/proxy', to: 'proxy#proxy_request'
+
+  resources :prices, only: [:create]
 end

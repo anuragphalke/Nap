@@ -1,11 +1,13 @@
 class PricesController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def create
     @price = Price.new(price_params)
 
     if @price.save
-      redirect_to @price
+      render json: { message: 'success!' }
     else
-      render :new
+      render json: { message: 'failure' }
     end
   end
 

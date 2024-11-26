@@ -36,11 +36,13 @@ const formattedDate = today.toISOString().split('T')[0];
 
 console.log(formattedDate);
 
+const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
 numbers.forEach((num) => {
   fetch('/prices',
     {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json", "X-CSRF-Token": csrfToken},
       body: JSON.stringify({"datetime": `${formattedDate} ${hour}:00:00`, "price": num})
     }
   )
