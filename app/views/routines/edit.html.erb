@@ -1,0 +1,27 @@
+<h1>Edit Routine</h1>
+
+<%= simple_form_for @routine do |f| %>
+  <div class="form-group">
+    <%= f.association :appliance, label: "Appliance" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.input :cost, label: "Cost", as: :number, step: 0.01, placeholder: "Enter cost (e.g., 25.50)" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.input :starttime, label: "Start Time", as: :time %>
+  </div>
+
+  <div class="form-group">
+    <%= f.input :endtime, label: "End Time", as: :time %>
+  </div>
+
+  <div class="form-group">
+    <%= f.input :day, label: "Day", as: :select, collection: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday], prompt: "Select a day" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Update Routine", class: "btn btn-primary" %>
+  </div>
+<% end %>

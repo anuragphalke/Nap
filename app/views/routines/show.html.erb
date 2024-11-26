@@ -1,0 +1,9 @@
+<!-- It is gonna be rewrited depends on what we want to show in the screen. -->
+<h2><%= @routine.appliance_id %></h2>
+<p><%= @routine.starttime %></p>
+<p><%= @routine.endtime %></p>
+
+<%= link_to "Delete",
+  routine_path(@routine),
+  data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+%>

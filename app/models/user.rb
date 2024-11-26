@@ -1,11 +1,9 @@
-# rubocop:disable Layout/LineLength
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # Associations
   has_many :appliances, dependent: :destroy
 
   # Validations
@@ -16,4 +14,3 @@ class User < ApplicationRecord
     message: "must include at least one uppercase letter, one lowercase letter, and one number"
   }, if: -> { new_record? || !password.nil? }
 end
-# rubocop:enable Layout/LineLength
