@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   #Routines
   resources :routines
 
+   #Appliances
+   resources :appliances
+
   get '/proxy', to: 'proxy#proxy_request'
 
-  resources :prices, only: [:create]
+  resources :prices, only: [:index, :create]
 end
