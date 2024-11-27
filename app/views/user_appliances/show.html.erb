@@ -1,5 +1,8 @@
 <%= @user_appliance.all_appliance.model %>
 
+<p><%= @user_appliance.all_appliance.brand %></p>
+<p><%= @user_appliance.all_appliance.wattage %></p>
+
 
 
 <%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>

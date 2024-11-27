@@ -1,0 +1,19 @@
+<h1>Add a New Appliance</h1>
+
+<%= simple_form_for @user_appliance do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <!-- Brand Dropdown -->
+  <%= f.input :brand, collection: AllAppliance.all, label: "Choose an Appliance",
+              label_method: :brand, value_method: :brand, prompt: "Select an appliance", input_html: { onchange: "this.form.submit();" } %>
+
+  <!-- Model Dropdown -->
+  <%= f.input :all_appliance_id, collection: @models, label: "Model", prompt: "Select a model", disabled: @models.empty? %>
+
+  <div>
+    <%= f.button :submit, "Add Appliance", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%= link_to "Back to Appliances", user_appliances_path, class: "btn btn-primary" %>
