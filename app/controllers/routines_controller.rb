@@ -44,7 +44,7 @@ class RoutinesController < ApplicationController
   end
 
   def routine_params
-    params.require(:routine).permit(:appliance_id, :cost, :starttime, :endtime, :day)
+    params.require(:routine).permit(:user_appliance_id, :cost, :starttime, :endtime, :day)
   end
 
 end

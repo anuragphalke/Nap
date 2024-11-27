@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   #Routines
   resources :routines
 
-   #Appliances
-   resources :appliances
+   #User Appliances
+   resources :user_appliances
 
   get '/proxy', to: 'proxy#proxy_request'
 

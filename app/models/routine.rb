@@ -1,7 +1,7 @@
 # rubocop:disable Layout/LineLength
 class Routine < ApplicationRecord
   # Associations
-  belongs_to :appliance
+  belongs_to :user_appliance
   has_many :recommendations, dependent: :destroy
 
   # Validations

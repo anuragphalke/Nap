@@ -10,58 +10,44 @@
 
 # db/seeds.rb
 
-Appliance.destroy_all
-puts "All appliances have been destroyed!"
+
+
+
+
+
+# List of appliances to seed
 
 User.destroy_all
 puts "All users have been destroyed!"
 
+AllAppliance.destroy_all
+puts "All appliances have been destroyed!"
+UserAppliance.destroy_all
+puts "All user appliances have been destroyed!"
 
-# Create a sample user
+# Create a user
 user = User.create!(
   email: "user@example.com",
   username: "testuser",
   password: "Aa123456"
 )
-
 puts "Seeded #{user.username} user"
-# List of appliances to seed
+
+# Create all appliances
 appliances = [
-  {
-    user_id: user.id,
-    name: "MIELE WCB 390 WCS 125 Washing Machine",
-    category: "laundry",
-    wattage: 2100.0
-  },
-  {
-    user_id: user.id,
-    name: "Samsung AR12TXFYAWKNEU Air Conditioner",
-    category: "climate control",
-    wattage: 3500.0
-  },
-  {
-    user_id: user.id,
-    name: "Tesla Wall Connector Gen 3 EV Charger",
-    category: "EV Charger",
-    wattage: 11000.0
-  },
-  {
-    user_id: user.id,
-    name: "Honeywell T9 Smart Thermostat",
-    category: "climate control",
-    wattage: 5.0
-  },
-  {
-    user_id: user.id,
-    name: "Sony BRAVIA XR-55A80J OLED TV",
-    category: "entertainment",
-    wattage: 400.0
-  }
+  AllAppliance.create!(model: 'LG123', brand: 'LG', category: 'kitchen', subcategory: 'Oven', wattage: 2000),
+  AllAppliance.create!(model: 'Bosch567', brand: 'Bosch', category: 'laundry', subcategory: 'Washing Machine', wattage: 1500),
+  AllAppliance.create!(model: 'SamsungX90', brand: 'Samsung', category: 'entertainment', subcategory: 'TV', wattage: 100),
+  AllAppliance.create!(model: 'DysonCool', brand: 'Dyson', category: 'climate control', subcategory: 'Air Conditioner', wattage: 2200),
+  AllAppliance.create!(model: 'TeslaChg', brand: 'Tesla', category: 'EV charger', subcategory: 'EV Charger', wattage: 7200),
+  AllAppliance.create!(model: 'WhirlpoolDry', brand: 'Whirlpool', category: 'laundry', subcategory: 'Dryer', wattage: 2500)
 ]
 
-# Seed appliances into the database
-appliances.each do |appliance|
-  Appliance.create!(appliance)
-end
+# Assign three appliances to the user
+UserAppliance.create!([
+  { user: user, all_appliance: appliances[0] },
+  { user: user, all_appliance: appliances[1] },
+  { user: user, all_appliance: appliances[2] }
+])
 
-puts "Seeded #{appliances.count} appliances!"
+puts "Seeding completed! Created 1 user, 6 appliances, and 3 user appliances."

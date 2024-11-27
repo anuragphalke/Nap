@@ -1,6 +1,6 @@
 <!-- It is gonna be rewrited depends on what we want to show in the screen. -->
 <ul>
-  <li>Appliance: <%= @routine.appliance.name %></li>
+  <li>Appliance: <%= @routine.user_appliance.name %></li>
   <li>Start time: <%= @routine.starttime.strftime('%H:%M %p') %></li>
   <li>End time: <%= @routine.endtime.strftime('%H:%M %p') %></li>
   <li>Cost: <%= @routine.cost %></li>

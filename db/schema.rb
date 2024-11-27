@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_26_164702) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_27_133010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "appliances", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "name"
+  create_table "all_appliances", force: :cascade do |t|
     t.text "category"
+    t.text "subcategory"
+    t.text "brand"
+    t.text "model"
     t.decimal "wattage", precision: 10, scale: 4
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_appliances_on_user_id"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -58,14 +58,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_164702) do
   end
 
   create_table "routines", force: :cascade do |t|
-    t.bigint "appliance_id"
     t.decimal "cost", precision: 10, scale: 4
     t.time "starttime"
     t.time "endtime"
     t.string "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["appliance_id"], name: "index_routines_on_appliance_id"
+    t.bigint "user_appliance_id"
+  end
+
+  create_table "user_appliances", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "all_appliance_id"
+    t.index ["user_id"], name: "index_user_appliances_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -82,7 +89,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_164702) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "appliances", "users"
   add_foreign_key "recommendations", "routines"
-  add_foreign_key "routines", "appliances"
+  add_foreign_key "routines", "user_appliances"
+  add_foreign_key "user_appliances", "all_appliances"
+  add_foreign_key "user_appliances", "users"
 end

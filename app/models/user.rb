@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :appliances, dependent: :destroy
+  has_many :user_appliances, dependent: :destroy
 
   # Validations
   validates :username, presence: true, uniqueness: true, format: { with: /\A\w+\z/, message: "must contain only letters, numbers, and underscores without spaces" }
