@@ -25,6 +25,9 @@ gem "stimulus-rails"
 
 gem 'http'
 
+gem 'whenever'
+
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 

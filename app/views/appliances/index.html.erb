@@ -1,0 +1,27 @@
+<% @appliances.each do |appliance| %>
+  <p><%= link_to appliance.name, appliance_path(appliance) %></p>
+<% end %>
+
+
+<br>
+
+<h1>Average Prices by Hour and Day</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Hour</th>
+      <th>Average Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @average_prices.each do |price| %>
+      <tr>
+        <td><%= price.day %></td>
+        <td><%= price.hour %></td>
+        <td><%= price.average_price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

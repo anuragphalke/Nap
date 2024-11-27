@@ -33,7 +33,7 @@ class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
 
     create_table :prices do |t|
       t.datetime :datetime
-      t.decimal :price, precision: 10, scale: 4
+      t.decimal :cost, precision: 10, scale: 4
 
       t.timestamps
     end

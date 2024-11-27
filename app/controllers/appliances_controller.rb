@@ -1,21 +1,38 @@
 class AppliancesController < ApplicationController
 
   def index
-
+    @prices = Price.all
     @appliances = Appliance.all
 
     if params[:category].present?
       @appliances = @appliances.where(category: params[:category])
     end
 
+    @average_prices = Price
+    .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
+    .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
+    .order("day, hour")
+
   end
 
+
+  def average_prices
+    # Execute the query to get the average price by day and hour
+    @average_prices = Price
+      .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
+      .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
+      .order("day, hour")
+
+
+  end
+
+
   def show
-    @appliacne = Appliacne.find(params[:id])
+    @appliance = Appliance.find(params[:id])
   end
 
   def new
-    @appliance = Appliacne.new
+    @appliance = Appliance.new
   end
 
   def create
