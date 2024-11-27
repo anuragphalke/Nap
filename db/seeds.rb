@@ -9,7 +9,7 @@
 #   end
 
 # db/seeds.rb
-
+require "csv"
 
 
 
@@ -34,14 +34,15 @@ user = User.create!(
 puts "Seeded #{user.username} user"
 
 # Create all appliances
-appliances = [
-  AllAppliance.create!(model: 'LG123', brand: 'LG', category: 'kitchen', subcategory: 'Oven', wattage: 2000),
-  AllAppliance.create!(model: 'Bosch567', brand: 'Bosch', category: 'laundry', subcategory: 'Washing Machine', wattage: 1500),
-  AllAppliance.create!(model: 'SamsungX90', brand: 'Samsung', category: 'entertainment', subcategory: 'TV', wattage: 100),
-  AllAppliance.create!(model: 'DysonCool', brand: 'Dyson', category: 'climate control', subcategory: 'Air Conditioner', wattage: 2200),
-  AllAppliance.create!(model: 'TeslaChg', brand: 'Tesla', category: 'EV charger', subcategory: 'EV Charger', wattage: 7200),
-  AllAppliance.create!(model: 'WhirlpoolDry', brand: 'Whirlpool', category: 'laundry', subcategory: 'Dryer', wattage: 2500)
-]
+
+filepath = "seeds/appliances.csv"
+
+appliances = []
+
+CSV.foreach(filepath, headers: :first_row) do |row|
+  appliances << AllAppliance.create!(category: row['category'], subcategory: row['subcategory'], brand: row['brand'], model: row['model'], wattage: row['wattage'].to_f)
+end
+
 
 # Assign three appliances to the user
 UserAppliance.create!([
@@ -50,4 +51,4 @@ UserAppliance.create!([
   { user: user, all_appliance: appliances[2] }
 ])
 
-puts "Seeding completed! Created 1 user, 6 appliances, and 3 user appliances."
+puts "Seeding completed! Created 1 user, all appliances, and 3 user appliances."
