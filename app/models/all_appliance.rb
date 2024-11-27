@@ -4,11 +4,11 @@ class AllAppliance < ApplicationRecord
 
   # Constants for valid categories and subcategories
   CATEGORIES = {
-    "kitchen" => ["Oven", "Dishwasher"],
-    "EV charger" => ["EV Charger"],
-    "entertainment" => ["TV"],
-    "climate control" => ["Air Conditioner", "Heater"],
-    "laundry" => ["Washing Machine", "Dryer"]
+    "Kitchen" => ["Oven", "Dishwasher"],
+    "EV Charger" => ["EV Charger"],
+    "Entertainment" => ["TV"],
+    "Climate Control" => ["Air Conditioner", "Heater"],
+    "Laundry" => ["Washing Machine", "Dryer"]
   }
   # Validations
   validates :model, :brand, presence: true
@@ -23,5 +23,5 @@ class AllAppliance < ApplicationRecord
   }
 
 
-  validates :wattage, numericality: { greater_than: 0, only_integer: true }
+  validates :wattage, numericality: { greater_than: 0 }
 end
