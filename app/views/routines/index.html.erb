@@ -1,7 +1,7 @@
 <h2>Routines</h2>
 <ul>
   <% @routines.each do |routine| %>
-    <li><%= routine.appliance&.name || "No appliance assigned" %></li>
+    <li><%= routine.user_appliance&.name || "No appliance assigned" %></li>
     <li><%= routine.cost || "N/A" %></li>
     <li><%= routine.starttime&.strftime('%H:%M %p') || "No start time" %></li>
     <li><%= routine.endtime&.strftime('%H:%M %p') || "No end time" %></li>

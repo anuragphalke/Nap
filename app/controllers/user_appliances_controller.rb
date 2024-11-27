@@ -1,11 +1,11 @@
-class AppliancesController < ApplicationController
+class UserAppliancesController < ApplicationController
 
   def index
     @prices = Price.all
-    @appliances = Appliance.all
+    @user_appliances = UserAppliance.all
 
     if params[:category].present?
-      @appliances = @appliances.where(category: params[:category])
+      @user_appliances = @user_appliances.where(category: params[:category])
     end
 
     @average_prices = Price
@@ -28,34 +28,34 @@ class AppliancesController < ApplicationController
 
 
   def show
-    @appliance = Appliance.find(params[:id])
+    @user_appliance = UserAppliance.find(params[:id])
   end
 
   def new
-    @appliance = Appliance.new
+    @user_appliance = UserAppliance.new
   end
 
   def create
 
-    @appliance = Appliance.new(appliance_params)
-    @appliance.user_id = current_user.id
+    @user_appliance = UserAppliance.new(appliance_params)
+    @user_appliance.user_id = current_user.id
 
-    if @appliance.save
-      redirect_to @appliance, notice: "appliance was created"
+    if @user_appliance.save
+      redirect_to @user_appliance, notice: "appliance was created"
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @appliance = Appliance.find(params[:id])
-    @appliance.destroy
+    @user_appliance = UserAppliance.find(params[:id])
+    @user_appliance.destroy
     redirect_to appliances_path, notice: "appliance deleted"
   end
 
   private
 
   def appliance_params
-    params.require(:appliance).permit(:name, :category, :wattage)
+    params.require(:user_appliance).permit(:name, :subcategory)
   end
 end

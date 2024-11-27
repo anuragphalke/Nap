@@ -1,5 +1,5 @@
-<% @appliances.each do |appliance| %>
-  <p><%= link_to appliance.name, appliance_path(appliance) %></p>
+<% @user_appliances.each do |appliance| %>
+  <p><%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %></p>
 <% end %>
 
 

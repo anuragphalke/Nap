@@ -1,12 +1,12 @@
-<%= @appliance.name %>
+<%= @user_appliance.all_appliance.model %>
 
 
 
-<%= button_to 'Back to Index', appliances_path, method: :get, class: 'btn btn-primary' %>
+<%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
 
 
-<%= link_to appliance_path(@appliance),
+<%= link_to user_appliance_path(@user_appliance),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
                       class: "btn btn-danger" do %>
                       Delete
