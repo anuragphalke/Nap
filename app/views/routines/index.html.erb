@@ -1,9 +1,10 @@
+<h2>Routines</h2>
 <ul>
   <% @routines.each do |routine| %>
-    <li><%= routine.appliance_id %></li>
-    <li><%= routine.cost %></li>
-    <li><%= routine.starttime %></li>
-    <li><%= routine.endtime %></li>
-    <li><%= routine.day %></li>
+    <li><%= routine.appliance&.name || "No appliance assigned" %></li>
+    <li><%= routine.cost || "N/A" %></li>
+    <li><%= routine.starttime&.strftime('%H:%M %p') || "No start time" %></li>
+    <li><%= routine.endtime&.strftime('%H:%M %p') || "No end time" %></li>
+    <li><%= routine.day || "No day assigned" %></li>
   <% end %>
 </ul>
