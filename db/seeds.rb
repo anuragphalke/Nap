@@ -35,7 +35,7 @@ puts "Seeded #{user.username} user"
 
 # Create all appliances
 
-filepath = "seeds/appliances.csv"
+filepath = "db/seeds/appliances.csv"
 
 appliances = []
 
