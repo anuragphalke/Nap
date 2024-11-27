@@ -18,5 +18,7 @@ Rails.application.routes.draw do
 
   get '/proxy', to: 'proxy#proxy_request'
 
+  get '/recommend', to: 'recommendations#recommend'
+
   resources :prices, only: [:index, :create]
 end

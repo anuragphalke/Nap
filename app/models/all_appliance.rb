@@ -17,10 +17,10 @@ class AllAppliance < ApplicationRecord
   validates :subcategory, presence: true
 
    # Validation to check that subcategory belongs to the correct category
-   validates :subcategory, inclusion: {
-    in: ->(all_appliance) { CATEGORIES[all_appliance.category] || [] },
-    message: "must be a valid subcategory for the given category"
-  }
+   # validates :subcategory, inclusion: {
+   # in: ->(all_appliance) { CATEGORIES[all_appliance.category] || [] },
+   #  message: "must be a valid subcategory for the given category"
+  # }
 
 
   validates :wattage, numericality: { greater_than: 0, only_integer: true }
