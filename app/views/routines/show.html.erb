@@ -1,9 +1,12 @@
 <!-- It is gonna be rewrited depends on what we want to show in the screen. -->
-<h2><%= @routine.appliance_id %></h2>
-<p><%= @routine.starttime %></p>
-<p><%= @routine.endtime %></p>
+<ul>
+  <li>Appliance: <%= @routine.appliance.name %></li>
+  <li>Start time: <%= @routine.starttime.strftime('%H:%M %p') %></li>
+  <li>End time: <%= @routine.endtime.strftime('%H:%M %p') %></li>
+  <li>Cost: <%= @routine.cost %></li>
+  <li>Day: <%= @routine.day %></li>
+</ul>
 
-<%= link_to "Delete",
-  routine_path(@routine),
-  data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-%>
+<%= link_to "Delete", routine_path(@routine),
+    class: "btn btn-danger",
+    data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this routine?" } %>

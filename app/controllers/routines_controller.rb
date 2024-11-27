@@ -1,5 +1,5 @@
 class RoutinesController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :set_routine, only: [:show, :edit, :update, :destroy]
   def index
     @routines = Routine.all
   end
@@ -13,24 +13,28 @@ class RoutinesController < ApplicationController
 
   def create
     @routine = Routine.new(routine_params)
-    @routine.save
-
-    redirect_to routine_path(@routine)
+    if @routine.save
+      redirect_to routine_path(@routine), notice: 'Routine was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
   end
 
   def update
-    @routine.update(routine_params)
-
-    redirect_to routine_path(@routine)
+    if @routine.update(routine_params)
+      redirect_to routine_path(@routine), notice: 'Routine was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
     @routine.destroy
 
-    redirect_to routines_path, status: :see_other
+    redirect_to routines_path, status: :see_other, notice: 'Routine was successfully deleted.'
   end
 
   private
@@ -40,7 +44,7 @@ class RoutinesController < ApplicationController
   end
 
   def routine_params
-    params.require(:routines).permit(:appliance_id, :cost, :starttime, :endtime, :day)
+    params.require(:routine).permit(:appliance_id, :cost, :starttime, :endtime, :day)
   end
 
 end
