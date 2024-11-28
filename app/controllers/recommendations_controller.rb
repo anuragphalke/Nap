@@ -33,9 +33,9 @@ class RecommendationsController < ApplicationController
       end
     end
 
-  #  render json: recommendations
-  # rescue StandardError => e
-  #  render json: { error: e.message }, status: :unprocessable_entity
+    #  render json: recommendations
+    # rescue StandardError => e
+    # render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private
