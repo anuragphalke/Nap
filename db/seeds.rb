@@ -10,11 +10,6 @@
 
 # db/seeds.rb
 
-
-
-
-
-
 # List of appliances to seed
 
 User.destroy_all
@@ -40,6 +35,7 @@ appliances = [
   AllAppliance.create!(model: 'SamsungX90', brand: 'Samsung', category: 'entertainment', subcategory: 'TV', wattage: 100),
   AllAppliance.create!(model: 'DysonCool', brand: 'Dyson', category: 'climate control', subcategory: 'Air Conditioner', wattage: 2200),
   AllAppliance.create!(model: 'TeslaChg', brand: 'Tesla', category: 'EV charger', subcategory: 'EV Charger', wattage: 7200),
+  AllAppliance.create!(model: 'LG2207', brand: 'LG', category: 'kitchen', subcategory: 'Oven', wattage: 2200),
   AllAppliance.create!(model: 'WhirlpoolDry', brand: 'Whirlpool', category: 'laundry', subcategory: 'Dryer', wattage: 2500)
 ]
 
