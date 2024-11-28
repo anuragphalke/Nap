@@ -3,13 +3,21 @@
 <p><%= @user_appliance.all_appliance.brand %></p>
 
 
+<br>
+<% @routines.each do |routine| %>
+<p><%= routine.starttime %></p>
 
+<% end %>
+<br>
 
+<%= button_to 'Add routine', new_user_appliance_routine_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
 
 <%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
-<%= button_to 'View Suggestions', user_appliance_suggestions_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
 
+<%= link_to 'Edit', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
+
+<%= button_to 'View Recommendations', user_appliance_recommendations_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
 
 
 <%= link_to user_appliance_path(@user_appliance),

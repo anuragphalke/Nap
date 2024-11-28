@@ -1,4 +1,5 @@
 class UserAppliancesController < ApplicationController
+  before_action :set_user_appliance, only: [:show, :edit, :update, :destroy]
 
   def index
     @prices = Price.all
@@ -9,27 +10,13 @@ class UserAppliancesController < ApplicationController
     end
 
     @average_prices = Price
-    .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
-    .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
-    .order("day, hour")
-
-
-  end
-
-
-  def average_prices
-    # Execute the query to get the average price by day and hour
-    @average_prices = Price
       .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
       .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
       .order("day, hour")
-
-
   end
 
-
   def show
-    @user_appliance = UserAppliance.find(params[:id])
+    @routines = Routine.all
   end
 
   def new
@@ -59,7 +46,7 @@ class UserAppliancesController < ApplicationController
     end
 
     if @user_appliance.save
-      redirect_to @user_appliance, notice: "Appliance was successfully added."
+      redirect_to @user_appliance, notice: "Appliance was successfully created."
     else
       @brands = AllAppliance.distinct.pluck(:brand)
       @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
@@ -67,15 +54,34 @@ class UserAppliancesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    @user_appliance = UserAppliance.find(params[:id])
+
+    if @user_appliance.user_id == current_user.id
+      if @user_appliance.update(appliance_params)
+        redirect_to @user_appliance, notice: "Appliance was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      redirect_to user_appliances_path, alert: "You are not authorized to edit this appliance."
+    end
+  end
 
 
   def destroy
-    @user_appliance = UserAppliance.find(params[:id])
     @user_appliance.destroy
-    redirect_to user_appliances_path, notice: "appliance deleted"
+    redirect_to user_appliances_path, notice: "Appliance was successfully deleted."
   end
 
 private
+
+  def set_user_appliance
+    @user_appliance = UserAppliance.find(params[:id])
+  end
 
   def appliance_params
     params.require(:user_appliance).permit(:all_appliance_id, :brand)
