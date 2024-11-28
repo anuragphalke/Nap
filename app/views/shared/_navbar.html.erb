@@ -15,5 +15,11 @@
     <li>
       <%= link_to "Articles", articles_path %>
     </li>
+    <li>
+      <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+    </li>
+    <li>
+      <%= link_to "Log out", destroy_user_session_path, class: "dropdown-item", data: {turbo_method: :delete} %>
+    </li>
   </ul>
 </nav>
