@@ -1,5 +1,7 @@
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Layout/LineLength
 class UserAppliancesController < ApplicationController
-  before_action :set_user_appliance, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_appliance, only: %i[show edit update destroy]
 
   def index
     @prices = Price.all
@@ -10,13 +12,13 @@ class UserAppliancesController < ApplicationController
     end
 
     @average_prices = Price
-      .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
-      .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
-      .order("day, hour")
+                           .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
+                           .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
+                           .order("day, hour")
   end
 
   def show
-    @routines = Routine.all
+    @routines = @user_appliance.routines
   end
 
   def new
@@ -71,7 +73,6 @@ class UserAppliancesController < ApplicationController
     end
   end
 
-
   def destroy
     @user_appliance.destroy
     redirect_to user_appliances_path, notice: "Appliance was successfully deleted."
@@ -87,3 +88,5 @@ private
     params.require(:user_appliance).permit(:all_appliance_id, :brand)
   end
 end
+# rubocop:enable Metrics/MethodLength
+# # rubocop:enable Layout/LineLength

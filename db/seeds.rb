@@ -1,5 +1,4 @@
 require 'date'
-require "csv"
 
 # Define Categories and Subcategories
 User.destroy_all
@@ -43,7 +42,7 @@ routine1 = Routine.create!(
   cost: 1.5,
   starttime: DateTime.new(2024, 11, 27, 10, 0, 0),  # Example starttime
   endtime: DateTime.new(2024, 11, 27, 12, 0, 0),    # Example endtime
-  day: DateTime.new(2024, 11, 27, 10, 0, 0).strftime('%u').to_s,  # Convert wday to correct day of the week
+  day: DateTime.new(2024, 11, 27, 10, 0, 0).strftime('%u').to_s, # Convert wday to correct day of the week
   user_appliance: user_appliance1
 )
 

@@ -1,7 +1,8 @@
 class RoutinesController < ApplicationController
-  before_action :set_routine, only: [:show, :edit, :update, :destroy]
+  before_action :set_routine, only: %i[show edit update destroy]
+
   def index
-    @routines = Routine.all
+    @routines = Routine.joins(:user_appliance).where(user_appliances: { user_id: current_user.id })
   end
 
   def show
@@ -46,5 +47,4 @@ class RoutinesController < ApplicationController
   def routine_params
     params.require(:routine).permit(:user_appliance_id, :cost, :starttime, :endtime, :day)
   end
-
 end
