@@ -39,6 +39,7 @@ user_appliance2 = UserAppliance.create!(
 )
 
 routine1 = Routine.create!(
+  name: "Morning Wash Cycle",
   cost: 1.5,
   starttime: DateTime.new(2024, 11, 27, 10, 0, 0),  # Example starttime
   endtime: DateTime.new(2024, 11, 27, 12, 0, 0),    # Example endtime
@@ -47,6 +48,7 @@ routine1 = Routine.create!(
 )
 
 routine2 = Routine.create!(
+  name: "Evening Heating",
   cost: 0.8,
   starttime: DateTime.new(2024, 12, 1, 10, 0, 0),  # Example starttime
   endtime: DateTime.new(2024, 12, 1, 12, 0, 0),    # Example endtime
