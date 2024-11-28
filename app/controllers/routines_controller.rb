@@ -10,12 +10,15 @@ class RoutinesController < ApplicationController
 
   def new
     @routine = Routine.new
+    @user_appliance = UserAppliance.find(params[:user_appliance_id])
   end
 
   def create
     @routine = Routine.new(routine_params)
+    @routine.user_appliance_id = params[:user_appliance_id] # Link to the user_appliance
+
     if @routine.save
-      redirect_to routine_path(@routine), notice: 'Routine was successfully created.'
+      redirect_to user_appliance_path(@user_appliance), notice: 'Routine was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,8 +28,9 @@ class RoutinesController < ApplicationController
   end
 
   def update
+    
     if @routine.update(routine_params)
-      redirect_to routine_path(@routine), notice: 'Routine was successfully updated.'
+      redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +39,7 @@ class RoutinesController < ApplicationController
   def destroy
     @routine.destroy
 
-    redirect_to routines_path, status: :see_other, notice: 'Routine was successfully deleted.'
+    redirect_to user_appliance_path(@routine.user_appliance), status: :see_other, notice: 'Routine was successfully deleted.'
   end
 
   private
@@ -44,7 +48,11 @@ class RoutinesController < ApplicationController
     @routine = Routine.find(params[:id])
   end
 
+  def user_applaince
+
+  end
+
   def routine_params
-    params.require(:routine).permit(:user_appliance_id, :cost, :starttime, :endtime, :day)
+    params.require(:routine).permit(:name, :starttime, :endtime, :day, :cost)
   end
 end
