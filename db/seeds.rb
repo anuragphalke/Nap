@@ -8,14 +8,6 @@ Routine.destroy_all
 UserAppliance.destroy_all
 Average.destroy_all
 
-CATEGORIES = {
-  "kitchen" => ["Oven", "Dishwasher"],
-  "EV charger" => ["EV Charger"],
-  "entertainment" => ["TV"],
-  "climate control" => ["Air Conditioner", "Heater"],
-  "laundry" => ["Washing Machine", "Dryer"]
-}
-
 # Seed users
 user1 = User.create!(
   email: 'user1@example.com',
@@ -28,6 +20,12 @@ user2 = User.create!(
   password: 'Aassword123',
   username: 'user2'
 )
+
+filepath = "db/seeds/appliances.csv"
+appliances = []
+CSV.foreach(filepath, headers: :first_row) do |row|
+  appliances << AllAppliance.create!(category: row['category'], subcategory: row['subcategory'], brand: row['brand'], model: row['model'], wattage: row['wattage'].to_f)
+end
 
 # Seed user_appliances (Associating appliances with users)
 user_appliance1 = UserAppliance.create!(
