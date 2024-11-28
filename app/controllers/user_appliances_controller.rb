@@ -23,6 +23,7 @@ class UserAppliancesController < ApplicationController
   end
 
   def show
+    @routines = Routine.all
   end
 
   def new
