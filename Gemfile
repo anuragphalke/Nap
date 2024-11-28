@@ -27,6 +27,7 @@ gem 'http'
 
 gem 'whenever'
 
+gem 'csv'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
