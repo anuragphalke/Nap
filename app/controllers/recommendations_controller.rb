@@ -4,7 +4,7 @@ class RecommendationsController < ApplicationController
   end
 
   def recommend
-    @routine = Routine.all.sample # This needs to be replaced
+    @routine = Routine.find(params[:id])
     @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
     @day = @routine.day.to_i # Converts the routine's day to an integer (1..7)
 
