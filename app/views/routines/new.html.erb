@@ -1,12 +1,9 @@
 <h1>New Routine</h1>
 
-<%= simple_form_for @routine do |f| %>
-  <div class="form-group">
-    <%= f.association :user_appliance, label: "Appliance" %>
-  </div>
+<%= simple_form_for [@user_appliance, @routine] do |f| %>
 
-  <div class="form-group">
-    <%= f.input :cost, label: "Cost", as: :number, step: 0.01, placeholder: "Enter cost (e.g., 25.50)" %>
+<div class="form-group">
+    <%= f.input :name, label: "Name of the routine" %>
   </div>
 
   <div class="form-group">
@@ -17,9 +14,13 @@
     <%= f.input :endtime, label: "End Time", as: :time %>
   </div>
 
-  <div class="form-group">
-    <%= f.input :day, label: "Day", as: :select, collection: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday], prompt: "Select a day" %>
-  </div>
+ <div class="form-group">
+  <%= f.input :day,
+              label: "Day",
+              as: :select,
+              collection: [["Monday", "1"], ["Tuesday", "2"], ["Wednesday", "3"], ["Thursday", "4"], ["Friday", "5"], ["Saturday", "6"], ["Sunday", "7"]],
+              prompt: "Select a day" %>
+</div>
 
   <div class="form-actions">
     <%= f.button :submit, "Create Routine", class: "btn btn-primary" %>
