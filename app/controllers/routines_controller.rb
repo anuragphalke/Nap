@@ -28,8 +28,9 @@ class RoutinesController < ApplicationController
   end
 
   def update
+    
     if @routine.update(routine_params)
-      redirect_to routine_path(@routine), notice: 'Routine was successfully updated.'
+      redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,13 +39,17 @@ class RoutinesController < ApplicationController
   def destroy
     @routine.destroy
 
-    redirect_to routines_path, status: :see_other, notice: 'Routine was successfully deleted.'
+    redirect_to user_appliance_path(@routine.user_appliance), status: :see_other, notice: 'Routine was successfully deleted.'
   end
 
   private
 
   def set_routine
     @routine = Routine.find(params[:id])
+  end
+
+  def user_applaince
+
   end
 
   def routine_params

@@ -4,11 +4,23 @@
 
 
 <br>
-<% @routines.each do |routine| %>
-<p><%= routine.name %></p>
-<p><%= routine.starttime %></p>
-
-<% end %>
+<ul>
+  <% @routines.each do |routine| %>
+    <li>
+      <strong><%= routine.name %></strong>
+      <ul>
+        <li><%= "#{routine.starttime.strftime("%H:%M")}-" + routine.endtime.strftime("%H:%M") %>
+          <%= link_to "Edit", edit_routine_path(routine), class: "btn btn-link" %>
+          <%= link_to routine_path(routine),
+                              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
+                              class: "btn btn-link" do %>
+                    Delete
+                  <% end %>
+        </li>
+      </ul>
+    </li>
+  <% end %>
+</ul>
 <br>
 
 <%= button_to 'Add routine', new_user_appliance_routine_path(@user_appliance), method: :get, class: 'btn btn-primary' %>

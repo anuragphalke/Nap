@@ -18,7 +18,7 @@ class UserAppliancesController < ApplicationController
   end
 
   def show
-    @routines = @user_appliance.routines
+    @routines = @user_appliance.routines.order(:starttime)
   end
 
   def new
