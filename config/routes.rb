@@ -14,13 +14,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
- 
+
 
 resources :user_appliances, only: [:index, :show, :edit, :new, :create, :destroy] do
-    resources :routines, only: [:index, :new, :create, :show, :update, :destroy]
+    resources :routines, only: [:index, :new, :create]
     resources :recommendations, only: [:index, :show]
   end
 
+  resources :routines, only: [:show, :update, :edit, :destroy]
 
   get '/recommend', to: 'recommendations#recommend'
 
