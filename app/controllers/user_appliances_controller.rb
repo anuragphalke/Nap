@@ -89,4 +89,4 @@ private
   end
 end
 # rubocop:enable Metrics/MethodLength
-# # rubocop:enable Layout/LineLength
+# rubocop:enable Layout/LineLength
