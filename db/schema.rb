@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_27_133010) do
 
   create_table "averages", force: :cascade do |t|
     t.string "day"
-    t.time "time"
+    t.datetime "time", precision: nil
     t.decimal "average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,8 +59,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_27_133010) do
 
   create_table "routines", force: :cascade do |t|
     t.decimal "cost", precision: 10, scale: 4
-    t.time "starttime"
-    t.time "endtime"
+    t.datetime "starttime", precision: nil
+    t.datetime "endtime", precision: nil
     t.string "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -27,15 +27,35 @@ class UserAppliancesController < ApplicationController
 
   def new
     @user_appliance = UserAppliance.new
+    @user_appliance.brand = params[:user_appliance][:brand] if params[:user_appliance]&.[](:brand).present?
+
+    @brands = AllAppliance.distinct.pluck(:brand)
+
+    if @user_appliance.brand.present?
+      @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
+    else
+      @models = []
+    end
+
+    return render :new if params[:user_appliance]&.[](:brand).present?
   end
 
   def create
     @user_appliance = UserAppliance.new(appliance_params)
     @user_appliance.user_id = current_user.id
 
+    if params[:user_appliance][:all_appliance_id].blank?
+      @brands = AllAppliance.distinct.pluck(:brand)
+      @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
+      render :new
+      return
+    end
+
     if @user_appliance.save
       redirect_to @user_appliance, notice: "Appliance was successfully created."
     else
+      @brands = AllAppliance.distinct.pluck(:brand)
+      @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
       render :new, status: :unprocessable_entity
     end
   end
@@ -63,13 +83,13 @@ class UserAppliancesController < ApplicationController
     redirect_to user_appliances_path, notice: "Appliance was successfully deleted."
   end
 
-  private
+private
 
   def set_user_appliance
     @user_appliance = UserAppliance.find(params[:id])
   end
 
   def appliance_params
-    params.require(:user_appliance).permit(:category, :subcategory, :brand, :all_appliance_id)
+    params.require(:user_appliance).permit(:all_appliance_id, :brand)
   end
 end
