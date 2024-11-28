@@ -24,5 +24,7 @@ resources :user_appliances, only: [:index, :show, :new, :create, :destroy] do
   end
 
 
+  get '/recommend', to: 'recommendations#recommend'
+
   resources :prices, only: [:index, :create]
 end

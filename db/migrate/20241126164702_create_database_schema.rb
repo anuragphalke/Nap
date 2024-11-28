@@ -15,8 +15,8 @@ class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
     create_table :routines do |t|
       t.references :appliance, null: true, foreign_key: true
       t.decimal :cost, precision: 10, scale: 4, null: true
-      t.time :starttime, null: true
-      t.time :endtime, null: true
+      t.datetime :starttime, null: true
+      t.datetime :endtime, null: true
       t.string :day
 
       t.timestamps
@@ -40,7 +40,7 @@ class CreateDatabaseSchema < ActiveRecord::Migration[6.1]
 
     create_table :averages do |t|
       t.string :day
-      t.time :time
+      t.datetime :time
       t.decimal :average
 
       t.timestamps
