@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   # #Routines
   # resources :routines
 
-  # resources :suggestions
 
   # #User Appliances
   # resources :user_appliances, only: [:index, :new, :create, :destroy]

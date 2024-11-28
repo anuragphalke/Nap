@@ -1,0 +1,56 @@
+<h1>Edit Appliance</h1>
+
+<%= simple_form_for @user_appliance do |f| %>
+  <% if @user_appliance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_appliance.errors.count, "error") %> prohibited this appliance from being saved:</h2>
+      <ul>
+        <% @user_appliance.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Category Selection -->
+  <div class="form-input">
+    <%= f.input :all_appliance_id,
+                label: "Category",
+                as: :select,
+                collection: AllAppliance.distinct.pluck(:category, :id),
+                prompt: "Select Category" %>
+  </div>
+
+  <!-- Subcategory Selection -->
+  <div class="form-input">
+    <%= f.input :all_appliance_id,
+                label: "Subcategory",
+                as: :select,
+                collection: AllAppliance.distinct.pluck(:subcategory, :id),
+                prompt: "Select Subcategory" %>
+  </div>
+
+  <!-- Brand Selection -->
+  <div class="form-input">
+    <%= f.input :all_appliance_id,
+                label: "Brand",
+                as: :select,
+                collection: AllAppliance.distinct.pluck(:brand, :id),
+                prompt: "Select Brand" %>
+  </div>
+
+  <!-- Model Selection -->
+  <div class="form-input">
+    <%= f.input :all_appliance_id,
+                label: "Model",
+                as: :select,
+                collection: AllAppliance.distinct.pluck(:model, :id),
+                prompt: "Select Model" %>
+  </div>
+
+  <div class="form-input">
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', user_appliances_path %>

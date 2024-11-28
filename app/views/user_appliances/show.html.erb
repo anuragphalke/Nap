@@ -8,8 +8,10 @@
 
 <%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
-<%= button_to 'View Suggestions', user_appliance_suggestions_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
 
+<%= link_to 'Edit', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
+
+<%= button_to 'View Suggestions', user_appliance_suggestions_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
 
 
 <%= link_to user_appliance_path(@user_appliance),
