@@ -1,4 +1,8 @@
 class RecommendationsController < ApplicationController
+
+  def index
+    @recommendations = Recommendation.all
+  end
   def recommend
     @routine = Routine.last # Replace with params[:id] or relevant fetching logic
     @duration = ((@routine.endtime - @routine.starttime) / 3600).round
