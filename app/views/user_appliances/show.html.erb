@@ -4,7 +4,7 @@
 
 <%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
-
+<%= link_to 'Edit', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
 
 <%= link_to user_appliance_path(@user_appliance),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
