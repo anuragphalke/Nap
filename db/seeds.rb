@@ -9,10 +9,8 @@
 #   end
 
 # db/seeds.rb
+
 require "csv"
-
-
-
 
 
 # List of appliances to seed

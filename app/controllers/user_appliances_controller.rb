@@ -13,6 +13,7 @@ class UserAppliancesController < ApplicationController
     .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
     .order("day, hour")
 
+
   end
 
 
@@ -33,29 +34,50 @@ class UserAppliancesController < ApplicationController
 
   def new
     @user_appliance = UserAppliance.new
+    @user_appliance.brand = params[:user_appliance][:brand] if params[:user_appliance]&.[](:brand).present?
+
+    @brands = AllAppliance.distinct.pluck(:brand)
+
+    if @user_appliance.brand.present?
+      @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
+    else
+      @models = []
+    end
+
+    return render :new if params[:user_appliance]&.[](:brand).present?
   end
 
   def create
-
     @user_appliance = UserAppliance.new(appliance_params)
     @user_appliance.user_id = current_user.id
 
+    if params[:user_appliance][:all_appliance_id].blank?
+      @brands = AllAppliance.distinct.pluck(:brand)
+      @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
+      render :new
+      return
+    end
+
     if @user_appliance.save
-      redirect_to @user_appliance, notice: "appliance was created"
+      redirect_to @user_appliance, notice: "Appliance was successfully added."
     else
+      @brands = AllAppliance.distinct.pluck(:brand)
+      @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)
       render :new, status: :unprocessable_entity
     end
   end
 
+
+
   def destroy
     @user_appliance = UserAppliance.find(params[:id])
     @user_appliance.destroy
-    redirect_to appliances_path, notice: "appliance deleted"
+    redirect_to user_appliances_path, notice: "appliance deleted"
   end
 
-  private
+private
 
   def appliance_params
-    params.require(:user_appliance).permit(:name, :subcategory)
+    params.require(:user_appliance).permit(:all_appliance_id, :brand)
   end
 end
