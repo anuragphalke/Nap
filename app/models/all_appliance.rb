@@ -11,15 +11,15 @@ class AllAppliance < ApplicationRecord
     "Laundry" => ["Washing Machine", "Dryer"]
   }
   # Validations
-  validates :model, :brand, presence: true
+  # validates :model, :brand, presence: true
   # Validation for category and subcategory presence
-  validates :category, presence: true
-  validates :subcategory, presence: true
+  # validates :category, presence: true
+  # validates :subcategory, presence: true
 
-   # Validation to check that subcategory belongs to the correct category
-   # validates :subcategory, inclusion: {
-   # in: ->(all_appliance) { CATEGORIES[all_appliance.category] || [] },
-   #  message: "must be a valid subcategory for the given category"
+  # Validation to check that subcategory belongs to the correct category
+  #   validates :subcategory, inclusion: {
+  #   in: ->(all_appliance) { CATEGORIES[all_appliance.category] || [] },
+  #   message: "must be a valid subcategory for the given category"
   # }
 
 

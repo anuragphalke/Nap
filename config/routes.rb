@@ -10,13 +10,19 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  #Routines
-  resources :routines
+  # #Routines
+  # resources :routines
 
-   #User Appliances
-   resources :user_appliances
+  # resources :suggestions
 
-  get '/proxy', to: 'proxy#proxy_request'
+  # #User Appliances
+  # resources :user_appliances, only: [:index, :new, :create, :destroy]
+
+resources :user_appliances, only: [:index, :show, :new, :create, :destroy] do
+    resources :routines, only: [:index, :create, :show, :update, :destroy]
+    resources :suggestions, only: [:index, :show]
+  end
+
 
   get '/recommend', to: 'recommendations#recommend'
 

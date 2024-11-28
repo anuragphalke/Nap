@@ -1,4 +1,5 @@
 require 'date'
+require "csv"
 
 # Define Categories and Subcategories
 User.destroy_all
@@ -27,24 +28,6 @@ user2 = User.create!(
   password: 'Aassword123',
   username: 'user2'
 )
-
-# Seed all_appliances based on categories and subcategories
-CATEGORIES.each do |category, subcategories|
-  subcategories.each do |subcategory|
-    # Ensure the subcategory belongs to the category
-    if CATEGORIES[category].include?(subcategory)
-      AllAppliance.create!(
-        category: category,
-        subcategory: subcategory,
-        brand: 'BrandName',  # Sample brand name
-        model: "#{subcategory}-Model",  # Sample model name
-        wattage: rand(50..1500)  # Random wattage for variety
-      )
-    else
-      puts "Invalid subcategory #{subcategory} for category #{category}"
-    end
-  end
-end
 
 # Seed user_appliances (Associating appliances with users)
 user_appliance1 = UserAppliance.create!(
