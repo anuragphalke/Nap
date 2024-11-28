@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_28_115206) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_28_151618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,14 +27,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_28_115206) do
   create_table "articles", force: :cascade do |t|
     t.text "title"
     t.text "content"
-    t.text "category"
+    t.text "subcategory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_appliance_id"
+    t.index ["user_appliance_id"], name: "index_articles_on_user_appliance_id"
   end
 
   create_table "averages", force: :cascade do |t|
     t.string "day"
-    t.time "time"
+    t.datetime "time", precision: nil
     t.decimal "average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,8 +61,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_28_115206) do
 
   create_table "routines", force: :cascade do |t|
     t.decimal "cost", precision: 10, scale: 4
-    t.time "starttime"
-    t.time "endtime"
+    t.datetime "starttime", precision: nil
+    t.datetime "endtime", precision: nil
     t.string "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -91,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_28_115206) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "articles", "user_appliances"
   add_foreign_key "recommendations", "routines"
   add_foreign_key "routines", "user_appliances"
   add_foreign_key "user_appliances", "all_appliances"

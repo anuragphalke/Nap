@@ -48,6 +48,7 @@ class UserAppliancesController < ApplicationController
     end
 
     if @user_appliance.save
+      
       redirect_to @user_appliance, notice: "Appliance was successfully created."
     else
       @brands = AllAppliance.distinct.pluck(:brand)

@@ -29,6 +29,8 @@ gem 'whenever'
 
 gem 'csv'
 
+gem "ruby-openai"
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
