@@ -15,13 +15,6 @@ class UserAppliancesController < ApplicationController
       .order("day, hour")
   end
 
-  def average_prices
-    @average_prices = Price
-      .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
-      .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
-      .order("day, hour")
-  end
-
   def show
   end
 
