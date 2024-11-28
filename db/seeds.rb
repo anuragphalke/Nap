@@ -1,22 +1,4 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
-# db/seeds.rb
-
-
-
-
-
-
-# db/seeds.rb
-# db/seeds.rb
+require 'date'
 
 # Define Categories and Subcategories
 User.destroy_all
@@ -75,37 +57,25 @@ user_appliance2 = UserAppliance.create!(
   all_appliance: AllAppliance.second # Just linking to the second appliance created
 )
 
-# Seed routines with DateTime objects
 routine1 = Routine.create!(
   cost: 1.5,
-  starttime: DateTime.new(2024, 11, 27, 0, 0, 0),  # DateTime format (YYYY, MM, DD, HH, MM, SS)
-  endtime: DateTime.new(2024, 11, 27, 1, 0, 0),    # Ensure endtime is after starttime
-  day: '1',
+  starttime: DateTime.new(2024, 11, 27, 10, 0, 0),  # Example starttime
+  endtime: DateTime.new(2024, 11, 27, 12, 0, 0),    # Example endtime
+  day: DateTime.new(2024, 11, 27, 10, 0, 0).strftime('%u').to_s,  # Convert wday to correct day of the week
   user_appliance: user_appliance1
 )
 
 routine2 = Routine.create!(
   cost: 0.8,
-  starttime: DateTime.new(2024, 11, 27, 10, 0, 0),  # DateTime format (YYYY, MM, DD, HH, MM, SS)
-  endtime: DateTime.new(2024, 11, 27, 12, 0, 0),   # Ensure endtime is after starttime
-  day: '2',
+  starttime: DateTime.new(2024, 12, 1, 10, 0, 0),  # Example starttime
+  endtime: DateTime.new(2024, 12, 1, 12, 0, 0),    # Example endtime
+  day: DateTime.new(2024, 12, 1, 10, 0, 0).strftime('%u').to_s, # Convert wday to correct day of the week
   user_appliance: user_appliance2
 )
-
-# Seed recommendations with DateTime objects
-Recommendation.create!(
-  routine: routine1,
-  cost: 2.5,
-  starttime: DateTime.new(2024, 11, 27, 1, 0, 0),
-  endtime: DateTime.new(2024, 11, 27, 8, 0, 0)    # Ensure endtime is after starttime
-)
-
-Recommendation.create!(
-  routine: routine2,
-  cost: 1.0,
-  starttime: DateTime.new(2024, 11, 27, 2, 0, 0),
-  endtime: DateTime.new(2024, 11, 27, 5, 0, 0)    # Ensure endtime is after starttime
-)
+p routine2.starttime
+p Routine.last
+puts "wday for starttime: #{routine1.starttime.wday}"
+puts "wday for starttime: #{routine2.starttime.wday}"
 
 # Seed prices (Adding some example prices)
 Price.create!(
@@ -141,10 +111,13 @@ days_of_week.each_with_index do |day, index|
     # Generate a random average value (or you can set it as needed)
     average_value = rand(0.5..2.0).round(2)  # Example: Random average between 0.5 and 2.0
 
+    # Calculate the time for each day
+    time = DateTime.new(2024, 11, index + 4, hour, 0, 0) # Specific hour (for the given day)
+
     # Create an Average record for each hour of each day
     Average.create!(
-      day: day,  # Day of the week
-      time: DateTime.new(2024, 11, 27, hour, 0, 0),  # Specific hour (for the given day)
+      day: day,
+      time: time,
       average: average_value  # Random average value or fixed value
     )
   end
