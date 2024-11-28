@@ -17,9 +17,9 @@ Rails.application.routes.draw do
   # #User Appliances
   # resources :user_appliances, only: [:index, :new, :create, :destroy]
 
-resources :user_appliances, only: [:index, :show, :new, :create, :destroy] do
-    resources :routines, only: [:index, :create, :show, :update, :destroy]
-    resources :suggestions, only: [:index, :show]
+resources :user_appliances, only: [:index, :show, :edit, :new, :create, :destroy] do
+    resources :routines, only: [:index, :new, :create, :show, :update, :destroy]
+    resources :recommendations, only: [:index, :show]
   end
 
 
