@@ -3,3 +3,42 @@
 
 
 
+
+
+<div data-controller="price-chart" data-price-chart-costs-value="<%= @formatted_data%>"></div>
+
+
+
+
+<% if @price_rn %>
+  <p>The price for the current hour (<%= @price_rn.datetime.strftime('%H:%M')  %>) is €<%= @price_rn.cost %>.</p>
+<% else %>
+  <p>No price data available for this hour.</p>
+<% end %>
+
+<br>
+
+<p>The minimum price today is €<%= @min_price %>.</p>
+<p>The maximum price today is €<%= @max_price %>.</p>
+
+
+<h1>Average Prices by Hour and Day</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Hour</th>
+      <th>Average Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @average_prices.each do |price| %>
+      <tr>
+        <td><%= price.day %></td>
+        <td><%= price.hour %></td>
+        <td><%= price.average_price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
