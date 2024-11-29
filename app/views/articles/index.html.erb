@@ -1,5 +1,4 @@
 <%# Overview of all articles %>
 <h1> Articles </h1>
 <p> You can find many many articles about clean energy and saving and much more... here</p>
-<%= @articles.last.content%>
-
+<strong><%= link_to @articles.last.title, article_path(@articles.last) %></strong>
