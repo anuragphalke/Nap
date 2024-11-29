@@ -1,9 +1,6 @@
 class RecommendationsController < ApplicationController
-  def index
-    @recommendations = Recommendation.all
-  end
 
-  def show
+  def index
     @routine = Routine.find(params[:routine_id])
     @new_routine = Routine.new
     @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
@@ -31,7 +28,7 @@ class RecommendationsController < ApplicationController
         endtime: recommendation_end_time
       )
 
-      @slot = slot[:day] + 1
+      @slot = slot[:day]
       if slot[:day] == @day
         @today << @weekdays[@day - 1]
       else

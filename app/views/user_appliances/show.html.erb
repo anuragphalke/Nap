@@ -7,7 +7,7 @@
 <ul>
   <% @routines.each do |routine| %>
     <li>
-      <strong><%= link_to routine.name, routine_recommendation_path(routine) %></strong>
+      <strong><%= link_to routine.name, routine_recommendations_path(routine) %></strong>
       <ul>
         <li><%= "#{routine.starttime.strftime("%H:%M")}-" + routine.endtime.strftime("%H:%M") %>
           <%= link_to "Edit", edit_routine_path(routine), class: "btn btn-link" %>
