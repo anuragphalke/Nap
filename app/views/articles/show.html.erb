@@ -1,3 +1,4 @@
 <%# Put each article here. %>
+<%= image_tag "#{@article.subcategory}.jpeg" %>
 <strong><%= @article.title %></strong>
-<p><%= @article.content %></p>
+<p><%= @article.content.html_safe %></p>
