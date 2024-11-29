@@ -14,6 +14,8 @@ class RoutinesController < ApplicationController
   end
 
   def create
+    @user_appliance = UserAppliance.find(params[:user_appliance_id])
+
     @routine = Routine.new(routine_params)
     @routine.user_appliance_id = params[:user_appliance_id] # Link to the user_appliance
 
@@ -28,7 +30,7 @@ class RoutinesController < ApplicationController
   end
 
   def update
-    
+
     if @routine.update(routine_params)
       redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine was successfully updated.'
     else

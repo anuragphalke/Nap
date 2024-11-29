@@ -11,6 +11,10 @@ class UserAppliance < ApplicationRecord
   validates :nickname, uniqueness: { scope: :user_id, message: "should be unique for your devices" },
             length: { maximum: 20 }
 
+  # validates :nickname, uniqueness: { scope: :user_id, message: "should be unique for your devices" },
+  #           format: { with: /\A[a-zA-Z0-9]+\z/, message: "can only contain letters and numbers" },
+  #           length: { maximum: 20 }
+
   def create_article
     client = OpenAI::Client.new
     chatgpt_response = client.chat(parameters: {
@@ -49,5 +53,4 @@ class UserAppliance < ApplicationRecord
     puts "Cleaned Response: #{cleaned_response}"
     puts "Escaped Response: #{escaped_response}"
   end
-
 end
