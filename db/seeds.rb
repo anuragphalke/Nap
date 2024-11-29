@@ -13,6 +13,8 @@ Average.destroy_all
 puts "Averages destroyed!"
 Price.destroy_all
 puts "Prices destroyed!"
+Article.destroy_all
+puts "Articles destroyed!"
 
 # Seed users
 user1 = User.create!(
