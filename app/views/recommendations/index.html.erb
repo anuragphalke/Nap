@@ -2,7 +2,7 @@
 <p>Run every <%= @weekdays[@routine.day - 1] %> from <%= @routine.starttime.strftime("%H:%M") %> to <%= @routine.endtime.strftime("%H:%M") %></p>
 <% @recommendation_response.each_with_index do |recommendation, index| %>
   <% if recommendation.starttime == @routine.starttime && @day == @slot %>
-    <p><%= index + 1 %> You've already applied the best routine.</p>
+    <p>You've already applied the best routine.</p>
     <% break %>
   <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
     <p><%= index + 1 %> If you set your routine to begin at  <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
