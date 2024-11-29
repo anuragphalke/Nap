@@ -1,9 +1,4 @@
 <h1>Pages#home</h1>
-<p data-controller="get_data">Find me in app/views/pages/home.html.erb</p>
-
-
-
-
 
 <div data-controller="price-chart" data-price-chart-costs-value="<%= @formatted_data%>"></div>
 
@@ -24,20 +19,23 @@
 
 <h1>Average Prices by Hour and Day</h1>
 
-<table>
+<table class="price-table">
   <thead>
     <tr>
-      <th>Day</th>
       <th>Hour</th>
-      <th>Average Price</th>
+      <% @average_prices.group_by { |price| price.day }.keys.each do |day| %>
+        <th><%= day %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
-    <% @average_prices.each do |price| %>
+    <% (0..23).each do |hour| %>
       <tr>
-        <td><%= price.day %></td>
-        <td><%= price.hour %></td>
-        <td><%= price.average_price %></td>
+        <td><%= format('%02d:00', hour) %></td>
+        <% @average_prices.group_by { |price| price.day }.each do |day, prices| %>
+          <% hourly_price = prices.find { |p| p.hour.to_i == hour } %>
+          <td><%= number_to_currency(hourly_price&.average_price || 0, unit: '€', precision: 4) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
