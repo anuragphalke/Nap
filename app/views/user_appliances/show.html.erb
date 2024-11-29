@@ -7,7 +7,7 @@
 <ul>
   <% @routines.each do |routine| %>
     <li>
-      <strong><%= routine.name %></strong>
+      <strong><%= link_to routine.name, routine_recommendation_path(routine) %></strong>
       <ul>
         <li><%= "#{routine.starttime.strftime("%H:%M")}-" + routine.endtime.strftime("%H:%M") %>
           <%= link_to "Edit", edit_routine_path(routine), class: "btn btn-link" %>
@@ -26,11 +26,7 @@
 
 <%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
-
 <%= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
-
-<%# <%= button_to 'View Recommendations', user_appliance_recommendations_path(@user_appliance), method: :get, class: 'btn btn-primary' %> %>
-
 
 <%= link_to user_appliance_path(@user_appliance),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },

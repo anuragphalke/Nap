@@ -1,4 +1,20 @@
 <h1>Hello from Your personal recomendations</h1>
 
+<% @recommendation_response.each_with_index do |recommendation, index| %>
+  <% if recommendation.starttime.hour == @routine.starttime && @day == @slot %>
+    <p>You've already applied the best routine.</p>
+  <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
+    <p>If you set your routine to begin at  <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+  <% else %>
+    <p>If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+  <% end %>
 
-<%# <%= button_to 'Back to Appliance', user_appliances_path, method: :get, class: 'btn btn-primary' %> %>
+  <%= simple_form_for @routine do |f| %>
+    <%= f.hidden_field :cost, value: recommendation.cost %>
+    <%= f.submit %>
+  <% end %>
+
+<% end %>
+
+
+<%# <%= button_to 'Back to Appliance', user_appliances_path, method: :get, class: 'btn btn-primary' %>

@@ -3,35 +3,38 @@ class RecommendationsController < ApplicationController
     @recommendations = Recommendation.all
   end
 
-  def recommend
-    @routine = Routine.find(params[:id])
+  def show
+    @routine = Routine.find(params[:routine_id])
     @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
-    @day = @routine.day.to_i # Converts the routine's day to an integer (1..7)
+    @day = @routine.day # Converts the routine's day to an integer (1..7)
 
     averages = fetch_averages_for_day(@day, @duration) # returns the averages for present day + extended window (6 hours)
     best_slots = find_best_slots(averages, @duration) # returns array of 3 cheapest total averages of each 'duration' houred set of options
 
     original_cost = calculate_routine_cost(@routine.starttime, @routine.endtime, @duration) # retrieves cost of current routine
 
-    best_slots.reverse.each_with_index.map do |slot, index| # builds an array of best 3 recommendations
+    @recommendation_response = []
+    @savings = []
+    @today = []
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    best_slots.reverse.each.map do |slot, index| # builds an array of best 3 recommendations
       recommendation_start_time, recommendation_end_time = calculate_times(averages, slot, @duration) # Calculates start and end time based on index in total averages array
       recommended_cost = slot[:total_cost] # Calcuates cost of each recommendation
-      savings = calculate_savings(original_cost, recommended_cost) * -1 # Calculates annual savings based on a 52 week year
+      @savings << (calculate_savings(original_cost, recommended_cost) * -1) # Calculates annual savings based on a 52 week year
 
-      Recommendation.create(
+      @recommendation_response << Recommendation.create(
         cost: slot[:total_cost],
         routine_id: @routine.id,
         starttime: recommendation_start_time,
         endtime: recommendation_end_time
       )
 
-      # This needs to be in the View
-      if recommendation_start_time.hour == @routine.starttime && @routine.day.to_i == slot[:day]
-        "You've already applied the best routine"
-      elsif recommendation_end_time.hour < recommendation_start_time.hour # Checks if the recommendation crosses into the next day MAJOR FLAW HERE < how does it know if 00:00 - 02:00 is today or tomorrow?
-        "If you set your routine to begin at #{recommendation_start_time.strftime('%H:%M')} today and end at #{recommendation_end_time.strftime("%H:%M")} tomorrow, a #{@duration} hour routine will save you €#{savings} per year"
+      @slot = slot[:day] + 1
+      if slot[:day] == @day
+        @today << weekdays[@day - 1]
       else
-        "If you set your routine to begin at #{recommendation_start_time.strftime('%H:%M')} #{slot[:day]} and end at #{recommendation_end_time.strftime("%H:%M")}, a #{@duration} hour routine will save you €#{savings} per year"
+        @today << weekdays[slot[:day] - 1]
       end
     end
   end
@@ -53,7 +56,7 @@ class RecommendationsController < ApplicationController
 
     (0..(averages.size - duration)).each do |start_index|
       total_cost = averages[start_index, duration].sum(&:average)
-      day = start_index < 23 ? @day : @day + 1 # VERIFY
+      day = start_index < 23 ? @day : @day + 1 # VERIFY ------------------------------------------------------>
       total_averages << { total_cost: total_cost, start_index: start_index, day: day }
     end
 

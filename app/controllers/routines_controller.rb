@@ -30,7 +30,6 @@ class RoutinesController < ApplicationController
   end
 
   def update
-
     if @routine.update(routine_params)
       redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine was successfully updated.'
     else
