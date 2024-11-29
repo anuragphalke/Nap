@@ -74,13 +74,13 @@ Price.create!(
 Article.create!(
   title: 'How to Save Energy at Home',
   content: 'Here are some great tips to help you save energy...',
-  category: 'Heater'
+  subcategory: 'Heater'
 )
 
 Article.create!(
   title: 'Best Appliances to Reduce Power Consumption',
   content: 'If you are looking to reduce power consumption, these appliances...',
-  category: 'climate control'
+  subcategory: 'climate control'
 )
 
 # Days of the week (starting from Sunday to Saturday)
