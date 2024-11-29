@@ -17,15 +17,13 @@ Rails.application.routes.draw do
 
 
 resources :user_appliances, only: [:index, :show, :edit, :new, :create, :destroy] do
-    resources :routines, only: [:index, :new, :create] do
-      resources :recommendations, only: [:index, :show]
-    end
+    resources :routines, only: [:index, :new, :create]# do
+    #   resources :recommendations, only: [:index, :show]
+    # end
   end
 
-  resources :routines, only: [:show, :update, :edit, :destroy]
-
-
-  get '/recommend', to: 'recommendations#recommend'
-
+  resources :routines, only: [:create, :show, :update, :edit, :destroy] do
+    resources :recommendations, only: %i[index show]
+  end
   resources :prices, only: [:index, :create]
 end

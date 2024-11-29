@@ -2,11 +2,17 @@ require 'date'
 
 # Define Categories and Subcategories
 User.destroy_all
+puts "Users destroyed!"
 AllAppliance.destroy_all
+puts "All Appliances destroyed!"
 Routine.destroy_all
+puts "Routines destroyed!"
 UserAppliance.destroy_all
+puts "User Appliances destroyed!"
 Average.destroy_all
+puts "Averages destroyed!"
 Price.destroy_all
+puts "Prices destroyed!"
 
 # Seed users
 user1 = User.create!(
@@ -21,11 +27,15 @@ user2 = User.create!(
   username: 'user2'
 )
 
+puts "Users seeded!"
+
 filepath = "db/seeds/appliances.csv"
 appliances = []
 CSV.foreach(filepath, headers: :first_row) do |row|
   appliances << AllAppliance.create!(category: row['category'], subcategory: row['subcategory'], brand: row['brand'], model: row['model'], wattage: row['wattage'].to_f)
 end
+
+puts "All Appliances seeded!"
 
 # Seed user_appliances (Associating appliances with users)
 user_appliance1 = UserAppliance.create!(
@@ -38,27 +48,26 @@ user_appliance2 = UserAppliance.create!(
   all_appliance: AllAppliance.second # Just linking to the second appliance created
 )
 
-routine1 = Routine.create!(
+puts "User Appliances seeded!"
+
+Routine.create!(
   name: "Morning Wash Cycle",
   cost: 1.5,
   starttime: DateTime.new(2024, 11, 27, 10, 0, 0),  # Example starttime
   endtime: DateTime.new(2024, 11, 27, 12, 0, 0),    # Example endtime
-  day: DateTime.new(2024, 11, 27, 10, 0, 0).strftime('%u').to_s, # Convert wday to correct day of the week
+  day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1, # Convert wday to correct day of the week
   user_appliance: user_appliance1
 )
 
-routine2 = Routine.create!(
+Routine.create!(
   name: "Evening Heating",
   cost: 0.8,
   starttime: DateTime.new(2024, 12, 1, 10, 0, 0),  # Example starttime
   endtime: DateTime.new(2024, 12, 1, 12, 0, 0),    # Example endtime
-  day: DateTime.new(2024, 12, 1, 10, 0, 0).strftime('%u').to_s, # Convert wday to correct day of the week
+  day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1, # Convert wday to correct day of the week
   user_appliance: user_appliance2
 )
-p routine2.starttime
-p Routine.last
-puts "wday for starttime: #{routine1.starttime.wday}"
-puts "wday for starttime: #{routine2.starttime.wday}"
+puts "Routines seeded!"
 
 # Seed prices (Adding some example prices)
 # Price.create!(
@@ -94,6 +103,8 @@ end
 puts "Prices have been seeded successfully!"
 
 
+puts "Prices seeded!"
+
 # Seed articles (Adding some example articles)
 Article.create!(
   title: 'How to Save Energy at Home',
@@ -107,8 +118,10 @@ Article.create!(
   subcategory: 'climate control'
 )
 
+puts "Articles seeded!"
+
 # Days of the week (starting from Sunday to Saturday)
-days_of_week = ["1", "2", "3", "4", "5", "6", "7"]
+days_of_week = [1, 2, 3, 4, 5, 6, 7]
 
 # Seed averages for every hour (24 hours per day) for every day of the week (7 days)
 days_of_week.each_with_index do |day, index|
@@ -128,5 +141,5 @@ days_of_week.each_with_index do |day, index|
     )
   end
 end
-
+puts "Averages seeded!"
 puts "Seeding completed successfully!"

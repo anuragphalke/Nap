@@ -14,13 +14,16 @@ class RoutinesController < ApplicationController
   end
 
   def create
-    @user_appliance = UserAppliance.find(params[:user_appliance_id])
-
     @routine = Routine.new(routine_params)
-    @routine.user_appliance_id = params[:user_appliance_id] # Link to the user_appliance
+
+    unless params[:routine][:request_origin]
+      @user_appliance = UserAppliance.find(params[:user_appliance_id])
+      @routine.user_appliance_id = params[:user_appliance_id] # Link to the user_appliance
+    end
 
     if @routine.save
-      redirect_to user_appliance_path(@user_appliance), notice: 'Routine was successfully created.'
+
+      redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine created'
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,9 +33,8 @@ class RoutinesController < ApplicationController
   end
 
   def update
-
     if @routine.update(routine_params)
-      redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine was successfully updated.'
+      redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine updated'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,6 +48,10 @@ class RoutinesController < ApplicationController
 
   private
 
+  def set_lineage
+
+  end
+
   def set_routine
     @routine = Routine.find(params[:id])
   end
@@ -55,6 +61,6 @@ class RoutinesController < ApplicationController
   end
 
   def routine_params
-    params.require(:routine).permit(:name, :starttime, :endtime, :day, :cost)
+    params.require(:routine).permit(:name, :starttime, :endtime, :day, :cost, :lineage, :user_appliance_id)
   end
 end
