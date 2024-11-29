@@ -7,6 +7,7 @@ Routine.destroy_all
 UserAppliance.destroy_all
 Average.destroy_all
 Price.destroy_all
+Article.destroy_all
 
 # Seed users
 user1 = User.create!(
