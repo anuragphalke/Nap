@@ -5,6 +5,7 @@ class RecommendationsController < ApplicationController
 
   def show
     @routine = Routine.find(params[:routine_id])
+    @new_routine = Routine.new
     @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
     @day = @routine.day # Converts the routine's day to an integer (1..7)
 
@@ -16,7 +17,7 @@ class RecommendationsController < ApplicationController
     @recommendation_response = []
     @savings = []
     @today = []
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    @weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     best_slots.reverse.each.map do |slot, index| # builds an array of best 3 recommendations
       recommendation_start_time, recommendation_end_time = calculate_times(averages, slot, @duration) # Calculates start and end time based on index in total averages array
@@ -32,9 +33,9 @@ class RecommendationsController < ApplicationController
 
       @slot = slot[:day] + 1
       if slot[:day] == @day
-        @today << weekdays[@day - 1]
+        @today << @weekdays[@day - 1]
       else
-        @today << weekdays[slot[:day] - 1]
+        @today << @weekdays[slot[:day] - 1]
       end
     end
   end
@@ -56,7 +57,7 @@ class RecommendationsController < ApplicationController
 
     (0..(averages.size - duration)).each do |start_index|
       total_cost = averages[start_index, duration].sum(&:average)
-      day = start_index < 23 ? @day : @day + 1 # VERIFY ------------------------------------------------------>
+      day = start_index < 23 ? @day : @day + 1
       total_averages << { total_cost: total_cost, start_index: start_index, day: day }
     end
 
