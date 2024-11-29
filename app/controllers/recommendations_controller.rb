@@ -32,7 +32,7 @@ class RecommendationsController < ApplicationController
       if slot[:day] == @day
         @today << @weekdays[@day - 1]
       else
-        @today << @weekdays[slot[:day] - 1]
+        @today << @weekdays[slot[:day]]
       end
     end
   end
