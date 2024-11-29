@@ -47,8 +47,14 @@ class UserAppliancesController < ApplicationController
       return
     end
 
+    device = @user_appliance.all_appliance.subcategory
+    articles = Article.where(subcategory: device)
+
     if @user_appliance.save
-      create_article(@user_appliance)
+      if articles.empty?
+        create_article(@user_appliance)
+      end
+
       if current_user.user_appliances.count == 1
         redirect_to  new_user_appliance_routine_path(@user_appliance)
       else
@@ -106,7 +112,7 @@ class UserAppliancesController < ApplicationController
 
     # Replace Ruby-like hash syntax with JSON-compatible syntax (if necessary)
     json_response = escaped_response.gsub(/(\w+):/, '"\1":')
-    
+
     # Parse the JSON response
     parsed_response = JSON.parse(cleaned_response)
 
