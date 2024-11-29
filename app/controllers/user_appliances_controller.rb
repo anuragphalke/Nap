@@ -99,16 +99,16 @@ class UserAppliancesController < ApplicationController
     raw_response = chatgpt_response["choices"][0]["message"]["content"]
 
     # Clean the response by removing Markdown code block delimiters
-    cleaned_response = raw_response.gsub(/```ruby|```/, "").strip
+    cleaned_response = raw_response.gsub(/```json|```/, "").strip
 
     # Escape unescaped quotes within strings
     escaped_response = cleaned_response.gsub(/(?<!\\)"/, '\"')
 
     # Replace Ruby-like hash syntax with JSON-compatible syntax (if necessary)
     json_response = escaped_response.gsub(/(\w+):/, '"\1":')
-
+    raise
     # Parse the JSON response
-    parsed_response = JSON.parse(json_response)
+    parsed_response = JSON.parse(cleaned_response)
 
     # Create the article using the parsed data
 
