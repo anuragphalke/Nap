@@ -23,7 +23,7 @@ resources :user_appliances, only: [:index, :show, :edit, :new, :create, :destroy
   end
 
   resources :routines, only: [:create, :show, :update, :edit, :destroy] do
-    resources :recommendations, only: %i[index show]
+    resources :recommendations, only: %i[index]
   end
   resources :prices, only: [:index, :create]
 end

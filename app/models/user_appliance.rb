@@ -6,6 +6,7 @@ class UserAppliance < ApplicationRecord
   belongs_to :user
   belongs_to :all_appliance
   has_many :routines, dependent: :destroy
+  has_many :articles, dependent: :destroy
 
   # Validations
   # validates :nickname, uniqueness: { scope: :user_id, message: "should be unique for your devices" },
