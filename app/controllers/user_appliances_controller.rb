@@ -5,7 +5,7 @@ class UserAppliancesController < ApplicationController
 
   def index
     @prices = Price.all
-    @user_appliances = UserAppliance.all
+    @user_appliances = current_user.user_appliances
 
     if params[:category].present?
       @user_appliances = @user_appliances.where(category: params[:category])
@@ -48,7 +48,11 @@ class UserAppliancesController < ApplicationController
     end
 
     if @user_appliance.save
-      redirect_to @user_appliance, notice: "Appliance was successfully created."
+      if current_user.user_appliances.count == 1
+        redirect_to  new_user_appliance_routine_path(@user_appliance)
+      else
+        redirect_to @user_appliance, notice: "Appliance was successfully created."
+      end
     else
       @brands = AllAppliance.distinct.pluck(:brand)
       @models = AllAppliance.where(brand: @user_appliance.brand).pluck(:model, :id)

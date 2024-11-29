@@ -1,9 +1,9 @@
-<%= @user_appliance.all_appliance.model %>
+<h1><%= @user_appliance.all_appliance.model %></h1>
 
 <p><%= @user_appliance.all_appliance.brand %></p>
 
 
-<br>
+<h2>My Routines</h2>
 <ul>
   <% @routines.each do |routine| %>
     <li>
@@ -21,20 +21,19 @@
     </li>
   <% end %>
 </ul>
-<br>
 
 <%= button_to 'Add routine', new_user_appliance_routine_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
 
 <%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
 
-<%= link_to 'Edit', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
+<%= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
 
-<%= button_to 'View Recommendations', user_appliance_recommendations_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
+<%# <%= button_to 'View Recommendations', user_appliance_recommendations_path(@user_appliance), method: :get, class: 'btn btn-primary' %> %>
 
 
 <%= link_to user_appliance_path(@user_appliance),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
                       class: "btn btn-danger" do %>
-                      Delete
+                      Delete the Appliance
                   <% end %>
