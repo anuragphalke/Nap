@@ -11,6 +11,8 @@ UserAppliance.destroy_all
 puts "User Appliances destroyed!"
 Average.destroy_all
 puts "Averages destroyed!"
+Price.destroy_all
+puts "Prices destroyed!"
 
 # Seed users
 user1 = User.create!(
@@ -68,15 +70,38 @@ Routine.create!(
 puts "Routines seeded!"
 
 # Seed prices (Adding some example prices)
-Price.create!(
-  datetime: DateTime.now,
-  cost: 0.15
-)
+# Price.create!(
+#   datetime: DateTime.now,
+#   cost: 0.15
+# )
 
-Price.create!(
-  datetime: DateTime.now - 1.day,
-  cost: 0.13
-)
+# Price.create!(
+#   datetime: DateTime.now - 1.day,
+#   cost: 0.13
+# )
+# # db/seeds.rb
+
+# Define the date range
+dates = [
+  { date: '2024-11-26', costs: [0.090, 0.079, 0.079, 0.071, 0.073, 0.082, 0.102, 0.110, 0.136, 0.127, 0.112, 0.100, 0.092, 0.102, 0.116, 0.124, 0.144, 0.155, 0.161, 0.153, 0.127, 0.119, 0.123, 0.114] },
+  { date: '2024-11-27', costs: [0.111, 0.110, 0.110, 0.103, 0.101, 0.112, 0.129, 0.129, 0.166, 0.131, 0.139, 0.134, 0.126, 0.124, 0.120, 0.124, 0.116, 0.114, 0.110, 0.101, 0.079, 0.080, 0.086, 0.060] },
+  { date: '2024-11-28', costs: [0.050, 0.041, 0.035, 0.038, 0.060, 0.092, 0.100, 0.132, 0.148, 0.140, 0.099, 0.099, 0.096, 0.099, 0.114, 0.119, 0.134, 0.151, 0.158, 0.154, 0.143, 0.131, 0.122, 0.113] },
+  { date: '2024-11-29', costs: [0.110, 0.107, 0.104, 0.102, 0.103, 0.112, 0.131, 0.161, 0.174, 0.157, 0.138, 0.120, 0.110, 0.114, 0.109, 0.124, 0.146, 0.149, 0.142, 0.132, 0.120, 0.112, 0.114, 0.103] }
+]
+
+# Loop through the dates and insert the data into the prices table
+dates.each do |date_data|
+  date_data[:costs].each_with_index do |cost, index|
+    # Create a new Price record for each hour
+    Price.create!(
+      datetime: "#{date_data[:date]} #{index.to_s.rjust(2, '0')}:00:00", # Generate the datetime
+      cost: cost
+    )
+  end
+end
+
+puts "Prices have been seeded successfully!"
+
 
 puts "Prices seeded!"
 
@@ -84,13 +109,13 @@ puts "Prices seeded!"
 Article.create!(
   title: 'How to Save Energy at Home',
   content: 'Here are some great tips to help you save energy...',
-  category: 'Heater'
+  subcategory: 'Heater'
 )
 
 Article.create!(
   title: 'Best Appliances to Reduce Power Consumption',
   content: 'If you are looking to reduce power consumption, these appliances...',
-  category: 'climate control'
+  subcategory: 'climate control'
 )
 
 puts "Articles seeded!"
