@@ -1,7 +1,25 @@
-<% @user_appliances.each do |appliance| %>
-  <p><%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %></p>
+<p style="font-size: 20px; padding-left: 9px">Categories</p>
+
+<% @categories.each do |category, subcategories| %>
+  <%= link_to category, user_appliances_path(category: category), class: "btn-secondary" %>
 <% end %>
 
-<%= link_to "Add Appliance", new_user_appliance_path, class: "btn btn-primary" %>
-<br>
+<div class="grid-2">
+  <% @user_appliances.each do |appliance| %>
+    <div class="card-appl">
+      <%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %>
+    </div>
+  <% end %>
+</div>
 
+
+
+
+<div class="grid-2">
+    <%= link_to new_user_appliance_path, class: "btn-secondary" do %>
+  <i class="fas fa-edit"></i> Edit
+<% end %>
+
+
+  <%= link_to "Add new device", new_user_appliance_path, class: "btn-active" %>
+</div>

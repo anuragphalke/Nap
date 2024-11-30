@@ -1,0 +1,18 @@
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Defines 12 equal-width columns */
+  gap: 16px; /* Defines the gutter size between columns */
+  padding-bottom: 25px;
+}
+
+.card-appl {
+  background-color: $element;
+  border-radius: 20px;
+  padding: 20px;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+}

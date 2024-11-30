@@ -13,6 +13,10 @@
   <body><%= render "shared/navbar" %>
 <%= render "shared/flashes" %>
 
-    <%= yield %>
+    <div class="on-top"><%= yield %></div>
+
+
+    <div class="overlay"></div>
+    <%= image_tag 'blob.svg', class: "blob" %>
   </body>
 </html>

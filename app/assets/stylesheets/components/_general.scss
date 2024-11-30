@@ -1,0 +1,12 @@
+body {
+  color: white;
+  background-color: $background;
+  margin: 16px;
+  font-family: 'Space Mono', monospace;
+
+}
+
+.on-top {
+  position: relative;
+  z-index: 100; /* Content stays above the overlay */
+}
