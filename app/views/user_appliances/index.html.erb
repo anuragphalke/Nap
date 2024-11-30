@@ -1,8 +1,14 @@
 <p style="font-size: 20px; padding-left: 9px">Categories</p>
 
-<% @categories.each do |category, subcategories| %>
-  <%= link_to category, user_appliances_path(category: category), class: "btn-secondary" %>
-<% end %>
+
+
+<div style="margin-bottom: 40px;">
+  <%= link_to "all", user_appliances_path, class: @selected_category == "all" ? "category-active" : "category" %>
+
+  <% @categories.each do |category, subcategories| %>
+    <%= link_to category.downcase, user_appliances_path(category: category), class: @selected_category == category ? "category-active" : "category" %>
+  <% end %>
+</div>
 
 <div class="grid-2">
   <% @user_appliances.each do |appliance| %>

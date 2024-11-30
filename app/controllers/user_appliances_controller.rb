@@ -19,6 +19,8 @@ class UserAppliancesController < ApplicationController
       @user_appliances = @user_appliances.joins(:all_appliance).where(all_appliances: { category: params[:category] })
     end
 
+    @selected_category = params[:category] || "all"
+    
     @average_prices = Price
                            .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
                            .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
