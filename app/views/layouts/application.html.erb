@@ -15,9 +15,9 @@
     <%= render "shared/flashes" %>
 
     <div class="my-own-space">
-      <div class="yellow-circle on-top">
+      <%= link_to profile_path, class: "yellow-circle on-top" do %>
         <%= image_tag 'spark.svg' %>
-      </div>
+      <% end %>
     </div>
 
     <div class="on-top"><%= yield %></div>

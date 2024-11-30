@@ -1,12 +1,15 @@
 <p style="font-size: 20px; padding-left: 9px">Categories</p>
 
-
-
 <div class="categories-container" data-controller="categories">
-  <%= link_to "all", user_appliances_path, class: "category-active", data: { action: "click->categories#setActiveCategory" } %>
+  <%= link_to "all", user_appliances_path,
+      class: params[:category].nil? ? "category-active" : "category",
+      data: { action: "click->categories#setActiveCategory" } %>
 
   <% @categories.each do |category| %>
-    <%= link_to category.downcase, user_appliances_path(category: category), class: "category", data: { action: "click->categories#setActiveCategory" } %>
+    <%= link_to category.downcase,
+        user_appliances_path(category: category),
+        class: params[:category] == category ? "category-active" : "category",
+        data: { action: "click->categories#setActiveCategory" } %>
   <% end %>
 </div>
 
@@ -18,14 +21,10 @@
   <% end %>
 </div>
 
-
-
-
 <div class="grid-2">
     <%= link_to new_user_appliance_path, class: "btn-secondary" do %>
   <i class="fas fa-edit"></i> Edit
 <% end %>
-
 
   <%= link_to "Add new device", new_user_appliance_path, class: "btn-active" %>
 </div>

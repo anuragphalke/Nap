@@ -5,26 +5,17 @@ class UserAppliancesController < ApplicationController
 
 
   def index
-    @prices = Price.all
-    @user_appliances = current_user.user_appliances
+    @categories = current_user.user_appliances
+                  .joins(:all_appliance)
+                  .distinct
+                  .pluck('all_appliances.category')
 
-    # if params[:category].present?
-    #   @user_appliances = @user_appliances.where(category: params[:category])
-    # end
-    @categories = current_user.user_appliances.joins(:all_appliance).distinct.pluck('all_appliances.category')
-
-    # Filter by category if present in params
-    if params[:category].present?
-      # Filter user appliances by selected category
-      @user_appliances = @user_appliances.joins(:all_appliance).where(all_appliances: { category: params[:category] })
+    @user_appliances = if params[:category]
+      current_user.user_appliances.joins(:all_appliance)
+      .where(all_appliances: { category: params[:category] })
+    else
+      current_user.user_appliances
     end
-
-    @selected_category = params[:category] || "all"
-    
-    @average_prices = Price
-                           .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
-                           .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
-                           .order("day, hour")
   end
 
   def show

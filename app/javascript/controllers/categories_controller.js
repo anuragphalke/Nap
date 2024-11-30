@@ -1,33 +1,73 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="categories"
 export default class extends Controller {
-  static targets = ["category"];
-
   connect() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentCategory = urlParams.get("category") || "all";
+
+    this.setInitialActive(currentCategory);
+    this.scrollToActive();
+  }
+
+  setInitialActive(currentCategory) {
+    this.element
+      .querySelectorAll(".category, .category-active")
+      .forEach((link) => {
+        const linkCategory = link.textContent.trim().toLowerCase();
+        if (linkCategory === currentCategory) {
+          link.classList.add("category-active");
+          link.classList.remove("category");
+        } else {
+          link.classList.add("category");
+          link.classList.remove("category-active");
+        }
+      });
+  }
+
+  scrollToActive() {
+    const activeCategory = this.element.querySelector(".category-active");
+    if (activeCategory) {
+      activeCategory.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
   }
 
   setActiveCategory(event) {
-    // Prevent default link behavior if necessary
     event.preventDefault();
 
-    // Remove the active class from all categories
-    this.categoryTargets.forEach((category) => {
-      category.classList.remove("category-active");
-      category.classList.add("category");
-    });
+    this.element
+      .querySelectorAll(".category, .category-active")
+      .forEach((link) => {
+        link.classList.remove("category-active");
+        link.classList.add("category");
+      });
 
-    // Add the "category-active" class to the clicked category
+    event.currentTarget.classList.remove("category");
     event.currentTarget.classList.add("category-active");
 
-    // Scroll the clicked category into view
     event.currentTarget.scrollIntoView({
-      behavior: "smooth",   // Smooth scrolling
-      block: "center",      // Align vertically to the center
-      inline: "center"      // Align horizontally to the center
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
     });
 
-    // Optionally, navigate to the link's href if required
-    // window.location.href = event.currentTarget.href;
+    const newUrl = event.currentTarget.href;
+    window.history.pushState({}, "", newUrl);
+
+    fetch(newUrl)
+      .then((response) => response.text())
+      .then((html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const newGrid = doc.querySelector(".grid-2");
+        const currentGrid = document.querySelector(".grid-2");
+        if (newGrid && currentGrid) {
+          currentGrid.innerHTML = newGrid.innerHTML;
+        }
+      });
   }
 }

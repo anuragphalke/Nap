@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  get 'profile', to: 'pages#profile', as: 'profile'
 
 
 resources :user_appliances, only: [:index, :show, :edit, :new, :create, :destroy] do
