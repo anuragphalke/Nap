@@ -2,11 +2,11 @@
 
 
 
-<div style="margin-bottom: 40px;">
-  <%= link_to "all", user_appliances_path, class: @selected_category == "all" ? "category-active" : "category" %>
+<div class="categories-container" data-controller="categories">
+  <%= link_to "all", user_appliances_path(@user_appliances), class: "category category-active", data: { action: "click->categories#setActiveCategory" } %>
 
   <% @categories.each do |category, subcategories| %>
-    <%= link_to category.downcase, user_appliances_path(category: category), class: @selected_category == category ? "category-active" : "category" %>
+    <%= link_to category.downcase, user_appliances_path(category: category), class: "category", data: { action: "click->categories#setActiveCategory" } %>
   <% end %>
 </div>
 
