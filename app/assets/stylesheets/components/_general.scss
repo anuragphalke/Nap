@@ -10,3 +10,30 @@ body {
   position: relative;
   z-index: 100; /* Content stays above the overlay */
 }
+
+
+.yellow-circle {
+  background-color: $dark-yellow;
+  border-radius: 50%;
+  width: 48px; /* Slightly larger to accommodate padding */
+  height: 48px;
+  position: absolute;
+  top: 16px;      /* Distance from the top */
+  right: 16px;    /* Distance from the right */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 101; /* Make sure it's above other elements if needed */
+    img {
+      width: 40px; /* Adjust to fit nicely within the circle */
+      height: auto; /* Keeps aspect ratio */
+    }
+}
+
+.my-own-space {
+  width: 80%;              /* Adjust width as needed */
+  max-width: 1200px;       /* Limits the maximum size */
+  margin: 0 auto;          /* Centers the container */
+  padding: 20px;           /* Adds internal spacing */
+}
