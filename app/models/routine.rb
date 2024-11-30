@@ -15,9 +15,7 @@ class Routine < ApplicationRecord
   private
 
   def set_lineage
-    if !self.lineage
-      self.update(lineage: self.id)
-    end
+    return self.update(lineage: self.id) unless self.lineage
   end
 
 def endtime_after_starttime
