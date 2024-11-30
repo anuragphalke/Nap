@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="categories"
 export default class extends Controller {
-  static targets = ["category"]; 
+  static targets = ["category"];
 
   connect() {
   }
@@ -14,6 +14,7 @@ export default class extends Controller {
     // Remove the active class from all categories
     this.categoryTargets.forEach((category) => {
       category.classList.remove("category-active");
+      category.classList.add("category");
     });
 
     // Add the "category-active" class to the clicked category

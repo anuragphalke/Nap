@@ -3,9 +3,9 @@
 
 
 <div class="categories-container" data-controller="categories">
-  <%= link_to "all", user_appliances_path(@user_appliances), class: "category category-active", data: { action: "click->categories#setActiveCategory" } %>
+  <%= link_to "all", user_appliances_path, class: "category-active", data: { action: "click->categories#setActiveCategory" } %>
 
-  <% @categories.each do |category, subcategories| %>
+  <% @categories.each do |category| %>
     <%= link_to category.downcase, user_appliances_path(category: category), class: "category", data: { action: "click->categories#setActiveCategory" } %>
   <% end %>
 </div>
