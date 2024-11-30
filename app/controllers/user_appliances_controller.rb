@@ -26,8 +26,12 @@ class UserAppliancesController < ApplicationController
   end
 
   def show
-    @routines = @user_appliance.routines.order(:starttime)
+    # Fetch routines for the current user appliance ------------------------> to be tested
+    @routines = @user_appliance.routines
+                               .select("DISTINCT ON (lineage) *")        # Get distinct routines by lineage
+                               .order(:lineage, "id DESC", :starttime)  # Prioritize highest ID per lineage, then order by starttime
   end
+
 
   def new
     @user_appliance = UserAppliance.new
