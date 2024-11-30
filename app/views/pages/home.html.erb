@@ -1,5 +1,5 @@
-<h1>Pages#home</h1>
-
+<p>Overview for <br>
+2024/03</p>
 <div data-controller="price-chart" data-price-chart-costs-value="<%= @formatted_data%>"></div>
 
 
@@ -20,7 +20,7 @@
 <h1>Average Prices by Hour and Day</h1>
 
 <table class="price-table">
-  <thead>
+  <thead> 
     <tr>
       <th>Hour</th>
       <% @average_prices.group_by { |price| price.day }.keys.each do |day| %>
