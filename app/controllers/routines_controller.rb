@@ -41,9 +41,14 @@ class RoutinesController < ApplicationController
   end
 
   def destroy
-    @routine.destroy
+    # Find all routines with the same lineage as the routine being deleted
+    routines_with_same_lineage = @routine.user_appliance.routines.where(lineage: @routine.lineage)
 
-    redirect_to user_appliance_path(@routine.user_appliance), status: :see_other, notice: 'Routine was successfully deleted.'
+    # Destroy all routines in the same lineage
+    routines_with_same_lineage.destroy_all
+
+    # Redirect with a notice
+    redirect_to user_appliance_path(@routine.user_appliance), status: :see_other, notice: 'Routine deleted'
   end
 
   private
