@@ -15,13 +15,15 @@
 
 <div class="grid-2">
   <% @user_appliances.each do |appliance| %>
-    <div class="card-appl">
-      <%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %>
-    </div>
+    <%= link_to user_appliance_path(appliance), class: "card-appl" do %>
+    <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, class: "appliance-icon" %>
+
+      <p><%= appliance.all_appliance.model %></p>
+    <% end %>
   <% end %>
 </div>
 
-<div class="grid-2">
+<div class="grid-2-down">
     <%= link_to new_user_appliance_path, class: "btn-secondary" do %>
   <i class="fas fa-edit"></i> Edit
 <% end %>
