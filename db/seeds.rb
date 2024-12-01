@@ -1,5 +1,5 @@
 require 'date'
-
+require 'json'
 # Define Categories and Subcategories
 User.destroy_all
 puts "Users destroyed!"
@@ -108,19 +108,25 @@ puts "Prices have been seeded successfully!"
 puts "Prices seeded!"
 
 # Seed articles (Adding some example articles)
-Article.create!(
-  title: 'How to Save Energy at Home',
-  content: 'Here are some great tips to help you save energy...',
-  subcategory: 'Heater'
-)
+# db/seeds.rb
 
-Article.create!(
-  title: 'Best Appliances to Reduce Power Consumption',
-  content: 'If you are looking to reduce power consumption, these appliances...',
-  subcategory: 'climate control'
-)
 
-puts "Articles seeded!"
+file_path = Rails.root.join('db', 'seeds', 'articles.json')
+
+# JSON dosyasını oku
+articles = JSON.parse(File.read(file_path))
+
+# Her bir article verisi üzerinde döngüye gir
+articles.each do |article_data|
+  # Verinin formatını kontrol et ve veritabanına kaydet
+  Article.create!(article_data)
+end
+
+
+puts "Articles seeded successfully!"
+
+
+
 
 # Days of the week (starting from Sunday to Saturday)
 days_of_week = [1, 2, 3, 4, 5, 6, 7]
