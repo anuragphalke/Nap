@@ -54,4 +54,6 @@ class UserAppliance < ApplicationRecord
     puts "Cleaned Response: #{cleaned_response}"
     puts "Escaped Response: #{escaped_response}"
   end
+
+  
 end
