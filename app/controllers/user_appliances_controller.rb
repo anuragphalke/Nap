@@ -3,23 +3,28 @@
 class UserAppliancesController < ApplicationController
   before_action :set_user_appliance, only: %i[show edit update destroy]
 
+
   def index
-    @prices = Price.all
-    @user_appliances = current_user.user_appliances
+    @categories = current_user.user_appliances
+                  .joins(:all_appliance)
+                  .distinct
+                  .pluck('all_appliances.category')
 
-    if params[:category].present?
-      @user_appliances = @user_appliances.where(category: params[:category])
+    @user_appliances = if params[:category]
+      current_user.user_appliances.joins(:all_appliance)
+      .where(all_appliances: { category: params[:category] })
+    else
+      current_user.user_appliances
     end
-
-    @average_prices = Price
-                           .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
-                           .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
-                           .order("day, hour")
   end
 
   def show
-    @routines = @user_appliance.routines.order(:starttime)
+    # Fetch routines for the current user appliance ------------------------> to be tested
+    @routines = @user_appliance.routines
+                               .select("DISTINCT ON (lineage) *")        # Get distinct routines by lineage
+                               .order(:lineage, "id DESC", :starttime)  # Prioritize highest ID per lineage, then order by starttime
   end
+
 
   def new
     @user_appliance = UserAppliance.new

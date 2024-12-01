@@ -7,14 +7,14 @@ AllAppliance.destroy_all
 puts "All Appliances destroyed!"
 Routine.destroy_all
 puts "Routines destroyed!"
+Article.destroy_all
+puts "Articles destroyed!"
 UserAppliance.destroy_all
 puts "User Appliances destroyed!"
 Average.destroy_all
 puts "Averages destroyed!"
 Price.destroy_all
 puts "Prices destroyed!"
-Article.destroy_all
-puts "Articles destroyed!"
 
 # Seed users
 user1 = User.create!(
@@ -71,18 +71,6 @@ Routine.create!(
 )
 puts "Routines seeded!"
 
-# Seed prices (Adding some example prices)
-# Price.create!(
-#   datetime: DateTime.now,
-#   cost: 0.15
-# )
-
-# Price.create!(
-#   datetime: DateTime.now - 1.day,
-#   cost: 0.13
-# )
-# # db/seeds.rb
-
 # Define the date range
 dates = [
   { date: '2024-11-26', costs: [0.090, 0.079, 0.079, 0.071, 0.073, 0.082, 0.102, 0.110, 0.136, 0.127, 0.112, 0.100, 0.092, 0.102, 0.116, 0.124, 0.144, 0.155, 0.161, 0.153, 0.127, 0.119, 0.123, 0.114] },
@@ -101,9 +89,6 @@ dates.each do |date_data|
     )
   end
 end
-
-puts "Prices have been seeded successfully!"
-
 
 puts "Prices seeded!"
 
@@ -136,7 +121,7 @@ days_of_week.each_with_index do |day, index|
   # Loop through each hour of the day (0 to 23)
   (0..23).each do |hour|
     # Generate a random average value (or you can set it as needed)
-    average_value = rand(0.5..2.0).round(2)  # Example: Random average between 0.5 and 2.0
+    average_value = rand(0.5..2.0).round(2) # Example: Random average between 0.5 and 2.0
 
     # Calculate the time for each day
     time = DateTime.new(2024, 11, index + 4, hour, 0, 0) # Specific hour (for the given day)

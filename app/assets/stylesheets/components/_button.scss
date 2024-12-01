@@ -1,0 +1,24 @@
+.btn-active {
+  background-color: $button-active;
+  display: inline-block;
+  padding: 0 10px; /* Add some horizontal padding */
+  height: 43px;
+  line-height: 43px; /* Center the text vertically */
+  text-align: center;
+  text-decoration: none; /* Remove the underline */
+  color: black;
+  border-radius: 21.5px;
+  text-decoration: none;
+}
+
+
+.btn-secondary {
+  background-color: #090f1437;
+  font-style: italic;
+  text-align: center;
+  text-decoration: none; /* Remove the underline */
+  line-height: 43px; /* Center the text vertically */
+  border-radius: 21.5px;
+  border: 1px solid white;
+  color: white;
+}

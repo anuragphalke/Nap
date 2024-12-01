@@ -1,7 +1,32 @@
-<% @user_appliances.each do |appliance| %>
-  <p><%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %></p>
+<p style="font-size: 20px; padding-left: 9px">Categories</p>
+
+<div class="categories-container" data-controller="categories">
+  <%= link_to "all", user_appliances_path,
+      class: params[:category].nil? ? "category-active" : "category",
+      data: { action: "click->categories#setActiveCategory" } %>
+
+  <% @categories.each do |category| %>
+    <%= link_to category.downcase,
+        user_appliances_path(category: category),
+        class: params[:category] == category ? "category-active" : "category",
+        data: { action: "click->categories#setActiveCategory" } %>
+  <% end %>
+</div>
+
+<div class="grid-2">
+  <% @user_appliances.each do |appliance| %>
+    <%= link_to user_appliance_path(appliance), class: "card-appl" do %>
+    <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, class: "appliance-icon" %>
+
+      <p><%= appliance.all_appliance.model %></p>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="grid-2-down">
+    <%= link_to new_user_appliance_path, class: "btn-secondary" do %>
+  <i class="fas fa-edit"></i> Edit
 <% end %>
 
-<%= link_to "Add Appliance", new_user_appliance_path, class: "btn btn-primary" %>
-<br>
-
+  <%= link_to "Add new device", new_user_appliance_path, class: "btn-active" %>
+</div>

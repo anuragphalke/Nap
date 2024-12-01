@@ -1,0 +1,27 @@
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Defines 12 equal-width columns */
+  gap: 16px; /* Defines the gutter size between columns */
+  padding-bottom: 25px;
+}
+
+.card-appl {
+    background-color: $element;
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none; /* Remove underline */
+    color: white;
+    display: block;
+}
+
+.grid-2-down {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+  gap: 16px;
+  position: fixed; /* Fix the grid to a specific part of the viewport */
+  bottom: 123px; /* Adjust the percentage to control vertical positioning */
+  left: 0;
+  right: 0;
+  padding: 0 16px; /* Adjust padding as necessary */
+  z-index: 100; /* Ensure it's above other elements */
+}
