@@ -1,8 +1,10 @@
 
 <div class="header">
-  <%= link_to user_appliances_path, method: :get do %>
-    <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
-  <% end %>
+  <div class='d-flex align-items-center'>
+    <%= link_to user_appliances_path, method: :get do %>
+      <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
+    <% end %>
+  </div>
   <div class="inner-container">
     <h1><%= @user_appliance.all_appliance.subcategory %>: <%= @user_appliance.all_appliance.model %></h1>
   </div>

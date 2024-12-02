@@ -1,11 +1,5 @@
-<% @user_appliances.each_with_index do |appliance, index| %>
-  <p><%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %></p>
-  <p><%= @user_appliance_tags[index] %></p>
-<% end %>
 
 
-<%= link_to "Add Appliance", new_user_appliance_path, class: "btn btn-primary" %>
-<br>
 <p style="font-size: 20px; padding-left: 9px">Categories</p>
 
 <div class="categories-container" data-controller="categories">
@@ -22,12 +16,13 @@
 </div>
 
 <div class="grid-2">
-  <% @user_appliances.each do |appliance| %>
+  <% @user_appliances.each_with_index do |appliance, index| %>
     <%= link_to user_appliance_path(appliance), class: "card-appl" do %>
     <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, style: "margin-bottom: 9px;" %>
 
       <p><%= appliance.all_appliance.model %></p>
       <%#= appliance.all_appliance.subcategory %>
+      <p><%= @user_appliance_tags[index] %></p>
     <% end %>
   <% end %>
 </div>
