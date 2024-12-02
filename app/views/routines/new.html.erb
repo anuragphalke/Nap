@@ -1,17 +1,34 @@
-<h1>New Routine</h1>
+<div class="title-container">
+  <h1 class="page-title">NEW ROUTINE</h1>
+  <%= link_to user_appliance_path(@user_appliance), class: "close-btn" do %>
+    <div class="circle">
+      <%= image_tag 'cross.svg', alt: 'Close' %>
+    </div>
+  <% end %>
+</div>
 
 <%= simple_form_for [@user_appliance, @routine] do |f| %>
+  <div class="form-container">
+    <div class="routine-form-group">
+      <%= f.input :name, label: "Name of the routine", input_html: { class: "routine-form-control" } %>
+    </div>
 
-<div class="form-group">
-    <%= f.input :name, label: "Name of the routine" %>
-  </div>
+    <div class="routine-form-group">
+      <%= f.input :starttime, label: "Start Time", as: :time, input_html: { class: "routine-form-control" } %>
+    </div>
 
-  <div class="form-group">
-    <%= f.input :starttime, label: "Start Time", as: :time %>
-  </div>
+    <div class="routine-form-group">
+      <%= f.input :endtime, label: "End Time", as: :time, input_html: { class: "routine-form-control" } %>
+    </div>
 
-  <div class="form-group">
-    <%= f.input :endtime, label: "End Time", as: :time %>
+    <div class="routine-form-group">
+      <%= f.input :day,
+                  label: "Day",
+                  as: :select,
+                  collection: [["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5], ["Saturday", 6], ["Sunday", 7]],
+                  prompt: "Select a day",
+                  input_html: { class: "routine-form-control" } %>
+    </div>
   </div>
 
   <div class="form-group">
@@ -26,5 +43,3 @@
     <%= f.button :submit, "Apply Routine", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-<%= link_to "Back to my appliance", user_appliance_path(@user_appliance), class: "btn btn-primary" %>

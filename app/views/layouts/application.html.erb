@@ -10,9 +10,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
+  <body>
+    <%= render "shared/navbar" %>
+    <%= render "shared/flashes" %>
 
-    <%= yield %>
+    <div class="my-own-space">
+      <%= link_to profile_path, class: "yellow-circle on-top" do %>
+        <%= image_tag 'spark.svg' %>
+      <% end %>
+    </div>
+
+    <div class="on-top"><%= yield %></div>
+
+    <div class="overlay"></div>
+    <%= image_tag 'blob.svg', class: "blob" %>
   </body>
 </html>

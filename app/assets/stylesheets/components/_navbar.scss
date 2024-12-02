@@ -1,13 +1,64 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+/* General Navbar Styling */
+.navbar {
+  background-color: #2C2B2B; /* Dark background for contrast */
+  // padding: 0.5rem; /* Adds space inside the navbar */
+  position: fixed; /* Keeps the navbar fixed at the top */
+  width: 351px;  /* Figma width */
+  height: 62px;  /* Figma height */
+  bottom: 33px;
+  left: 50%; /* Moves the navbar to the center */
+  transform: translateX(-50%); /* Corrects the centering by shifting it back */
+  z-index: 1000; /* Ensures it stays above other elements */
+  border-radius: 23px;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+/* Container for Flex Layout */
+.navbar-container {
+  display: flex;
+  justify-content: center; /* Keeps items centered */
+  align-items: center; /* Centers items vertically */
+  margin: 0 auto; /* Centers container horizontally */
+  padding-left: 25px; /* Adds 25px padding to the left */
+  padding-right: 25px; /* Adds 25px padding to the right */
+  width: 100%; /* Ensures navbar-container takes the full width */
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+/* Navbar Links */
+.navbar-links {
+  list-style: none; /* Removes bullet points */
+  display: flex; /* Aligns links horizontally */
+  gap: 1.5rem; /* Adds space between links */
+  margin: 0;
+  padding: 0;
 }
 
+/* Individual Links */
+
+.nav-link {
+  color: $innactive-el; /* Default inactive color */
+  font-size: 24px; /* Increases the size of the icons */
+
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link.active {
+  color: white; /* Change icon color to white */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* White glow effect */
+}
+
+/* Smooth color and glow transition */
+.nav-link i {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-links {
+    gap: 1rem; /* Adjust spacing for mobile */
+  }
+}

@@ -1,5 +1,5 @@
 table.price-table {
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
   margin-top: 20px;
   font-size: 0.9em;
@@ -22,7 +22,7 @@ table.price-table tbody tr:nth-child(even) {
 }
 
 table.price-table tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #e80c0c;
 }
 
 table.price-table th:first-child,
@@ -36,4 +36,40 @@ table.price-table td:first-child {
 h1 {
   text-align: center;
   margin-bottom: 15px;
+}
+
+
+.panel-container {
+  display: flex;               /* Enables inline-flex behavior */
+  overflow-x: auto;            /* Adds horizontal scrolling */
+  gap: 16px;                   /* Space between panels */
+  padding-bottom: 16px;
+  padding-right: 50px;
+  padding-left: 50px;        /* Optional space at the bottom */
+  scroll-behavior: smooth;     /* Enables smooth scrolling */
+}
+
+.panel {
+  flex: 0 0 auto;              /* Prevents shrinking and allows inline behavior */
+  background-color: $element;  /* Preserves background color */
+  border-radius: 24px;
+  padding: 20px;
+  color: white;
+  width: 100%;
+  cursor: pointer;             /* Changes cursor to indicate interactivity */
+}
+
+
+.btn-price {
+  background-color: #67A55E;
+  font-size: 24px;
+  height: 52px;
+  line-height: 52px;
+  color: black;
+  border-radius: 26px;
+  width: 100%; /* Stretch to full width */
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  box-sizing: border-box; /* Include padding in width calculation */
 }

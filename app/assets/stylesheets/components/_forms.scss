@@ -1,0 +1,75 @@
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: 40px;
+  border-radius: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 10px;
+
+}
+
+.page-title {
+  font-size: 18px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+.close-btn {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-decoration: none;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  background-color: $dark-yellow;
+  color: $button-active;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.form-container {
+  background-color: $element;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.routine-form-group {
+  margin-bottom: 20px;
+}
+
+.routine-form-control {
+  background-color: $background;
+  color: white;
+  border: 2px solid $innactive-el;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+}
+
+.routine-form-control:disabled {
+  background-color: $innactive-el;
+}
+
+.error-notification {
+  color: $button-active;
+  margin-bottom: 16px;
+}
+
+.routine-form-actions {
+  text-align: center;
+}
