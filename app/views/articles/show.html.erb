@@ -1,4 +1,20 @@
-<%# Put each article here. %>
-<%= image_tag "#{@article.subcategory}.jpeg" %>
-<strong><%= @article.title %></strong>
-<p><%= @article.content.html_safe %></p>
+<div class="article-container">
+  <div class="banner">
+    <%= image_tag "#{@article.subcategory}.jpeg", alt: @article.title %>
+    <div class="banner-overlay">
+      <h1><%= @article.title %></h1>
+    </div>
+    <div class="exit-icon">
+      <%= link_to articles_path do %>
+        <%= image_tag "exit.svg", alt: "Close" %>
+        <% end %>
+    </div>
+    <div class="star-icon">
+      <%= image_tag "star.svg", alt: "Star" %>
+    </div>
+  </div>
+
+  <div class="article-content m-3">
+    <p><%= @article.content.html_safe %></p>
+  </div>
+</div>
