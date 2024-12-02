@@ -1,0 +1,27 @@
+.rec-container {
+  display: flex;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  gap: 16px; /* Space between cards */
+  padding: 10px;
+  scroll-behavior: smooth; /* Smooth scrolling effect */
+  -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+}
+
+.rec {
+  flex: 0 0 300px;
+  background-color: $element;
+  color: white;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.rec p {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: white;
+}
