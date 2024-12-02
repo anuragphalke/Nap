@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {registrations: "registrations"}
+  devise_for :users, controllers: { registrations: "registrations" }
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :recommendations, only: [:index]
-  resources :articles, only: [:index, :show]
+  resources :articles, only: %i[index show]
 
   get "statistics", to: "pages#statistics", as: :statistics
   # Defines the root path route ("/")
@@ -17,14 +17,14 @@ Rails.application.routes.draw do
   get 'profile', to: 'pages#profile', as: 'profile'
 
 
-resources :user_appliances, only: [:index, :show, :edit, :new, :create, :destroy] do
-    resources :routines, only: [:index, :new, :create]# do
+  resources :user_appliances, only: %i[index show edit new create destroy] do
+    resources :routines, only: %i[index new create] # do
     #   resources :recommendations, only: [:index, :show]
     # end
   end
 
-  resources :routines, only: [:create, :show, :update, :edit, :destroy] do
-    resources :recommendations, only: %i[index]
+  resources :routines, only: %i[create show update edit destroy] do
+    resources :recommendations, only: [:index]
   end
-  resources :prices, only: [:index, :create]
+  resources :prices, only: %i[index create]
 end
