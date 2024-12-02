@@ -1,0 +1,102 @@
+body.articles-show {
+   .yellow-circle, .my-own-space {
+    display: none;
+  }
+}
+
+
+.article-container {
+  width: 100%;
+}
+
+/* Banner - image section */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 50vh; /* Ekranın üst kısmını kapsayacak şekilde */
+  background-size: cover;
+  background-position: center center; /* Görseli merkezle */
+  background-image:
+  linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), /* Üst kısımda koyulaşma */
+  linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%),
+}
+
+/* Eğer img kullanacaksanız, şu şekilde de yazabilirsiniz. Fakat, gradient burada görünür olacak */
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Görselin boyutlarını ekrana göre uyumlu hale getirir */
+  position: absolute; /* Görselin alttan görünmesini sağlarız */
+  top: 0;
+  left: 0;
+  z-index: -1; /* Görselin arka planda olmasını sağlar */
+}
+
+/* Başlık overlay */
+.banner-overlay {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.banner-overlay h1 {
+  font-size: 1.2em;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Article Content */
+.article-content {
+  background-color: #343436; /* Arka plan rengi */
+  padding: 20px;
+  border-radius: 26px; /* Kenarları yuvarlatılmış */
+
+  p {
+    font-size: 0.9em;
+    font-weight: lighter ;
+    line-height: 1.6;
+    color: #F4F4F4;
+  }
+}
+
+.exit-icon {
+  border-radius: 50%;       /* Yuvarlak şekil */
+  width: 48px;              /* Genişlik */
+  height: 48px;             /* Yükseklik */
+  position: absolute;       /* Mutlak konumlandırma */
+  top: 16px;                /* Üstten mesafe */
+  right: 16px;              /* Sağdan mesafe */
+  display: flex;            /* Ortalamak için flex */
+  align-items: center;      /* Dikey ortalama */
+  justify-content: center;  /* Yatay ortalama */
+  z-index: 101;             /* Katman sırası */
+
+  img {
+    width: 34px;  /* İkonun boyutu */
+    height: 34px; /* İkonun yüksekliği */
+    cursor: pointer; /* Tıklanabilir imleç */
+  }
+
+  a {
+    text-decoration: none; /* Bağlantı alt çizgisini kaldırır */
+  }
+}
+.star-icon {
+  bottom: 16px; /* Adjust the position from the bottom */
+  right: 16px; /* Adjust the position from the right */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 101;
+}
+
+.star-icon img {
+  width: 36px; /* Adjust the size of the star icon */
+  height: auto;
+  cursor: pointer; /* Optional: shows a pointer cursor when hovering over the icon */
+}
