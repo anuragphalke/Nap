@@ -1,6 +1,8 @@
 body.articles-show {
-   .yellow-circle, .my-own-space {
-    display: none;
+  margin:0;
+
+  .yellow-circle, .my-own-space {
+  display: none;
   }
 }
 
@@ -52,6 +54,7 @@ body.articles-show {
   font-size: 1.2em;
   margin: 0;
   font-weight: bold;
+  font-family: 'Space Mono', monospace;
 }
 
 /* Article Content */
@@ -74,7 +77,7 @@ body.articles-show {
   height: 48px;             /* Yükseklik */
   position: absolute;       /* Mutlak konumlandırma */
   top: 16px;                /* Üstten mesafe */
-  right: 16px;              /* Sağdan mesafe */
+  right: 0px;              /* Sağdan mesafe */
   display: flex;            /* Ortalamak için flex */
   align-items: center;      /* Dikey ortalama */
   justify-content: center;  /* Yatay ortalama */
@@ -91,17 +94,21 @@ body.articles-show {
   }
 }
 .star-icon {
-  bottom: 16px; /* Adjust the position from the bottom */
-  right: 16px; /* Adjust the position from the right */
+  position: absolute;
+  bottom: 30px; /* Sağ alt köşeye sabitlemek için */
+  right: 30px;  /* Sağ alt köşe */
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
   z-index: 101;
 }
 
 .star-icon img {
-  width: 36px; /* Adjust the size of the star icon */
+  width: 20px;  /* Yıldız ikonunun boyutu */
   height: auto;
-  cursor: pointer; /* Optional: shows a pointer cursor when hovering over the icon */
+  cursor: pointer;
+}
+
+.star-icon:hover img {
+    filter: brightness(0) invert(1); /* Hover durumunda renk değişimi *//* Hover durumunda renk değişimi */
 }
