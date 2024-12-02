@@ -59,7 +59,7 @@
 
   .inner-content {
     background-color: $element;
-    padding: 10px 16px;
+    padding: 10px 16px 10px 0px;
     border-radius: 32px;
     display: flex;
     justify-content: center;
@@ -67,6 +67,11 @@
     grid-column: 1 / span 2; /* Span both columns */
     grid-row: 2; /* Position this in the second row */
     position: relative; /* Important for positioning the close button inside */
+
+    p {
+      max-width: 80%;
+      margin: 0 !important;
+    }
   }
 
   .closee-btn {
