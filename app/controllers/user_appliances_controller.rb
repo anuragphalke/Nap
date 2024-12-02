@@ -144,6 +144,8 @@ class UserAppliancesController < ApplicationController
   def appliance_params
     params.require(:user_appliance).permit(:all_appliance_id, :brand)
   end
+
+
 end
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Layout/LineLength

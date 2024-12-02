@@ -1,5 +1,24 @@
-<%= @routine.name %>
-<p>Run every <%= @weekdays[@routine.day - 1] %> from <%= @routine.starttime.strftime("%H:%M") %> to <%= @routine.endtime.strftime("%H:%M") %></p>
+<div class="header" style="background-color: rgba(69, 72, 57, 0.3);">
+  <%= link_to user_appliance_path(@routine.user_appliance), method: :get do %>
+    <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
+  <% end %>
+  <div class="inner-container">
+    <h1><%= @routine.name %></h1>
+  </div>
+  <div class="inner-content">
+    <p>Run every <%= @weekdays[@routine.day - 1] %> from <%= @routine.starttime.strftime("%H:%M") %> to <%= @routine.endtime.strftime("%H:%M") %></p>
+    <%= link_to routine_path(@routine),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
+                      class: "closee-btn" do %>
+        <div class="circlee">
+          <%= image_tag 'cross.svg', alt: 'Close' %>
+        </div>
+      <% end %>
+  </div>
+</div>
+
+
+
 <% @recommendation_response.each_with_index do |recommendation, index| %>
   <% if recommendation.starttime == @routine.starttime && @day == @slot %>
     <p>You've already applied the best routine.</p>

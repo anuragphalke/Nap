@@ -1,4 +1,4 @@
-table.price-table {
+  table.price-table {
   width: 80%;
   border-collapse: collapse;
   margin-top: 20px;
@@ -47,8 +47,11 @@ h1 {
   padding-right: 50px;
   padding-left: 50px;        /* Optional space at the bottom */
   scroll-behavior: smooth;     /* Enables smooth scrolling */
-}
 
+}
+.panel-container::-webkit-scrollbar {
+  display: none;  /* For Chrome, Safari, and Opera */
+}
 .panel {
   flex: 0 0 auto;              /* Prevents shrinking and allows inline behavior */
   background-color: $element;  /* Preserves background color */

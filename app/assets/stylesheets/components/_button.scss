@@ -43,3 +43,27 @@
   border-radius: 21.5px !important;
   cursor: pointer;
 }
+
+
+.button-container {
+  display: flex;
+  justify-content: center;  /* Centers horizontally */
+  margin-bottom: 10px;
+}
+
+.btn-add {
+  background-color: #090f1437;
+  font-size: 20px;
+  padding: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  height: 43px;
+  border-radius: 21.5px;
+  border: 1px solid white;
+  color: white;
+  width: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}

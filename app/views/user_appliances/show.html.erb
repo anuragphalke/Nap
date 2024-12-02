@@ -1,35 +1,61 @@
-<h1><%= @user_appliance.all_appliance.model %></h1>
-
-<p><%= @user_appliance.all_appliance.brand %></p>
-
-
-<h2>My Routines</h2>
-<ul>
-  <% @routines.each do |routine| %>
-    <li>
-      <strong><%= link_to routine.name, routine_recommendations_path(routine) %></strong>
-      <ul>
-        <li><%= "#{routine.starttime.strftime("%H:%M")}-" + routine.endtime.strftime("%H:%M") %>
-          <%= link_to "Edit", edit_routine_path(routine), class: "btn btn-link" %>
-          <%= link_to routine_path(routine),
-                              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
-                              class: "btn btn-link" do %>
-                    Delete
-                  <% end %>
-        </li>
-      </ul>
-    </li>
+<div class="header">
+  <%= link_to user_appliances_path, method: :get do %>
+    <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
   <% end %>
-</ul>
+  <div class="inner-container">
+    <h1><%= @user_appliance.all_appliance.subcategory %>: <%= @user_appliance.all_appliance.model %></h1>
+  </div>
+</div>
 
-<%= button_to 'Add routine', new_user_appliance_routine_path(@user_appliance), method: :get, class: 'btn btn-primary' %>
+<div class="routines-container">
+  <% if @routines.present? %>
+    <% @routines.each do |routine| %>
+      <div class="card-routine">
+        <div class="routine-header">
+          <div class="routine-time-icon">
+            <%= image_tag render_time_with_icon(routine.starttime, routine.endtime), class: "routine-icon" %>
+          </div>
+          <div class="routine-info">
+            <div class="top">
+              <strong>
+                <%= link_to routine.name, routine_recommendations_path(routine), class: "routine-link" %>
+              </strong>
+              <%= link_to edit_routine_path(routine), class: "edit-link" do %>
+                <%= image_tag 'edit.svg', alt: 'Edit Routine', class: "edit-icon" %>
+              <% end %>
+            </div>
+            <p class="routine-time">
+              From <%= routine.starttime.strftime("%H:%M") %> to <%= routine.endtime.strftime("%H:%M") %>
+            </p>
+          </div>
+        </div>
 
-<%= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
+        <div class="actions">
+          <%#= link_to routine_path(routine),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
+                      class: "btn btn-link" do %>
+            <%# Delete %>
+          <%# end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-center" >no routines yet <br> add ↓</p>
+  <% end %>
+</div>
 
-<%= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
+
+
+
+
+<div class="button-container"><%= button_to '+ NEW', new_user_appliance_routine_path(@user_appliance), method: :get, class: 'btn-add' %></div>
+
+<%#= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
+
+<%#= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
 
 <%= link_to user_appliance_path(@user_appliance),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                      class: "btn btn-danger" do %>
-                      Delete the Appliance
+                      class: "btn-secondary" do %>
+                      Delete this Appliance
                   <% end %>
