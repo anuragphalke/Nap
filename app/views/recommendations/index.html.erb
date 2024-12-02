@@ -18,41 +18,43 @@
   </div>
 </div>
 
-<div class="options-container">
-  <div class="option-active">1</div>
-  <div class="option">2</div>
-  <div class="option">3</div>
-</div>
+<div data-controller="recommendations">
+    <div class="options-container">
+      <div class="option active"
+           data-recommendations-target="option"
+           data-option="1">1</div>
+      <div class="option"
+           data-recommendations-target="option"
+           data-option="2">2</div>
+      <div class="option"
+           data-recommendations-target="option"
+           data-option="3">3</div>
+    </div>
 
+    <div class="rec-container" data-recommendations-target="container">
+      <% @recommendation_response.each_with_index do |recommendation, index| %>
+        <div class="rec">
+          <% if recommendation.starttime == @routine.starttime && @day == @slot %>
+            <p>You've already applied the best routine.</p>
+          <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
+            <p>If you set your routine to begin at <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+          <% else %>
+            <p>If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+          <% end %>
 
-<div class="rec-container">
-  <% @recommendation_response.each_with_index do |recommendation, index| %>
-    <div class="rec">
-      <% if recommendation.starttime == @routine.starttime && @day == @slot %>
-        <p class="panel">You've already applied the best routine.</p>
-        <% break %>
-      <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
-        <p>If you set your routine to begin at <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
-      <% else %>
-        <p>If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
-      <% end %>
-
-      <%= simple_form_for @new_routine do |f| %>
-        <%= f.hidden_field :user_appliance_id, value: @routine.user_appliance.id %>
-        <%= f.hidden_field :cost, value: recommendation.cost %>
-        <%= f.hidden_field :starttime, value: recommendation.starttime %>
-        <%= f.hidden_field :endtime, value: recommendation.endtime %>
-        <%= f.hidden_field :day, value: @weekdays.find_index(@today[index]) + 1 %>
-        <%= f.hidden_field :name, value: @routine.name %>
-        <%= f.hidden_field :lineage, value: @routine.lineage %>
-        <%= f.hidden_field :request_origin, value: "recommender" %>
-        <div class="form-actions">
-          <%= f.button :submit, "Change Routine", class: "btn-secondary" %>
+          <%= simple_form_for @new_routine do |f| %>
+            <%= f.hidden_field :user_appliance_id, value: @routine.user_appliance.id %>
+            <%= f.hidden_field :cost, value: recommendation.cost %>
+            <%= f.hidden_field :starttime, value: recommendation.starttime %>
+            <%= f.hidden_field :endtime, value: recommendation.endtime %>
+            <%= f.hidden_field :day, value: @weekdays.find_index(@today[index]) + 1 %>
+            <%= f.hidden_field :name, value: @routine.name %>
+            <%= f.hidden_field :lineage, value: @routine.lineage %>
+            <%= f.hidden_field :request_origin, value: "recommender" %>
+            <%= f.button :submit, "Change Routine", class: "btn-active" %>
+          <% end %>
         </div>
       <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
-
-
-<%#= link_to "Back to my appliance", user_appliance_path(@routine.user_appliance), class: "btn btn-primary" %>
