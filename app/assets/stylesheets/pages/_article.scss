@@ -55,6 +55,8 @@ body.articles-show {
   margin: 0;
   font-weight: bold;
   font-family: 'Space Mono', monospace;
+  text-align: left;
+  padding-left: 6px;
 }
 
 /* Article Content */
@@ -68,6 +70,7 @@ body.articles-show {
     font-weight: lighter ;
     line-height: 1.6;
     color: #F4F4F4;
+    padding-bottom: 50px;
   }
 }
 
@@ -95,8 +98,8 @@ body.articles-show {
 }
 .star-icon {
   position: absolute;
-  bottom: 30px; /* Sağ alt köşeye sabitlemek için */
-  right: 30px;  /* Sağ alt köşe */
+  bottom: 40px; /* Sağ alt köşeye sabitlemek için */
+  right: 40px;  /* Sağ alt köşe */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,7 +107,7 @@ body.articles-show {
 }
 
 .star-icon img {
-  width: 20px;  /* Yıldız ikonunun boyutu */
+  width: 30px;  /* Yıldız ikonunun boyutu */
   height: auto;
   cursor: pointer;
 }
