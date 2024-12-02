@@ -3,8 +3,17 @@
   overflow-x: auto;          /* Enables horizontal scrolling */
   white-space: nowrap;       /* Prevents line breaks */
   padding-bottom: 40px;      /* Optional: space between the categories and the rest of the page */
-  scroll-snap-type: x mandatory; /* Enable snapping behavior */
 }
+
+.categories-container::-webkit-scrollbar {
+  display: none;  /* For Chrome, Safari, and Opera */
+}
+.categories-container {
+  -ms-overflow-style: none;  /* For Internet Explorer */
+  scrollbar-width: none;  /* For Firefox */
+}
+
+
 
 .category {
   display: inline-block;
