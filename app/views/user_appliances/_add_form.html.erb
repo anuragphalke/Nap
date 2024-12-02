@@ -15,22 +15,22 @@
           <%= f.error_notification %>
           <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
         </div>
-        <div class="form-group">
+        <div class="routine-form-group">
           <%= f.input :brand,
                       collection: @brands,
                       include_blank: "Select an appliance",
-                      input_html: { onchange: 'this.form.submit()', data: { button_active_target: "brand"}}
+                      input_html: { class: "routine-form-control", onchange: 'this.form.submit()', data: { button_active_target: "brand"}}
           %>
         </div>
-        <div class="form-group">
+        <div class="routine-form-group">
           <%= f.input :all_appliance_id,
                       collection: @models,
                       include_blank: "Select a model",
                       disabled: @models.empty?,
-                      input_html: {data: { button_active_target: "model"}} %>
+                      input_html: { class: "routine-form-control", data: { button_active_target: "model"}} %>
         </div>
       </div>
-      <div class="form-actions">
+      <div class="routine-form-actions">
         <%= f.button :submit, "Add Appliance", class: "btn-secondary", data: { button_active_target: "button"} %>
       </div>
     <% end %>
