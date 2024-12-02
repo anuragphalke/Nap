@@ -16,6 +16,13 @@ class UserAppliancesController < ApplicationController
     else
       current_user.user_appliances
     end
+
+    @average_prices = Price
+                           .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
+                           .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
+                           .order("day, hour")
+
+    @user_appliance_tags = @user_appliances.map { |appliance| calculate_tag(appliance) }
   end
 
   def show
@@ -24,7 +31,6 @@ class UserAppliancesController < ApplicationController
                                .select("DISTINCT ON (lineage) *")        # Get distinct routines by lineage
                                 .order(:lineage, "id DESC", :starttime)  # Prioritize highest ID per lineage, then order by starttime
   end
-
 
   def new
     @user_appliance = UserAppliance.new
@@ -95,6 +101,22 @@ class UserAppliancesController < ApplicationController
   end
 
   private
+
+  def calculate_tag(user_appliance)
+    return "" if user_appliance.routines.empty?
+
+    routines_match = user_appliance.routines.any? do |routine|
+      routine.recommendations.any? do |recommendation|
+        routine.starttime.wday == recommendation.starttime.wday && routine.starttime.strftime("%H:%M") == recommendation.starttime.strftime("%H:%M")
+      end
+    end
+
+    if routines_match
+      "Automated ✓"
+    else
+      "New Suggestions"
+    end
+  end
 
   def create_article(user_appliance)
     client = OpenAI::Client.new

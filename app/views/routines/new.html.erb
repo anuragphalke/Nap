@@ -31,7 +31,15 @@
     </div>
   </div>
 
-  <div class="routine-form-actions">
-    <%= f.button :submit, "Create Routine", class: "btn-secondary" %>
+  <div class="form-group">
+    <%= f.input :day,
+                label: "Day",
+                as: :select,
+                collection: [["Monday", "1"], ["Tuesday", "2"], ["Wednesday", "3"], ["Thursday", "4"], ["Friday", "5"], ["Saturday", "6"], ["Sunday", "7"]],
+                prompt: "Select a day" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Apply Routine", class: "btn btn-primary" %>
   </div>
 <% end %>

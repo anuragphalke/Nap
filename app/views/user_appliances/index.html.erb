@@ -1,3 +1,11 @@
+<% @user_appliances.each_with_index do |appliance, index| %>
+  <p><%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %></p>
+  <p><%= @user_appliance_tags[index] %></p>
+<% end %>
+
+
+<%= link_to "Add Appliance", new_user_appliance_path, class: "btn btn-primary" %>
+<br>
 <p style="font-size: 20px; padding-left: 9px">Categories</p>
 
 <div class="categories-container" data-controller="categories">

@@ -1,5 +1,4 @@
 class RecommendationsController < ApplicationController
-
   def index
     @routine = Routine.find(params[:routine_id])
     @new_routine = Routine.new
@@ -52,10 +51,34 @@ class RecommendationsController < ApplicationController
   def find_best_slots(averages, duration)
     total_averages = []
 
+    # Iterate through all possible starting points
     (0..(averages.size - duration)).each do |start_index|
-      total_cost = averages[start_index, duration].sum(&:average)
-      day = start_index < 23 ? @day : @day + 1
-      total_averages << { total_cost: total_cost, start_index: start_index, day: day }
+      adjusted_duration = duration
+
+      # If duration is negative (indicating it spans over midnight), adjust it
+      if duration < 0
+        adjusted_duration = 24 + duration # Convert negative duration to a positive value
+      end
+
+      # Check if the start_index leads into the next day
+      if start_index + adjusted_duration <= averages.size
+        total_cost = averages[start_index, adjusted_duration].sum(&:average)
+
+        # If the routine crosses over midnight, we need to add the first 7 hours of the next day
+        if start_index + adjusted_duration > 23
+          # Calculate the remaining duration after the first day ends (24th hour)
+          remaining_duration = adjusted_duration - (24 - start_index)
+
+          # Account for the first 7 hours of the next day
+          next_day_slot = averages[0, [remaining_duration, 7].min] # Limit to first 7 hours of next day
+          total_cost += next_day_slot.sum(&:average)
+        end
+
+        # Assign the day the routine starts (today or next day)
+        day = start_index < 23 ? @day : @day + 1
+
+        total_averages << { total_cost: total_cost, start_index: start_index, day: day }
+      end
     end
 
     # Sort by total cost and return the top 3 cheapest slots
