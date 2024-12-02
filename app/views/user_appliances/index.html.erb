@@ -16,9 +16,10 @@
 <div class="grid-2">
   <% @user_appliances.each do |appliance| %>
     <%= link_to user_appliance_path(appliance), class: "card-appl" do %>
-    <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, class: "appliance-icon" %>
+    <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, style: "margin-bottom: 9px;" %>
 
       <p><%= appliance.all_appliance.model %></p>
+      <%#= appliance.all_appliance.subcategory %>
     <% end %>
   <% end %>
 </div>

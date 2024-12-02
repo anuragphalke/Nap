@@ -1,26 +1,35 @@
 <p>Overview for <br>
 2024/03</p>
-<div data-controller="price-chart" data-price-chart-costs-value="<%= @formatted_data%>"></div>
 
 
+<div class="panel-container" data-controller="button">
+  <div class="panel" data-action="click->button#scrollToCenter">
+    <% if @price_rn %>
+    <button class="btn-price">
+      <%= @price_rn.cost %> $/kWh</button>
+    <% else %>
+      <p>No price data available for this hour.</p>
+    <% end %>
+    <p>MIN: €<%= @min_price %>.</p>
+    <p>MAX: €<%= @max_price %>.</p>
+    <div data-controller="price-chart" data-price-chart-costs-value="<%= @formatted_data %>"></div>
+  </div>
 
+  <div class="panel" data-action="click->button#scrollToCenter">
+    <div>baba</div>
+  </div>
 
-<% if @price_rn %>
-  <p>The price for the current hour (<%= @price_rn.datetime.strftime('%H:%M')  %>) is €<%= @price_rn.cost %>.</p>
-<% else %>
-  <p>No price data available for this hour.</p>
-<% end %>
+  <div class="panel" data-action="click->button#scrollToCenter">
+    <div>nana</div>
+  </div>
+</div>
 
-<br>
-
-<p>The minimum price today is €<%= @min_price %>.</p>
-<p>The maximum price today is €<%= @max_price %>.</p>
-
+  <%= link_to "View recommendations", recommendations_path, class: "btn-active" %>
 
 <h1>Average Prices by Hour and Day</h1>
 
 <table class="price-table">
-  <thead> 
+  <thead>
     <tr>
       <th>Hour</th>
       <% @average_prices.group_by { |price| price.day }.keys.each do |day| %>

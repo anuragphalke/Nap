@@ -1,21 +1,37 @@
-<h1>Add a New Appliance</h1>
+<div class="title-container">
+  <h1 class="page-title">NEW DEVICE</h1>
+  <%= link_to user_appliances_path, class: "close-btn" do %>
+    <div class="circle">
+      <%= image_tag 'cross.svg', alt: 'Close', class: 'cross-icon' %>
+    </div>
+  <% end %>
+</div>
 
-<%= simple_form_for @user_appliance do |f| %>
-   <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= f.input :brand,
-              collection: @brands,
-              include_blank: "Select an appliance",
-              input_html: { onchange: 'this.form.submit()' } %>
-
-  <%= f.input :all_appliance_id,
-              collection: @models,
-              include_blank: "Select a model",
-              disabled: @models.empty? %>
-  <div>
-    <%= f.button :submit, "Add Appliance", class: "btn btn-primary" %>
+  <div data-controller="button-active">
+    <%= simple_form_for @user_appliance do |f| %>
+      <div class="form-container">
+        <div class="error-notification">
+          <%= f.error_notification %>
+          <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+        </div>
+        <div class="form-group">
+          <%= f.input :brand,
+                      collection: @brands,
+                      include_blank: "Select an appliance",
+                      input_html: { onchange: 'this.form.submit()', data: { button_active_target: "brand"}}
+          %>
+        </div>
+        <div class="form-group">
+          <%= f.input :all_appliance_id,
+                      collection: @models,
+                      include_blank: "Select a model",
+                      disabled: @models.empty?,
+                      input_html: {data: { button_active_target: "model"}} %>
+        </div>
+      </div>
+      <div class="form-actions">
+        <%= f.button :submit, "Add Appliance", class: "btn-secondary", data: { button_active_target: "button"} %>
+      </div>
+    <% end %>
   </div>
-<% end %>
-
-<%= link_to "Back to Appliances", user_appliances_path, class: "btn btn-primary" %>
