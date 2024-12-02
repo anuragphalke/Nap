@@ -1,7 +1,8 @@
-<% @user_appliances.each do |appliance| %>
+<% @user_appliances.each_with_index do |appliance, index| %>
   <p><%= link_to appliance.all_appliance.model, user_appliance_path(appliance) %></p>
+  <p><%= @user_appliance_tags[index] %></p>
 <% end %>
+
 
 <%= link_to "Add Appliance", new_user_appliance_path, class: "btn btn-primary" %>
 <br>
-
