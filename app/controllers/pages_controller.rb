@@ -42,6 +42,7 @@ class PagesController < ApplicationController
   def statistics
     @total_savings = total_savings
     @savings_this_year = savings_this_year
+    # @rating = rating
   end
 
   private
@@ -74,6 +75,10 @@ class PagesController < ApplicationController
     yearly_fraction = days_passed.to_f / days_in_year
 
     yearly_fraction * @total_savings
+  end
+
+  def ratings
+
   end
 
   private
