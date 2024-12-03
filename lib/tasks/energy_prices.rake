@@ -42,6 +42,15 @@ namespace :energy_prices do
 
         if price_record.save
           puts "Saved price #{price} for #{datetime}"
+
+          average = Average.find_or_initialize_by(day: price_record.datetime.wday, time: price_record.datetime.strftime("%H:%M"))
+          if average.new_record?
+            average.average = price_record.cost
+          else
+            prices_array = Price.where(datetime: price_record.datetime.beginning_of_hour)
+            average.average = prices_array.pluck(:cost).sum / prices_array.count
+          end
+          average.save
         else
           puts "Failed to save price for #{datetime}: #{price_record.errors.full_messages.join(', ')}"
         end

@@ -1,6 +1,9 @@
 require 'date'
+require 'csv'
 require 'json'
+
 # Define Categories and Subcategories
+
 User.destroy_all
 puts "Users destroyed!"
 AllAppliance.destroy_all
@@ -31,6 +34,7 @@ user2 = User.create!(
 
 puts "Users seeded!"
 
+# Seed appliances from CSV
 filepath = "db/seeds/appliances.csv"
 appliances = []
 CSV.foreach(filepath, headers: :first_row) do |row|
@@ -39,7 +43,7 @@ end
 
 puts "All Appliances seeded!"
 
-# Seed user_appliances (Associating appliances with users)
+# Seed user appliances (Associating appliances with users)
 user_appliance1 = UserAppliance.create!(
   user: user1,
   all_appliance: AllAppliance.first # Just linking to the first appliance created
@@ -52,37 +56,21 @@ user_appliance2 = UserAppliance.create!(
 
 puts "User Appliances seeded!"
 
-Routine.create!(
-  name: "Morning Wash Cycle",
-  cost: 1.5,
-  starttime: DateTime.new(2024, 11, 27, 10, 0, 0),  # Example starttime
-  endtime: DateTime.new(2024, 11, 27, 12, 0, 0),    # Example endtime
-  day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1, # Convert wday to correct day of the week
-  user_appliance: user_appliance1
-)
-
-Routine.create!(
-  name: "Evening Heating",
-  cost: 0.8,
-  starttime: DateTime.new(2024, 12, 1, 10, 0, 0),  # Example starttime
-  endtime: DateTime.new(2024, 12, 1, 12, 0, 0),    # Example endtime
-  day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1, # Convert wday to correct day of the week
-  user_appliance: user_appliance2
-)
-puts "Routines seeded!"
-
-# Define the date range
+# Seed Prices (Week of Prices)
 dates = [
   { date: '2024-11-26', costs: [0.090, 0.079, 0.079, 0.071, 0.073, 0.082, 0.102, 0.110, 0.136, 0.127, 0.112, 0.100, 0.092, 0.102, 0.116, 0.124, 0.144, 0.155, 0.161, 0.153, 0.127, 0.119, 0.123, 0.114] },
   { date: '2024-11-27', costs: [0.111, 0.110, 0.110, 0.103, 0.101, 0.112, 0.129, 0.129, 0.166, 0.131, 0.139, 0.134, 0.126, 0.124, 0.120, 0.124, 0.116, 0.114, 0.110, 0.101, 0.079, 0.080, 0.086, 0.060] },
   { date: '2024-11-28', costs: [0.050, 0.041, 0.035, 0.038, 0.060, 0.092, 0.100, 0.132, 0.148, 0.140, 0.099, 0.099, 0.096, 0.099, 0.114, 0.119, 0.134, 0.151, 0.158, 0.154, 0.143, 0.131, 0.122, 0.113] },
-  { date: '2024-11-29', costs: [0.110, 0.107, 0.104, 0.102, 0.103, 0.112, 0.131, 0.161, 0.174, 0.157, 0.138, 0.120, 0.110, 0.114, 0.109, 0.124, 0.146, 0.149, 0.142, 0.132, 0.120, 0.112, 0.114, 0.103] }
+  { date: '2024-11-29', costs: [0.110, 0.107, 0.104, 0.102, 0.103, 0.112, 0.131, 0.161, 0.174, 0.157, 0.138, 0.120, 0.110, 0.114, 0.109, 0.124, 0.146, 0.149, 0.142, 0.132, 0.120, 0.112, 0.114, 0.103] },
+  { date: '2024-11-30', costs: [0.100, 0.093, 0.090, 0.087, 0.088, 0.090, 0.088, 0.102, 0.118, 0.125, 0.109, 0.086, 0.087, 0.090, 0.107, 0.122, 0.132, 0.138, 0.136, 0.132, 0.125, 0.115, 0.115, 0.107] },
+  { date: '2024-12-01', costs: [0.100, 0.090, 0.088, 0.086, 0.084, 0.084, 0.083, 0.090, 0.099, 0.095, 0.089, 0.082, 0.085, 0.083, 0.088, 0.105, 0.118, 0.118, 0.123, 0.112, 0.094, 0.086, 0.097, 0.085] },
+  { date: '2024-12-02', costs: [0.075, 0.066, 0.062, 0.047, 0.049, 0.068, 0.093, 0.125, 0.126, 0.124, 0.121, 0.116, 0.115, 0.126, 0.134, 0.142, 0.145, 0.147, 0.148, 0.139, 0.121, 0.113, 0.113, 0.103] },
+  { date: '2024-12-03', costs: [0.111, 0.091, 0.088, 0.087, 0.095, 0.103, 0.120, 0.142, 0.156, 0.151, 0.142, 0.131, 0.127, 0.142, 0.148, 0.166, 0.200, 0.209, 0.198, 0.190, 0.168, 0.153, 0.142, 0.131] }
 ]
 
 # Loop through the dates and insert the data into the prices table
 dates.each do |date_data|
   date_data[:costs].each_with_index do |cost, index|
-    # Create a new Price record for each hour
     Price.create!(
       datetime: "#{date_data[:date]} #{index.to_s.rjust(2, '0')}:00:00", # Generate the datetime
       cost: cost
@@ -110,29 +98,53 @@ end
 
 puts "Articles seeded successfully!"
 
+# Calculate averages for each hour of the week (168 hours total)
+(0..23).each do |hour|
+  (0..6).each do |day|
 
+    # Get all the prices for this specific hour (e.g., Monday 10 AM)
+    prices_for_hour = Price.where("EXTRACT(HOUR FROM datetime) = ? AND EXTRACT(DOW FROM datetime) = ?", hour, day)
 
+    # Calculate the average of the prices for this hour
+    average_cost = prices_for_hour.pluck(:cost).sum / prices_for_hour.count
 
-# Days of the week (starting from Sunday to Saturday)
-days_of_week = [1, 2, 3, 4, 5, 6, 7]
+    # Get a valid date for the specified day of the week
+    # Use the first day of November 2024 and adjust based on the day of the week
+    base_date = Date.new(2024, 11, 1)  # November 1, 2024 (can be any fixed date in November)
+    day_of_week_offset = (day - base_date.wday) % 7 + 1 # Calculate offset to get the correct weekday
 
-# Seed averages for every hour (24 hours per day) for every day of the week (7 days)
-days_of_week.each_with_index do |day, index|
-  # Loop through each hour of the day (0 to 23)
-  (0..23).each do |hour|
-    # Generate a random average value (or you can set it as needed)
-    average_value = rand(0.5..2.0).round(2) # Example: Random average between 0.5 and 2.0
+    valid_date = base_date + day_of_week_offset  # Get the exact date for this weekday
 
-    # Calculate the time for each day
-    time = DateTime.new(2024, 11, index + 4, hour, 0, 0) # Specific hour (for the given day)
-
-    # Create an Average record for each hour of each day
+    # Create the average record
     Average.create!(
-      day: day,
-      time: time,
-      average: average_value  # Random average value or fixed value
+      day: day + 1,
+      time: DateTime.new(valid_date.year, valid_date.month, valid_date.day, hour, 0, 0),
+      average: average_cost
     )
   end
 end
+
 puts "Averages seeded!"
+
+# Seed routines
+Routine.create!(
+  name: "Morning Wash Cycle",
+  starttime: DateTime.new(2024, 11, 27, 10, 0, 0),
+  endtime: DateTime.new(2024, 11, 27, 12, 0, 0),
+  day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1,
+  user_appliance: user_appliance1
+)
+puts "Routine cost after creation: #{Routine.last.cost}"
+
+Routine.create!(
+  name: "Evening Heating",
+  starttime: DateTime.new(2024, 12, 1, 10, 0, 0),
+  endtime: DateTime.new(2024, 12, 1, 12, 0, 0),
+  day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1,
+  user_appliance: user_appliance2
+)
+puts "Routine cost after creation: #{Routine.last.cost}"
+
+puts "Routines seeded!"
+
 puts "Seeding completed successfully!"

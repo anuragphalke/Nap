@@ -1,5 +1,4 @@
 <h1>Statistics</h1>
 <p>This page will display relevant usage statistics.</p>
 <h1>Annual Savings</h1>
-<% raise %>
-<p>Your routine changes are have saved you €X so far this year, and will save you a total of €<%= @total_savings.round(2) %> this year.</p>
+<p>Your routine changes are have saved you €<%= @savings_this_year.round(2) %> so far this year, and will save you a total of €<%= @total_savings.round(2) %> this year.</p>

@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Layout/LineLength
 class RecommendationsController < ApplicationController
   def index
     @routine = Routine.find(params[:routine_id])
@@ -36,6 +38,31 @@ class RecommendationsController < ApplicationController
     end
   end
 
+  def graph
+    current_time = DateTime.now.beginning_of_hour
+    @price_rn = Price.find_by(datetime: current_time)
+
+    today_start = Date.today.beginning_of_day
+    today_end = Date.today.end_of_day
+
+    @max_price = Price.where(datetime: today_start..today_end).maximum(:cost)
+    @min_price = Price.where(datetime: today_start..today_end).minimum(:cost)
+
+    @price_rn = Price.find_by(datetime: current_time)
+    @average_prices = Price
+                        .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
+                        .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
+                        .order("day, hour")
+
+    costs = Price.where(datetime: Date.today.all_day)
+    # Format the data into the required format: [{ x: hour, y: cost }]
+    formatted_data = costs.map do |hour|
+      { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
+    end
+    @formatted_data = formatted_data.to_json
+  end
+
+
   private
 
   def fetch_averages_for_day(day, duration)
@@ -51,37 +78,27 @@ class RecommendationsController < ApplicationController
   def find_best_slots(averages, duration)
     total_averages = []
 
-    # Iterate through all possible starting points
     (0..(averages.size - duration)).each do |start_index|
       adjusted_duration = duration
 
-      # If duration is negative (indicating it spans over midnight), adjust it
-      if duration < 0
-        adjusted_duration = 24 + duration # Convert negative duration to a positive value
-      end
+      adjusted_duration = 24 + duration if duration.negative?
 
-      # Check if the start_index leads into the next day
       if start_index + adjusted_duration <= averages.size
         total_cost = averages[start_index, adjusted_duration].sum(&:average)
 
-        # If the routine crosses over midnight, we need to add the first 7 hours of the next day
         if start_index + adjusted_duration > 23
-          # Calculate the remaining duration after the first day ends (24th hour)
           remaining_duration = adjusted_duration - (24 - start_index)
 
-          # Account for the first 7 hours of the next day
-          next_day_slot = averages[0, [remaining_duration, 7].min] # Limit to first 7 hours of next day
+          next_day_slot = averages[0, [remaining_duration, 7].min]
           total_cost += next_day_slot.sum(&:average)
         end
 
-        # Assign the day the routine starts (today or next day)
         day = start_index < 23 ? @day : @day + 1
 
         total_averages << { total_cost: total_cost, start_index: start_index, day: day }
       end
     end
 
-    # Sort by total cost and return the top 3 cheapest slots
     total_averages.sort_by { |slot| slot[:total_cost] }.first(3)
   end
 
@@ -106,3 +123,5 @@ class RecommendationsController < ApplicationController
     (original_cost - recommended_cost) * 52
   end
 end
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Layout/LineLength

@@ -1,7 +1,6 @@
 <p>Overview for <br>
 2024/03</p>
 
-
 <div class="panel-container" data-controller="button">
   <div class="panel" data-action="click->button#scrollToCenter">
     <% if @price_rn %>
@@ -16,7 +15,7 @@
   </div>
 
   <div class="panel" data-action="click->button#scrollToCenter">
-    <div>baba</div>
+    <div><p>Amount Saved</p><p>€<%= @total_savings.round(2) %></p></div>
   </div>
 
   <div class="panel" data-action="click->button#scrollToCenter">
