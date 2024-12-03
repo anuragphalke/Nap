@@ -101,7 +101,6 @@ class UserAppliancesController < ApplicationController
   end
 
   private
-
   def calculate_tag(user_appliance)
     return "" if user_appliance.routines.empty?
 
@@ -111,12 +110,9 @@ class UserAppliancesController < ApplicationController
       end
     end
 
-    if routines_match
-      "Automated ✓"
-    else
-      "New Suggestions"
-    end
+    routines_match ? "tag-auto" : "tag-new"
   end
+
 
   def create_article(user_appliance)
     client = OpenAI::Client.new

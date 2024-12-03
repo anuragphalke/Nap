@@ -1,32 +1,24 @@
 .options-container {
   display: flex;
-  justify-content: space-between; /* Spaces out the buttons */
-  width: 100%; /* Make the container take the full width */
-  margin-bottom: 10px;
-  margin-top: 20px;
-}
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem;
 
-.option {
-  display: inline-block;
-  padding: 0 30px;
-  text-align: center;
-  line-height: 48px;
-  height: 48px;
-  border-radius: 28px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  // flex-grow: 1;
-  margin-right: 8px;
-}
+  .option {
+    width: 4.8rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1.5rem;
+    color: white;
+    transition: 0.5s ease;
 
-.option-active {
-  background-color: $button-active;
-  line-height: 48px;
-  color: black;
-  text-align: center;
-  border-radius: 28px;
-  border: 2px solid $button-active;
-  flex-grow: 1;
-  font-weight: bold;
-  margin-right: 8px;
+    &.active {
+      width: 15rem;
+      background: $button-active;
+      color: black;
+    }
+  }
 }
