@@ -113,7 +113,6 @@ class UserAppliancesController < ApplicationController
     routines_match ? "tag-auto" : "tag-new"
   end
 
-
   def create_article(user_appliance)
     client = OpenAI::Client.new
     chatgpt_response = client.chat(parameters: {

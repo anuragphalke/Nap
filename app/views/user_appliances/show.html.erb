@@ -48,15 +48,15 @@
   <% end %>
 </div>
 
-
-
-
-
 <div class="button-container"><%= button_to '+ NEW', new_user_appliance_routine_path(@user_appliance), method: :get, class: 'btn-add' %></div>
 
 <%#= button_to 'Back to Index', user_appliances_path, method: :get, class: 'btn btn-primary' %>
 
 <%#= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
+<% performance = @user_appliance.performance_and_savings_this_year %>
+<h2><%= performance[:rating] %></h2>
+<p>Saved so far: €<%= performance[:applied_savings].round(2) %></p>
+
 
 <%= link_to user_appliance_path(@user_appliance),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },

@@ -20,6 +20,7 @@ class RoutinesController < ApplicationController
     @routine.user_appliance = @user_appliance  # Set the user_appliance correctly
 
     if @routine.save
+      
       redirect_to user_appliance_path(@routine.user_appliance), notice: 'Routine created'
     else
       render :new, status: :unprocessable_entity
