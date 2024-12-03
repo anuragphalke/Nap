@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  require 'date'
+
   skip_before_action :authenticate_user!, only: [:home]
 
   def home
@@ -12,7 +14,7 @@ class PagesController < ApplicationController
     @min_price = Price.where(datetime: today_start..today_end).minimum(:cost)
 
     @price_rn = Price.find_by(datetime: current_time)
-    @average_prices = Price
+    @average_prices = Price # TODO: This needs to change to Average.all
                         .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
                         .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
                         .order("day, hour")
@@ -22,6 +24,7 @@ class PagesController < ApplicationController
     formatted_data = costs.map do |hour|
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
+    statistics
     @formatted_data = formatted_data.to_json
   end
 
@@ -37,29 +40,45 @@ class PagesController < ApplicationController
   end
 
   def statistics
-    @user = current_user # Assuming you're working with the current logged-in user
+    @total_savings = total_savings
+    @savings_this_year = savings_this_year
+  end
+
+  private
+
+  def total_savings
+    @user_appliances = current_user.user_appliances
     @total_savings = 0.0
 
-    @user.user_appliances.each do |user_appliance|
-      # For each user appliance, calculate savings for all lineages
-      lineages = user_appliance.routines.group_by(&:lineage)
+    @user_appliances.each do |user_appliance|
+      routines = user_appliance.routines.group_by(&:lineage)
 
-      lineages.each_value do |routines|
-        # Find the routine with the lowest id (earliest) and the highest id (latest)
-        first_routine = routines.min_by(&:id)
-        last_routine = routines.max_by(&:id)
+      routines.each_value do |lineage_routines|
+        first_routine = lineage_routines.min_by(&:id)
+        last_routine = lineage_routines.max_by(&:id)
 
-        # Skip iteration if either min_routine or max_routine is nil
-        next unless first_routine && last_routine
-
-        if first_routine.cost.nil? || last_routine.cost.nil?
-          next
+        if first_routine.cost && last_routine.cost
+          savings = calculate_savings(first_routine.cost, last_routine.cost)
+          @total_savings += savings
         end
-
-        # Calculate the savings based on the difference in cost
-        savings = (first_routine.cost - last_routine.cost) * 52
-        @total_savings += savings
       end
     end
+
+    return @total_savings
+  end
+
+  def savings_this_year
+    today = Date.today
+    days_passed = today.yday # Gets the day of the year (1-365 or 1-366 for leap years)
+    days_in_year = Date.gregorian_leap?(today.year) ? 366 : 365 # Checks if it's a leap year
+    yearly_fraction = days_passed.to_f / days_in_year
+
+    yearly_fraction * @total_savings
+  end
+
+  private
+
+  def calculate_savings(original_cost, recommended_cost)
+    (original_cost - recommended_cost) * 52
   end
 end

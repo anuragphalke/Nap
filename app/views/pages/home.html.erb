@@ -1,9 +1,8 @@
 <h1>Pages#home</h1>
 
 <div data-controller="price-chart" data-price-chart-costs-value="<%= @formatted_data%>"></div>
-
-
-
+<p>Amount Saved</p>
+<p>€<%= @total_savings.round(2) %></p>
 
 <% if @price_rn %>
   <p>The price for the current hour (<%= @price_rn.datetime.strftime('%H:%M')  %>) is €<%= @price_rn.cost %>.</p>
