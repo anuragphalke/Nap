@@ -1,21 +1,50 @@
 <%# Overview of all articles %>
-<h1> Articles </h1>
-<p> You can find many many articles about clean energy and saving and much more... here</p>
-
-<h1> All Articles </h1>
-<div class="panel-container" data-controller="button">
-<% @generic_articles.each do |article| %>
-  <div class="panel article-panel" data-action="click->button#scrollToCenter" style="background-image: url('<%= asset_path("#{article.subcategory}.jpg") %>')">
-    <p><strong><%= link_to article.title, article_path(article) %></strong></p>
-  </div>
-<% end %>
+<div class="mt-3"><%= image_tag "button.svg", alt: "Favourites" %></div>
+<div class="tree-icon ml-3 d-flex">
+  <%= image_tag "tree.svg", alt: "Tree" %>
+  <div class="mt-3 ms-2 flex-grow-1"><p> Sustainable life<p></div>
+    <%= image_tag "showmore.svg", alt: "Tree" %>
+</div>
+<div class="article-subtitle">
+  <p> Let's explore the changing world.</p>
 </div>
 
-<h1> My Articles </h1>
-<div class="panel-container" data-controller="button">
+<div class="panel-container" id= "article" data-controller="button">
+  <% @generic_articles.each do |article| %>
+    <div class="panel article-panel" data-action="click->button#scrollToCenter" style="background-image:
+              linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%),
+              linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%),
+              url('<%= asset_path("#{article.subcategory}.jpg") %>');>">
+      <div class="star-icon-top">
+        <%= image_tag "star.svg", alt: "Star" %>
+      </div>
+      <div class="article-title">
+        <p><%= link_to article.title, article_path(article) %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="tree-icon ml-3 d-flex">
+  <%= image_tag "tree.svg", alt: "Tree" %>
+  <div class="mt-3 ms-2 flex-grow-1"><p>Tips & Tricks</p></div>
+  <%= image_tag "showmore.svg", alt: "Tree" %>
+</div>
+<div class="article-subtitle">
+  <p> Let's read more with tips.</p>
+</div>
+<div class="panel-container"  data-controller="button">
 <% @my_articles.each do |article| %>
-  <div class="panel article-panel" data-action="click->button#scrollToCenter" style="background-image: url('<%= asset_path("#{article.subcategory}.jpg") %>')">
-    <p><strong><%= link_to article.title, article_path(article) %></strong></p>
+  <div class="panel article-panel mb-5" data-action="click->button#scrollToCenter" style="background-image:
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%),
+            linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%),
+            url('<%= asset_path("#{article.subcategory}.jpg") %>');>">
+    <div class="star-icon-top">
+        <%= image_tag "star.svg", alt: "Star" %>
+      </div>
+    <div class="article-title">
+    <p><%= link_to article.title, article_path(article) %></p>
+    </div>
   </div>
 <% end %>
 </div>
