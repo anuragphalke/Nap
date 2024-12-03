@@ -16,3 +16,20 @@
   <p>Notifications</p>
   <p>Settings</p>
 </div>
+
+<div>
+<% if user_signed_in? %>
+  <li>
+    <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" do %>
+      <i class="fas fa-sign-out-alt"></i>
+    <% end %>
+  </li>
+<% else %>
+  <li>
+    <%= link_to new_user_session_path, class: "nav-link #{'active' if current_page?(new_user_session_path)}" do %>
+      <i class="fas fa-sign-in-alt"></i>
+    <% end %>
+  </li>
+<% end %>
+
+</div>

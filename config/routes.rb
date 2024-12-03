@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get 'profile', to: 'pages#profile', as: 'profile'
 
+  get 'landing', to: 'pages#landing', as: 'landing'
+
   resources :user_appliances, only: %i[index show edit new create destroy] do
     resources :routines, only: %i[index new create] # do
     #   resources :recommendations, only: [:index, :show]

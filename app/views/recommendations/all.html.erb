@@ -1,22 +1,25 @@
-<h1>All Recommendations</h1>
+<div class="title-container">
+  <h1 class="page-title">ALL RECOMMENDATIONS</h1>
+</div>
 <% appliance_groups = @recommendations_grouped.group_by { |group| group[:appliance] } %>
 
 <% appliance_groups.each do |appliance, routines| %>
-  <h2><%= appliance.nickname %> (<%= appliance.all_appliance.brand %> <%= appliance.all_appliance.model %>)</h2>
-
-  <% routines.each do |group| %>
-    <h3><%= group[:routine].name %></h3>
-    <ul>
-      <% group[:recommendations].each do |recommendation| %>
-        <% if recommendation.starttime == recommendation.routine.starttime %>
-          <p>You've already applied the best routine</p>
-          <% break %>
-        <% else %>
-          <li>
-            Change to <%= recommendation.starttime.strftime('%A') %> <%= recommendation.starttime.strftime("%H:%M") %> to <%= recommendation.endtime.strftime("%H:%M") %><br>
-          </li>
+  <div class="some">
+    <h2><%= appliance.nickname %> (<%= appliance.all_appliance.brand %> <%= appliance.all_appliance.model %>)</h2>
+    <% routines.each do |group| %>
+      <h3><%= group[:routine].name %></h3>
+      <ul>
+        <% group[:recommendations].each do |recommendation| %>
+          <% if recommendation.starttime == recommendation.routine.starttime %>
+            <p>You've already applied the best routine</p>
+            <% break %>
+          <% else %>
+            <li>
+              Change to <%= recommendation.starttime.strftime('%A') %> <%= recommendation.starttime.strftime("%H:%M") %> to <%= recommendation.endtime.strftime("%H:%M") %><br>
+            </li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
-  <% end %>
+      </ul>
+    <% end %>
+  </div>
 <% end %>

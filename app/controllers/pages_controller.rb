@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   require 'date'
 
-  skip_before_action :authenticate_user!, only: [:home]
+  skip_before_action :authenticate_user!, only: [:landing]
 
   def home
     current_time = DateTime.now.beginning_of_hour
@@ -47,6 +47,8 @@ class PagesController < ApplicationController
     end
   end
 
+
+
   private
 
   def total_savings
@@ -80,7 +82,7 @@ class PagesController < ApplicationController
   end
 
   def rating
-    
+
   end
 
   private
