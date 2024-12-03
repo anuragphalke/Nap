@@ -9,6 +9,8 @@
   justify-content: center; /* Center text horizontally */
   align-items: center; /* Center text vertically */
   box-sizing: border-box; /* Include padding in width calculation */
+  transition:  0.5s ease, transform 0.5s ease;
+
 }
 
 
@@ -28,6 +30,8 @@
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   box-sizing: border-box; /* Include padding in width calculation */
+  transition:  0.5s ease, transform 0.5s ease;
+
 }
 
 .btn-secondary, .btn-secondary:hover, .btn-secondary:focus {

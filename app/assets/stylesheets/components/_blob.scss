@@ -35,9 +35,25 @@
 
 }
 
-.parent-container {
-  position: relative;
-  overflow: hidden; /* Prevents overflowing */
-  width: 100%; /* Ensure full width */
-  height: 100%; /* Ensure full height */
+.path-animation {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 2.5s ease-out;
 }
+
+.path-animation-leave {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 0.5s ease-out;
+}
+
+.path-animation-play {
+  stroke-dashoffset: 0;
+}
+
+
+// @keyframes draw {
+//   to {
+//     stroke-dashoffset: 0;
+//   }
+// }
