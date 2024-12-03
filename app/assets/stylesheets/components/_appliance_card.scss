@@ -1,0 +1,184 @@
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Defines 12 equal-width columns */
+  gap: 16px; /* Defines the gutter size between columns */
+  padding-bottom: 25px;
+}
+
+.card-appl {
+    background-color: $element;
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none; /* Remove underline */
+    color: white;
+    display: block;
+}
+
+.grid-2-down {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+  gap: 16px;
+  position: fixed; /* Fix the grid to a specific part of the viewport */
+  bottom: 123px; /* Adjust the percentage to control vertical positioning */
+  left: 0;
+  right: 0;
+  padding: 0 16px; /* Adjust padding as necessary */
+  z-index: 100; /* Ensure it's above other elements */
+}
+
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr; /* Align SVG and h1 in two columns */
+  grid-template-rows: auto auto; /* Two rows: one for the header content and one for .inner-content */
+  gap: 10px; /* Add spacing between grid items */
+  padding: 10px;
+  border-radius: 32px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  margin-top: 20px;
+
+  .inner-container {
+    background-color: $dark-yellow;
+    padding: 10px 16px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 2; /* Position h1 in the second column */
+    z-index: 1; /* Keep it above the inner-content */
+
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-weight: bold;
+      color: $button-active;
+      margin: 0;
+    }
+  }
+
+  .inner-content {
+    background-color: $element;
+    padding: 10px 16px 10px 0px;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / span 2; /* Span both columns */
+    grid-row: 2; /* Position this in the second row */
+    position: relative; /* Important for positioning the close button inside */
+
+    p {
+      max-width: 80%;
+      margin: 0 !important;
+    }
+  }
+
+  .closee-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2; /* Ensure it's above other content */
+  }
+
+  .circlee {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $background; /* Or another color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .circlee img {
+    width: 16px; /* Adjust the size of the icon */
+    height: 16px;
+  }
+}
+
+
+
+.routines-container {
+  .card-routine {
+    background-color: $element;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .routine-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .routine-time-icon {
+      display: flex;
+      align-items: center;
+    }
+
+    .routine-icon {
+      margin-top: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .routine-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      strong {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .edit-link {
+        display: inline-block;
+        margin-left: auto;
+      }
+
+      .edit-icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .routine-link {
+      color: white;
+      text-decoration: none;
+    }
+
+    .routine-time {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .actions {
+      margin-top: 10px;
+      text-align: right;
+
+      .btn-link {
+        color: white;
+        text-decoration: underline;
+      }
+    }
+  }
+}

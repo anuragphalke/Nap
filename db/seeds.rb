@@ -1,7 +1,9 @@
 require 'date'
 require 'csv'
+require 'json'
 
-# Destroy existing data
+# Define Categories and Subcategories
+
 User.destroy_all
 puts "Users destroyed!"
 AllAppliance.destroy_all
@@ -78,9 +80,28 @@ end
 
 puts "Prices seeded!"
 
+# Seed articles (Adding some example articles)
+# db/seeds.rb
+
+
+file_path = Rails.root.join('db', 'seeds', 'articles.json')
+
+# JSON dosyasını oku
+articles = JSON.parse(File.read(file_path))
+
+# Her bir article verisi üzerinde döngüye gir
+articles.each do |article_data|
+  # Verinin formatını kontrol et ve veritabanına kaydet
+  Article.create!(article_data)
+end
+
+
+puts "Articles seeded successfully!"
+
 # Calculate averages for each hour of the week (168 hours total)
 (0..23).each do |hour|
   (0..6).each do |day|
+
     # Get all the prices for this specific hour (e.g., Monday 10 AM)
     prices_for_hour = Price.where("EXTRACT(HOUR FROM datetime) = ? AND EXTRACT(DOW FROM datetime) = ?", hour, day)
 

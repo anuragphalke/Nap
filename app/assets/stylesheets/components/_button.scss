@@ -1,0 +1,69 @@
+.btn-active {
+  background-color: $button-active;
+  height: 43px;
+  color: black;
+  border-radius: 21.5px;
+  text-decoration: none;
+  width: 100%; /* Stretch to full width */
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+
+
+.btn-secondary {
+  background-color: #090f1437;
+  padding: 0 10px;
+  font-style: italic;
+  text-align: center;
+  text-decoration: none;
+  height: 43px;
+  border-radius: 21.5px;
+  border: 1px solid white;
+  color: white;
+  width: 100%; /* Stretch to full width */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.btn-secondary, .btn-secondary:hover, .btn-secondary:focus {
+  background-color: #090f1437 !important;
+  color: white !important;
+  border: 1px solid white !important;
+  cursor: pointer;
+}
+
+.btn-active, .btn-active:hover, .btn-active:focus {
+  background-color: $button-active !important;
+  color: black !important;
+  border-radius: 21.5px !important;
+  cursor: pointer;
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: center;  /* Centers horizontally */
+  margin-bottom: 10px;
+}
+
+.btn-add {
+  background-color: #090f1437;
+  font-size: 20px;
+  padding: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  height: 43px;
+  border-radius: 21.5px;
+  border: 1px solid white;
+  color: white;
+  width: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}

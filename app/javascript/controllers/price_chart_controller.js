@@ -21,13 +21,13 @@ export default class extends Controller {
           "background": "#343436",
           "foreColor": "#FFFFFF",
           "fontFamily": "Space Grotesk",
-          "height": 340,
+          "height": 200,
           "id": "Cvklo",
           "stackOnlyBar": true,
           "toolbar": {
               "show": false
           },
-          "width": 553,
+          "width": "100%",
           "zoom": {
               "allowMouseWheelZoom": true
           },

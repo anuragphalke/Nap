@@ -3,12 +3,18 @@
 class UserAppliancesController < ApplicationController
   before_action :set_user_appliance, only: %i[show edit update destroy]
 
-  def index
-    @prices = Price.all
-    @user_appliances = current_user.user_appliances
 
-    if params[:category].present?
-      @user_appliances = @user_appliances.where(category: params[:category])
+  def index
+    @categories = current_user.user_appliances
+                  .joins(:all_appliance)
+                  .distinct
+                  .pluck('all_appliances.category')
+
+    @user_appliances = if params[:category]
+      current_user.user_appliances.joins(:all_appliance)
+      .where(all_appliances: { category: params[:category] })
+    else
+      current_user.user_appliances
     end
 
     @average_prices = Price
@@ -23,7 +29,7 @@ class UserAppliancesController < ApplicationController
     # Fetch routines for the current user appliance ------------------------> to be tested
     @routines = @user_appliance.routines
                                .select("DISTINCT ON (lineage) *")        # Get distinct routines by lineage
-                               .order(:lineage, "id DESC", :starttime)  # Prioritize highest ID per lineage, then order by starttime
+                                .order(:lineage, "id DESC", :starttime)  # Prioritize highest ID per lineage, then order by starttime
   end
 
   def new
@@ -160,6 +166,8 @@ class UserAppliancesController < ApplicationController
   def appliance_params
     params.require(:user_appliance).permit(:all_appliance_id, :brand)
   end
+
+
 end
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Layout/LineLength

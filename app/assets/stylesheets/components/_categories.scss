@@ -1,0 +1,43 @@
+.categories-container {
+  display: flex;
+  overflow-x: auto;          /* Enables horizontal scrolling */
+  white-space: nowrap;       /* Prevents line breaks */
+  padding-bottom: 40px;      /* Optional: space between the categories and the rest of the page */
+}
+
+.categories-container::-webkit-scrollbar {
+  display: none;  /* For Chrome, Safari, and Opera */
+}
+.categories-container {
+  -ms-overflow-style: none;  /* For Internet Explorer */
+  scrollbar-width: none;  /* For Firefox */
+}
+
+
+
+.category {
+  display: inline-block;
+  padding: 0 12px;
+  text-align: center;
+  text-decoration: none; /* Remove the underline */
+  line-height: 48px; /* Center the text vertically */
+  height: 48px;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  margin-right: 8px;
+}
+
+.category-active {
+  background-color: $button-active;
+  display: inline-block;
+  padding: 0 12px;
+  text-align: center;
+  text-decoration: none; /* Remove the underline */
+  line-height: 48px; /* Center the text vertically */
+  height: 48px;
+  border-radius: 28px;
+  border: 2px solid $button-active;
+  margin-right: 8px;
+  color: black;
+}

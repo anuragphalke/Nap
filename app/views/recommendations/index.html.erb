@@ -1,28 +1,58 @@
-<%= @routine.name %>
-<p>Run every <%= @weekdays[@routine.day - 1] %> from <%= @routine.starttime.strftime("%H:%M") %> to <%= @routine.endtime.strftime("%H:%M") %></p>
 
-<% @recommendation_response.each_with_index do |recommendation, index| %>
-  <% if recommendation.starttime == @routine.starttime && @day == @slot %>
-    <p>You've already applied the best routine.</p>
-    <% break %>
-  <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
-    <p><%= index + 1 %> If you set your routine to begin at <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
-  <% else %>
-    <p><%= index + 1 %> If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+<div class="header" style="background-color: rgba(69, 72, 57, 0.3);">
+  <%= link_to user_appliance_path(@routine.user_appliance), method: :get do %>
+    <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
   <% end %>
+  <div class="inner-container">
+    <h1><%= @routine.name %></h1>
+  </div>
+  <div class="inner-content">
+    <p>Run every <%= @weekdays[@routine.day - 1] %> from <%= @routine.starttime.strftime("%H:%M") %> to <%= @routine.endtime.strftime("%H:%M") %></p>
+    <%= link_to routine_path(@routine),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
+                      class: "closee-btn" do %>
+        <div class="circlee">
+          <%= image_tag 'cross.svg', alt: 'Close' %>
+        </div>
+      <% end %>
+  </div>
+</div>
 
-  <%= simple_form_for @new_routine do |f| %>
-    <%= f.hidden_field :user_appliance_id, value: @routine.user_appliance.id %>
-    <%= f.hidden_field :cost, value: recommendation.cost %>
-    <%= f.hidden_field :starttime, value: recommendation.starttime %>
-    <%= f.hidden_field :endtime, value: recommendation.endtime %>
-    <%= f.hidden_field :day, value: @weekdays.find_index(@today[index]) + 1 %>
-    <%= f.hidden_field :name, value: @routine.name %>
-    <%= f.hidden_field :lineage, value: @routine.lineage %>
-    <%= f.hidden_field :request_origin, value: "recommender" %>
-    <%= f.submit %>
+<div class="options-container">
+  <div class="option-active">1</div>
+  <div class="option">2</div>
+  <div class="option">3</div>
+</div>
+
+
+<div class="rec-container">
+  <% @recommendation_response.each_with_index do |recommendation, index| %>
+    <div class="rec">
+      <% if recommendation.starttime == @routine.starttime && @day == @slot %>
+        <p class="panel">You've already applied the best routine.</p>
+        <% break %>
+      <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
+        <p>If you set your routine to begin at <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+      <% else %>
+        <p>If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+      <% end %>
+
+      <%= simple_form_for @new_routine do |f| %>
+        <%= f.hidden_field :user_appliance_id, value: @routine.user_appliance.id %>
+        <%= f.hidden_field :cost, value: recommendation.cost %>
+        <%= f.hidden_field :starttime, value: recommendation.starttime %>
+        <%= f.hidden_field :endtime, value: recommendation.endtime %>
+        <%= f.hidden_field :day, value: @weekdays.find_index(@today[index]) + 1 %>
+        <%= f.hidden_field :name, value: @routine.name %>
+        <%= f.hidden_field :lineage, value: @routine.lineage %>
+        <%= f.hidden_field :request_origin, value: "recommender" %>
+        <div class="form-actions">
+          <%= f.button :submit, "Change Routine", class: "btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
+</div>
 
-<% end %>
 
-<%= link_to "Back to my appliance", user_appliance_path(@routine.user_appliance), class: "btn btn-primary" %>
+<%#= link_to "Back to my appliance", user_appliance_path(@routine.user_appliance), class: "btn btn-primary" %>
