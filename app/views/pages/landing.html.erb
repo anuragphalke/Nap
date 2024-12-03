@@ -1,0 +1,36 @@
+<h1>hello mere mortals</h1>
+
+<h2>welcome to this magnificient app</h2>
+
+<div id="contentCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <p class="text-center p-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum distinctio provident eum perferendis animi est blanditiis suscipit soluta alias veritatis? Molestias atque, quo consequatur expedita ut error quidem sapiente tenetur.</p>
+    </div>
+    <div class="carousel-item">
+      <p class="text-center  p-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex eveniet esse iure aliquid quis error praesentium reiciendis cum repellat dignissimos id vitae pariatur in, assumenda vel fugiat! Facilis, placeat aut.</p>
+    </div>
+    <div class="carousel-item">
+      <p class="text-center  p-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum excepturi eaque sit eveniet fugit odit, recusandae nam! Nam, temporibus autem velit eveniet dicta sunt optio, sint fuga ullam ab cumque!</p>
+    </div>
+  </div>
+
+  <!-- Carousel Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#contentCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#contentCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
+<li>
+    <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" do %>
+      <i class="fas fa-sign-out-alt"></i>
+    <% end %>
+  </li>

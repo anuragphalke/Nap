@@ -7,31 +7,38 @@
   <% end %>
 </div>
 
-<%= simple_form_for [@user_appliance, @routine] do |f| %>
-  <div class="form-container">
-    <div class="routine-form-group">
-      <%= f.input :name, label: "Name of the routine", input_html: { class: "routine-form-control" } %>
+<div data-controller="btn-act-routine">
+  <%= simple_form_for [@user_appliance, @routine] do |f| %>
+    <div class="form-container">
+      <div class="routine-form-group">
+        <%= f.input :name, label: "Name of the routine",
+                            input_html: { class: "routine-form-control",
+                                          data: { btn_act_routine_target: "name"} } %>
+      </div>
+
+      <div class="routine-form-group">
+        <%= f.input :starttime, label: "Start Time", as: :time,
+                                input_html: { class: "routine-form-control" } %>
+      </div>
+
+      <div class="routine-form-group">
+        <%= f.input :endtime, label: "End Time", as: :time,
+                              input_html: { class: "routine-form-control" } %>
+      </div>
+
+      <div class="routine-form-group">
+        <%= f.input :day,
+                    label: "Day",
+                    as: :select,
+                    collection: [["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5], ["Saturday", 6], ["Sunday", 7]],
+                    prompt: "Select a day",
+                    input_html: { class: "routine-form-control",
+                                  data: { btn_act_routine_target: "day"} } %>
+      </div>
     </div>
 
-    <div class="routine-form-group">
-      <%= f.input :starttime, label: "Start Time", as: :time, input_html: { class: "routine-form-control" } %>
+    <div class="form-actions">
+      <%= f.button :submit, "Apply Routine", class: "btn-secondary", data: { btn_act_routine_target: "button"} %>
     </div>
-
-    <div class="routine-form-group">
-      <%= f.input :endtime, label: "End Time", as: :time, input_html: { class: "routine-form-control" } %>
-    </div>
-
-    <div class="routine-form-group">
-      <%= f.input :day,
-                  label: "Day",
-                  as: :select,
-                  collection: [["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5], ["Saturday", 6], ["Sunday", 7]],
-                  prompt: "Select a day",
-                  input_html: { class: "routine-form-control" } %>
-    </div>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Apply Routine", class: "btn-secondary" %>
-  </div>
-<% end %>
+  <% end %>
+</div>
