@@ -5,83 +5,43 @@ class RecommendationsController < ApplicationController
     if params[:routine_id].present?
       @routine = Routine.find(params[:routine_id])
       @new_routine = Routine.new
-      @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
-      @day = @routine.day # Converts the routine's day to an integer (1..7)
 
-      averages = fetch_averages_for_day(@day, @duration) # returns the averages for present day + extended window (6 hours)
-      best_slots = find_best_slots(averages, @duration) # returns array of 3 cheapest total averages of each 'duration' houred set of options
-
-      original_cost = calculate_routine_cost(@routine.starttime, @routine.endtime, @duration) # retrieves cost of current routine
-
-      @recommendation_response = []
-      @savings = []
-      @today = []
-      @weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
-      best_slots.reverse.each.map do |slot, index| # builds an array of best 3 recommendations
-        recommendation_start_time, recommendation_end_time = calculate_times(averages, slot, @duration) # Calculates start and end time based on index in total averages array
-        recommended_cost = slot[:total_cost] # Calculates cost of each recommendation
-        @savings << (calculate_savings(original_cost, recommended_cost) * -1) # Calculates annual savings based on a 52 week year
-
-        @recommendation_response << Recommendation.create(
-          cost: slot[:total_cost],
-          routine_id: @routine.id,
-          starttime: recommendation_start_time,
-          endtime: recommendation_end_time
-        )
-
-        @slot = slot[:day]
-        if slot[:day] == @day
-          @today << @weekdays[@day - 1]
-        else
-          @today << @weekdays[slot[:day]]
-        end
-      end
+      # Build recommendations and populate instance variables
+      build_recommendations(@routine)
     else
       redirect_to all_recommendations_path
     end
   end
 
-  def all
-    # Fetch user's appliances
-    user_appliances = UserAppliance.where(user_id: current_user.id)
+  def build_recommendations(routine)
+    @duration = ((routine.endtime - routine.starttime) / 3600).round # Converts duration into hours
+    @day = routine.day # Converts the routine's day to an integer (1..7)
 
-    # Fetch the latest routines for each lineage
-    @latest_routines = Routine
-                        .select("DISTINCT ON (lineage) *")
-                        .where(user_appliance_id: user_appliances.pluck(:id))
-                        .order(:lineage, id: :desc)
+    averages = fetch_averages_for_day(@day, @duration) # Returns the averages for the present day + extended window (6 hours)
+    best_slots = find_best_slots(averages, @duration) # Returns array of 3 cheapest total averages of each 'duration' houred set of options
 
-    # Fetch recommendations grouped by appliance and routine
-    @recommendations_grouped = @latest_routines.includes(:recommendations).map do |routine|
-      appliance = UserAppliance.find(routine.user_appliance_id)
-      recommendations = routine.recommendations.first(3)
-      { appliance: appliance, routine: routine, recommendations: recommendations }
+    original_cost = calculate_routine_cost(routine.starttime, routine.endtime, @duration) # Retrieves cost of the current routine
+
+    @recommendation_response = []
+    @savings = []
+    @today = []
+    @weekdays = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+
+    best_slots.reverse.each do |slot|
+      recommendation_start_time, recommendation_end_time = calculate_times(averages, slot, @duration) # Calculates start and end time based on index in total averages array
+      recommended_cost = slot[:total_cost] # Calculates cost of each recommendation
+      @savings << (calculate_savings(original_cost, recommended_cost) * -1) # Calculates annual savings based on a 52-week year
+
+      @recommendation_response << Recommendation.create(
+        cost: slot[:total_cost],
+        routine_id: routine.id,
+        starttime: recommendation_start_time,
+        endtime: recommendation_end_time
+      )
+
+      @slot = slot[:day]
+      @today << (@slot == @day ? @weekdays[@day - 1] : @weekdays[@slot - 1])
     end
-  end
-
-  def graph
-    current_time = DateTime.now.beginning_of_hour
-    @price_rn = Price.find_by(datetime: current_time)
-
-    today_start = Date.today.beginning_of_day
-    today_end = Date.today.end_of_day
-
-    @max_price = Price.where(datetime: today_start..today_end).maximum(:cost)
-    @min_price = Price.where(datetime: today_start..today_end).minimum(:cost)
-
-    @price_rn = Price.find_by(datetime: current_time)
-    @average_prices = Price
-                        .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
-                        .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
-                        .order("day, hour")
-
-    costs = Price.where(datetime: Date.today.all_day)
-    # Format the data into the required format: [{ x: hour, y: cost }]
-    formatted_data = costs.map do |hour|
-      { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
-    end
-    @formatted_data = formatted_data.to_json
   end
 
   private
@@ -101,7 +61,6 @@ class RecommendationsController < ApplicationController
 
     (0..(averages.size - duration)).each do |start_index|
       adjusted_duration = duration
-
       adjusted_duration = 24 + duration if duration.negative?
 
       if start_index + adjusted_duration <= averages.size
@@ -109,7 +68,6 @@ class RecommendationsController < ApplicationController
 
         if start_index + adjusted_duration > 23
           remaining_duration = adjusted_duration - (24 - start_index)
-
           next_day_slot = averages[0, [remaining_duration, 7].min]
           total_cost += next_day_slot.sum(&:average)
         end
