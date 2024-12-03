@@ -4,14 +4,38 @@
   gap: 16px; /* Defines the gutter size between columns */
   padding-bottom: 25px;
 }
+.tag-auto {
+  color: #8EEBFF;
+  background-color: #394648;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  margin-bottom: 1px;
+  font-size: 14px;
+  padding: 0 10px 0 10px;
+}
 
+.tag-new {
+  color: $button-active;
+  background-color: $dark-yellow;
+  padding: 2px 2px 0 0;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  margin-bottom: 1px;
+  font-size: 14px;
+  padding: 0 10px 0 10px;
+
+}
 .card-appl {
     background-color: $element;
     border-radius: 20px;
-    padding: 20px;
+    padding: 20px 10px 5px 20px;
     text-decoration: none; /* Remove underline */
     color: white;
-    display: block;
+    height: 111px;
 }
 
 .grid-2-down {

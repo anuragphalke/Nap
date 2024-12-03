@@ -1,8 +1,10 @@
 
 <div class="header" style="background-color: rgba(69, 72, 57, 0.3);">
-  <%= link_to user_appliance_path(@routine.user_appliance), method: :get do %>
-    <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
-  <% end %>
+  <div class="d-flex align-items-center">
+    <%= link_to user_appliance_path(@routine.user_appliance), method: :get do %>
+      <%= image_tag 'back.svg', style: "margin-right: 20px; margin-left: 10px;" %>
+    <% end %>
+  </div>
   <div class="inner-container">
     <h1><%= @routine.name %></h1>
   </div>

@@ -18,11 +18,15 @@
 <div class="grid-2">
   <% @user_appliances.each_with_index do |appliance, index| %>
     <%= link_to user_appliance_path(appliance), class: "card-appl" do %>
-    <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, style: "margin-bottom: 9px;" %>
+      <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, style: "margin-bottom: 9px;" %>
 
-      <p><%= appliance.all_appliance.model %></p>
-      <%#= appliance.all_appliance.subcategory %>
-      <p><%= @user_appliance_tags[index] %></p>
+      <p style="margin-bottom: 2px!important;"><%= appliance.all_appliance.model %></p>
+      <% tag_class = calculate_tag(appliance) %>
+      <div class="d-flex justify-content-end">
+        <% if tag_class.present? %>
+          <p class="<%= tag_class %> "><%= tag_class == "tag-auto" ? "Automated ✓" : "New Suggestions" %></p>
+        <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>
