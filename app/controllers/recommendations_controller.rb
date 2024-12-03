@@ -2,39 +2,61 @@
 # rubocop:disable Layout/LineLength
 class RecommendationsController < ApplicationController
   def index
-    @routine = Routine.find(params[:routine_id])
-    @new_routine = Routine.new
-    @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
-    @day = @routine.day # Converts the routine's day to an integer (1..7)
+    if params[:routine_id].present?
+      @routine = Routine.find(params[:routine_id])
+      @new_routine = Routine.new
+      @duration = ((@routine.endtime - @routine.starttime) / 3600).round # Converts duration into duration in hours
+      @day = @routine.day # Converts the routine's day to an integer (1..7)
 
-    averages = fetch_averages_for_day(@day, @duration) # returns the averages for present day + extended window (6 hours)
-    best_slots = find_best_slots(averages, @duration) # returns array of 3 cheapest total averages of each 'duration' houred set of options
+      averages = fetch_averages_for_day(@day, @duration) # returns the averages for present day + extended window (6 hours)
+      best_slots = find_best_slots(averages, @duration) # returns array of 3 cheapest total averages of each 'duration' houred set of options
 
-    original_cost = calculate_routine_cost(@routine.starttime, @routine.endtime, @duration) # retrieves cost of current routine
+      original_cost = calculate_routine_cost(@routine.starttime, @routine.endtime, @duration) # retrieves cost of current routine
 
-    @recommendation_response = []
-    @savings = []
-    @today = []
-    @weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+      @recommendation_response = []
+      @savings = []
+      @today = []
+      @weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-    best_slots.reverse.each.map do |slot, index| # builds an array of best 3 recommendations
-      recommendation_start_time, recommendation_end_time = calculate_times(averages, slot, @duration) # Calculates start and end time based on index in total averages array
-      recommended_cost = slot[:total_cost] # Calcuates cost of each recommendation
-      @savings << (calculate_savings(original_cost, recommended_cost) * -1) # Calculates annual savings based on a 52 week year
+      best_slots.reverse.each.map do |slot, index| # builds an array of best 3 recommendations
+        recommendation_start_time, recommendation_end_time = calculate_times(averages, slot, @duration) # Calculates start and end time based on index in total averages array
+        recommended_cost = slot[:total_cost] # Calculates cost of each recommendation
+        @savings << (calculate_savings(original_cost, recommended_cost) * -1) # Calculates annual savings based on a 52 week year
 
-      @recommendation_response << Recommendation.create(
-        cost: slot[:total_cost],
-        routine_id: @routine.id,
-        starttime: recommendation_start_time,
-        endtime: recommendation_end_time
-      )
+        @recommendation_response << Recommendation.create(
+          cost: slot[:total_cost],
+          routine_id: @routine.id,
+          starttime: recommendation_start_time,
+          endtime: recommendation_end_time
+        )
 
-      @slot = slot[:day]
-      if slot[:day] == @day
-        @today << @weekdays[@day - 1]
-      else
-        @today << @weekdays[slot[:day]]
+        @slot = slot[:day]
+        if slot[:day] == @day
+          @today << @weekdays[@day - 1]
+        else
+          @today << @weekdays[slot[:day]]
+        end
       end
+    else
+      redirect_to all_recommendations_path
+    end
+  end
+
+  def all
+    # Fetch user's appliances
+    user_appliances = UserAppliance.where(user_id: current_user.id)
+
+    # Fetch the latest routines for each lineage
+    @latest_routines = Routine
+                        .select("DISTINCT ON (lineage) *")
+                        .where(user_appliance_id: user_appliances.pluck(:id))
+                        .order(:lineage, id: :desc)
+
+    # Fetch recommendations grouped by appliance and routine
+    @recommendations_grouped = @latest_routines.includes(:recommendations).map do |routine|
+      appliance = UserAppliance.find(routine.user_appliance_id)
+      recommendations = routine.recommendations.first(3)
+      { appliance: appliance, routine: routine, recommendations: recommendations }
     end
   end
 
@@ -61,7 +83,6 @@ class RecommendationsController < ApplicationController
     end
     @formatted_data = formatted_data.to_json
   end
-
 
   private
 
