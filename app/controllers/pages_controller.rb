@@ -40,9 +40,11 @@ class PagesController < ApplicationController
   end
 
   def statistics
-    @total_savings = total_savings
-    @savings_this_year = savings_this_year
-    # @rating = rating
+    if current_user
+      @total_savings = total_savings
+      @savings_this_year = savings_this_year
+      @rating = rating
+    end
   end
 
   private
@@ -77,8 +79,8 @@ class PagesController < ApplicationController
     yearly_fraction * @total_savings
   end
 
-  def ratings
-
+  def rating
+    
   end
 
   private
