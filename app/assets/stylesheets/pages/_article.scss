@@ -14,6 +14,10 @@ body.articles-show {
   width: 100%;
 }
 
+#article-bottom{
+  margin-bottom: 100px !important;
+}
+
 .article-title {
   position: absolute;
   bottom: 2px; /* Alt kısımdan 10px uzaklıkta */
@@ -96,7 +100,6 @@ body.articles-show {
     font-weight: lighter ;
     line-height: 1.6;
     color: #F4F4F4;
-    padding-bottom: 50px;
   }
 }
 
