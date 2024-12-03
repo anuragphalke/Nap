@@ -16,3 +16,28 @@
   left: -45%;
   z-index: -2; /* Ensure blob is behind the overlay and content */
 }
+
+.blob-login {
+  opacity: 0.4;
+  position: fixed;
+  bottom: -20%;
+  left: -45%;
+  z-index: -2; /* Ensure blob is behind the overlay and content */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.blob-login-active {
+  opacity: 1;
+  position: fixed;
+  bottom: -20%;
+  left: -45%;
+  z-index: -2; /* Ensure blob is behind the overlay and content */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+}
+
+.parent-container {
+  position: relative;
+  overflow: hidden; /* Prevents overflowing */
+  width: 100%; /* Ensure full width */
+  height: 100%; /* Ensure full height */
+}

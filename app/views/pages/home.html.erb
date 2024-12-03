@@ -30,26 +30,4 @@
 
   <%= link_to "View recommendations", recommendations_path, class: "btn-active" %>
 
-<h1>Average Prices by Hour and Day</h1>
 
-<table class="price-table">
-  <thead>
-    <tr>
-      <th>Hour</th>
-      <% @average_prices.group_by { |price| price.day }.keys.each do |day| %>
-        <th><%= day %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% (0..23).each do |hour| %>
-      <tr>
-        <td><%= format('%02d:00', hour) %></td>
-        <% @average_prices.group_by { |price| price.day }.each do |day, prices| %>
-          <% hourly_price = prices.find { |p| p.hour.to_i == hour } %>
-          <td><%= number_to_currency(hourly_price&.average_price || 0, unit: '€', precision: 4) %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>

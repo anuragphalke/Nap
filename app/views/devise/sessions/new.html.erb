@@ -1,6 +1,6 @@
-<h2 class="text-center mt-5">Log in</h2>
-
 <div data-controller="login">
+  <h2 class="text-center mt-5">Log in</h2>
+
   <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="form-container">
       <div class="routine-form-group">
@@ -9,22 +9,23 @@
                     autofocus: true,
                     input_html: { class: "routine-form-control",
                                   autocomplete: "email",
-                                  data: { button_active_target: "email"} } %>
+                                  data: { login_target: "email"} } %>
       </div>
       <div class="routine-form-group">
         <%= f.input :password,
                     required: false,
                     input_html: { class: "routine-form-control",
                                   autocomplete: "current-password",
-                                  data: { button_active_target: "password"} } %>
+                                  data: { login_target: "password"} } %>
         <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
       </div>
       </div>
       <div class="form-actions">
-        <%= f.button :submit, "Log in", class: "btn-secondary", data: { button_active_target: "button"} %>
+        <%= f.button :submit, "Log in", class: "btn-secondary", data: { login_target: "button"} %>
       </div>
-    </div>
   <% end %>
-</div>
 
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+  <div class="overlay"></div>
+  <div class="parent-container"><%= image_tag 'blob.svg', class: "blob-login", data: { login_target: "blob"} %></div>
+</div>
