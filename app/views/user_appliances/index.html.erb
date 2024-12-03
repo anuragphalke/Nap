@@ -20,7 +20,9 @@
     <%= link_to user_appliance_path(appliance), class: "card-appl" do %>
       <%= image_tag appliance.all_appliance.icon_for_subcategory, alt: appliance.all_appliance.subcategory, style: "margin-bottom: 9px;" %>
 
-      <p style="margin-bottom: 2px!important;"><%= appliance.all_appliance.model %></p>
+      <p style="margin-bottom: 2px!important;">
+        <%= appliance.nickname.present? ? appliance.nickname : appliance.all_appliance.model %>
+      </p>
       <% tag_class = calculate_tag(appliance) %>
       <div class="d-flex justify-content-end">
         <% if tag_class.present? %>

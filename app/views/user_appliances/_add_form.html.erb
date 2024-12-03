@@ -7,7 +7,6 @@
   <% end %>
 </div>
 
-
   <div data-controller="button-active">
     <%= simple_form_for @user_appliance do |f| %>
       <div class="form-container">
@@ -28,6 +27,11 @@
                       include_blank: "Select a model",
                       disabled: @models.empty?,
                       input_html: { class: "routine-form-control", data: { button_active_target: "model"}} %>
+        </div>
+        <div class="routine-form-group">
+        <%= f.input :nickname,
+                    placeholder: "Enter a nickname",
+                    input_html: { class: "routine-form-control" } %>
         </div>
       </div>
       <div class="routine-form-actions">
