@@ -16,7 +16,6 @@ Rails.application.routes.draw do
 
   get 'profile', to: 'pages#profile', as: 'profile'
 
-
   resources :user_appliances, only: %i[index show edit new create destroy] do
     resources :routines, only: %i[index new create] # do
     #   resources :recommendations, only: [:index, :show]
@@ -27,4 +26,7 @@ Rails.application.routes.draw do
     resources :recommendations, only: [:index]
   end
   resources :prices, only: %i[index create]
+
+  # New route for all recommendations
+  get 'recommendations/all', to: 'recommendations#all', as: :all_recommendations
 end
