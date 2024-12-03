@@ -2,14 +2,40 @@ body.articles-show {
   margin:0;
 
   .yellow-circle, .my-own-space {
-  display: none;
+    display: none;
   }
 }
 
 .article-panel {
-  height: 300px;
+  position: relative;
+  height: 230px;
   background-position: center;
   background-size: cover;
+  width: 100%;
+}
+
+.article-title {
+  position: absolute;
+  bottom: 2px; /* Alt kısımdan 10px uzaklıkta */
+  left: 10px; /* Sol taraftan 10px uzaklıkta */
+  color: white; /* Başlık rengini beyaz yap */
+  font-size: 16px; /* Başlık boyutunu ayarlayın */
+  padding: 5px;
+}
+.article-subtitle{
+  padding-left: 40px;
+  color:#9C9C9C;
+  width: 80%;
+}
+
+.panel-container p a {
+  bottom: 0;
+  text-decoration: none; /* Alt çizgiyi kaldır */
+  color: inherit; /* Varsayılan metin rengini koru */
+  font-family: 'Space Mono', monospace; /* İsteğe bağlı özel font */
+  font-weight: bold; /* Yazı tipi kalınlığı */
+  text-align: left; /* Sola yasla */
+  display: block; /* Tüm genişliği kapsaması için blok yap */
 }
 
 .article-container {
@@ -113,5 +139,20 @@ body.articles-show {
 }
 
 .star-icon:hover img {
-    filter: brightness(0) invert(1); /* Hover durumunda renk değişimi *//* Hover durumunda renk değişimi */
+  filter: brightness(0) invert(1); /* Hover durumunda renk değişimi *//* Hover durumunda renk değişimi */
+}
+
+.star-icon-top {
+  position: absolute;
+  top: 10px;
+  right:10px;
+  z-index:101;
+
+  img {
+    width: 20px;
+  }
+
+  :hover{
+    filter: brightness(0) invert(1);
+  }
 }
