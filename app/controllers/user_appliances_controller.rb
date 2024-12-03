@@ -159,7 +159,7 @@ class UserAppliancesController < ApplicationController
   end
 
   def appliance_params
-    params.require(:user_appliance).permit(:all_appliance_id, :brand)
+    params.require(:user_appliance).permit(:all_appliance_id, :brand, :nickname)
   end
 
 
