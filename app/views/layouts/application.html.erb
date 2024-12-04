@@ -25,7 +25,9 @@
 
     <div class="on-top"><%= yield %></div>
 
+  <% unless current_page?(new_user_session_path) %>
     <div class="overlay"></div>
     <%= image_tag 'blob.svg', class: "blob" %>
+    <% end %>
   </body>
 </html>
