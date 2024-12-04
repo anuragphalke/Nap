@@ -28,19 +28,19 @@
                 <%= image_tag 'edit.svg', alt: 'Edit Routine', class: "edit-icon" %>
               <% end %>
             </div>
-            <p class="routine-time">
-              From <%= routine.starttime.strftime("%H:%M") %> to <%= routine.endtime.strftime("%H:%M") %>
-            </p>
+            <div class="top">
+              <p class="routine-time">
+                From <%= routine.starttime.strftime("%H:%M") %> to <%= routine.endtime.strftime("%H:%M") %>
+              </p>
+              <%= link_to user_appliance_path(@user_appliance),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "delete-icon" do %>
+              <i class="fas fa-trash"></i>
+              <% end %>
+            </div>
           </div>
         </div>
 
-        <div class="actions">
-          <%= link_to routine_path(routine),
-                      data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
-                      class: "btn btn-link" do %>
-            Delete
-          <% end %>
-        </div>
       </div>
     <% end %>
   <% else %>
@@ -55,19 +55,30 @@
 
 <%#= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
 <% performance = @user_appliance.performance_and_savings_this_year %>
-<div class="performance-container mb-3">
+<div class="performance-container mb-3" style="position: fixed;
+                                              bottom: 160px;
+                                              left: 50%;
+                                              transform: translateX(-50%);
+                                              padding: 0 16px;
+                                              width: calc(100% - 32px);">
   <div class="performance-grade">
     <h2 style="font-size: 70px;"><%= performance[:rating] %></h2>
   </div>
   <div class="performance-savings">
-    <p class="savings-amount" style="margin-bottom: 5px;">€<%= performance[:applied_savings].round(2) %></p>
+    <p class="savings-amount" style="margin-bottom: 3px;">€<%= performance[:applied_savings].round(2) %></p>
     <p class="savings-label">Saved This Year</p>
   </div>
 </div>
 
 
 <%= link_to user_appliance_path(@user_appliance),
-                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                      class: "btn-secondary" do %>
-                      Delete this Appliance
-                  <% end %>
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+            class: "btn-secondary",
+            style: "position: fixed;
+                    bottom: 120px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    padding: 0 16px;
+                    width: calc(100% - 32px);" do %>
+  Delete this Appliance
+<% end %>
