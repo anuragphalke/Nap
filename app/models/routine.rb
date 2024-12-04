@@ -36,7 +36,6 @@ class Routine < ApplicationRecord
     day_1_averages = Average.where(day: day).order(:time)
     day_2_averages = Average.where(day: day + 1).where("EXTRACT(HOUR FROM time) < ?", 7).order(:time)
 
-
     combined_averages = day_1_averages + day_2_averages
 
     if combined_averages.size < duration

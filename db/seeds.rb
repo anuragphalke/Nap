@@ -22,13 +22,13 @@ puts "Prices destroyed!"
 # Seed users
 user1 = User.create!(
   email: 'user1@example.com',
-  password: 'Aassword123',
+  password: 'Password123',
   username: 'user1'
 )
 
 user2 = User.create!(
   email: 'user2@example.com',
-  password: 'Aassword123',
+  password: 'Password123',
   username: 'user2'
 )
 
