@@ -132,8 +132,6 @@ class PagesController < ApplicationController
     end
   end
 
-  private
-
   # Shared query logic for routines grouped by lineage
   def fetch_routines(order_by)
     Routine.joins(user_appliance: :user)
