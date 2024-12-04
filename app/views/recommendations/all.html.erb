@@ -3,23 +3,46 @@
 </div>
 <% appliance_groups = @recommendations_grouped.group_by { |group| group[:appliance] } %>
 
-<% appliance_groups.each do |appliance, routines| %>
-  <div class="some">
-    <h2><%= appliance.nickname %> (<%= appliance.all_appliance.brand %> <%= appliance.all_appliance.model %>)</h2>
-    <% routines.each do |group| %>
-      <h3><%= group[:routine].name %></h3>
-      <ul>
-        <% group[:recommendations].each do |recommendation| %>
-          <% if recommendation.starttime == recommendation.routine.starttime %>
-            <p>You've already applied the best routine</p>
-            <% break %>
-          <% else %>
-            <li>
-              Change to <%= recommendation.starttime.strftime('%A') %> <%= recommendation.starttime.strftime("%H:%M") %> to <%= recommendation.endtime.strftime("%H:%M") %><br>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
+
+<% appliance_groups.each_with_index do |(appliance, routines), appliance_index| %>
+  <div class="accordion mb-3 all-rec-container" id="accordionExample<%= appliance_index %>">
+    <div class="all-rec-header">
+      <h2><%= appliance.nickname %> <%= appliance.all_appliance.brand %> <%= appliance.all_appliance.model %></h2>
+    </div>
+    <% routines.each_with_index do |group, routine_index| %>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading<%= appliance_index %>_<%= routine_index %>">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse<%= appliance_index %>_<%= routine_index %>"
+            aria-expanded="false"
+            aria-controls="collapse<%= appliance_index %>_<%= routine_index %>">
+            <%= group[:routine].name %>
+          </button>
+        </h2>
+        <div
+          id="collapse<%= appliance_index %>_<%= routine_index %>"
+          class="accordion-collapse collapse"
+          aria-labelledby="heading<%= appliance_index %>_<%= routine_index %>"
+          data-bs-parent="#accordionExample<%= appliance_index %>">
+          <div class="accordion-body">
+            <ul>
+              <% group[:recommendations].each do |recommendation| %>
+                <% if recommendation.starttime == recommendation.routine.starttime %>
+                  <p>You've already applied the best routine</p>
+                  <% break %>
+                <% else %>
+                  <li>
+                    Change to <%= recommendation.starttime.strftime('%A') %> <%= recommendation.starttime.strftime("%H:%M") %> to <%= recommendation.endtime.strftime("%H:%M") %><br>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
 <% end %>

@@ -1,6 +1,15 @@
 .alert {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
+  background-color: rgb(211, 184, 111);
+  height: 43px;
+  color: black;
+  border-radius: 21.5px;
+  text-decoration: none;
+  width: 100%; /* Stretch to full width */
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  box-sizing: border-box; /* Include padding in width calculation */
+  transition:  0.5s ease, transform 0.5s ease;
   z-index: 1000;
+
 }

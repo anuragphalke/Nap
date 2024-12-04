@@ -24,7 +24,7 @@ class PagesController < ApplicationController
     formatted_data = costs.map do |hour|
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
-    statistics
+    @statistics = statistics
     @formatted_data = formatted_data.to_json
   end
 
@@ -41,53 +41,117 @@ class PagesController < ApplicationController
 
   def statistics
     if current_user
-      @total_savings = total_savings
-      @savings_this_year = savings_this_year
-      @rating = rating
+      applied_savings = calculate_applied_savings
+      potential_savings = calculate_potential_savings
+      consumption = calculate_current_consumption
+      applied_savings_this_year = prorate_savings(applied_savings)
+      rating = calculate_rating(applied_savings, potential_savings)
+
+      initial_rate = (calculate_initial_cost / calculate_total_duration)
+      current_rate = (calculate_current_cost / calculate_total_duration)
+
+      improvement = ((current_rate - initial_rate) / initial_rate) * 100
+
+      {
+        rating: rating,
+        applied_savings: applied_savings_this_year,
+        total_savings: applied_savings,
+        consumption: consumption,
+        improvement: improvement
+      }
     end
   end
-
-
 
   private
-
-  def total_savings
-    @user_appliances = current_user.user_appliances
-    @total_savings = 0.0
-
-    @user_appliances.each do |user_appliance|
-      routines = user_appliance.routines.group_by(&:lineage)
-
-      routines.each_value do |lineage_routines|
-        first_routine = lineage_routines.min_by(&:id)
-        last_routine = lineage_routines.max_by(&:id)
-
-        if first_routine.cost && last_routine.cost
-          savings = calculate_savings(first_routine.cost, last_routine.cost)
-          @total_savings += savings
-        end
-      end
+  
+  def calculate_applied_savings
+    calculate_savings do |lineage|
+      (lineage.first.cost - lineage.last.cost) * 52
     end
-
-    return @total_savings
   end
 
-  def savings_this_year
+  def calculate_potential_savings
+    calculate_savings do |lineage|
+      (lineage.first.cost - lineage.last.recommendations.first.cost) * 52
+    end
+  end
+
+  def calculate_current_consumption
+    calculate_routine_attribute(:desc) do |routine|
+      duration = routine_duration(routine)
+      duration * (routine.user_appliance.all_appliance.wattage / 1000) * 52
+    end
+  end
+
+  def calculate_total_duration
+    calculate_routine_attribute(:desc) do |routine|
+      routine_duration(routine) * 52
+    end
+  end
+
+  def calculate_initial_cost
+    calculate_routine_attribute(:asc) { |routine| routine.cost * 52 }
+  end
+
+  def calculate_current_cost
+    calculate_routine_attribute(:desc) { |routine| routine.cost * 52 }
+  end
+
+  def prorate_savings(applied_savings)
     today = Date.today
-    days_passed = today.yday # Gets the day of the year (1-365 or 1-366 for leap years)
-    days_in_year = Date.gregorian_leap?(today.year) ? 366 : 365 # Checks if it's a leap year
+    days_passed = today.yday
+    days_in_year = Date.gregorian_leap?(today.year) ? 366 : 365
     yearly_fraction = days_passed.to_f / days_in_year
 
-    yearly_fraction * @total_savings
+    yearly_fraction * applied_savings
   end
 
-  def rating
+  def calculate_rating(applied_savings, potential_savings)
+    return 'N/A' if potential_savings.zero?
 
+    score = (applied_savings / potential_savings) * 100
+    case score
+    when 80..100 then 'A+'
+    when 60..79 then 'A'
+    when 40..59 then 'B+'
+    when 20..39 then 'B-'
+    else 'C'
+    end
   end
 
   private
 
-  def calculate_savings(original_cost, recommended_cost)
-    (original_cost - recommended_cost) * 52
+  # Shared query logic for routines grouped by lineage
+  def fetch_routines(order_by)
+    Routine.joins(user_appliance: :user)
+           .where(user_appliances: { user_id: current_user.id })
+           .order(:lineage, id: order_by)
+           .group_by(&:lineage)
+           .map { |_, routines| routines.first }
+  end
+
+  # Calculate savings by applying a block to each lineage
+  def calculate_savings
+    applied_savings = 0
+    lineages = Routine.joins(user_appliance: :user)
+                      .where(user_appliances: { user_id: current_user.id })
+                      .order(:lineage, "id ASC", :starttime)
+                      .group_by(&:lineage)
+                      .values
+    lineages.each { |lineage| applied_savings += yield(lineage) }
+    applied_savings
+  end
+
+  # Calculate an attribute for routines based on order and block logic
+  def calculate_routine_attribute(order_by)
+    total = 0
+    routines = fetch_routines(order_by)
+    routines.each { |routine| total += yield(routine) }
+    total
+  end
+
+  # Helper to calculate routine duration in hours
+  def routine_duration(routine)
+    (routine.endtime - routine.starttime) / 1.hour
   end
 end

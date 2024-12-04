@@ -26,7 +26,6 @@ class UserAppliancesController < ApplicationController
   end
 
   def show
-    # Fetch routines for the current user appliance ------------------------> to be tested
     @routines = @user_appliance.routines
                                .select("DISTINCT ON (lineage) *")        # Get distinct routines by lineage
                                 .order(:lineage, "id DESC", :starttime)  # Prioritize highest ID per lineage, then order by starttime
@@ -101,6 +100,7 @@ class UserAppliancesController < ApplicationController
   end
 
   private
+
   def calculate_tag(user_appliance)
     return "" if user_appliance.routines.empty?
 
