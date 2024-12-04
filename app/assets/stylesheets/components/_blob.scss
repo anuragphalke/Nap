@@ -17,6 +17,8 @@
   bottom: -20%;
   left: -45%;
   z-index: -2; /* Ensure blob is behind the overlay and content */
+  border-bottom-right-radius: 6%;
+  border-bottom-left-radius: 6%;
 }
 
 .blob-login {
