@@ -8,10 +8,14 @@ body.articles-show {
 
 .article-panel {
   position: relative;
-  height: 230px;
+  height: 210px;
   background-position: center;
   background-size: cover;
-  width: 100%;
+  width: 80%;
+}
+
+#article-left{
+  padding-left: 2px;
 }
 
 #article-bottom{
