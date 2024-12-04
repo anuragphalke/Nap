@@ -1,5 +1,4 @@
-<p>Overview for <br>
-2024/03</p>
+<p>Overview for <br><%= DateTime.now.strftime("%Y") %></p>
 
 <div class="panel-container" data-controller="button">
   <div class="panel" data-action="click->button#scrollToCenter">
@@ -16,9 +15,6 @@
 
   <div class="panel" data-action="click->button#scrollToCenter">
     <% if current_user && @statistics %>
-      <div>
-        <h2><%= @statistics[:rating] %></h2>
-      </div>
       <div>
         <p><%= number_with_precision(@statistics[:improvement], precision: 2) %>% than last year</p>
       </div>
@@ -39,6 +35,16 @@
 
   <div class="panel" data-action="click->button#scrollToCenter">
     <div>nana</div>
+  </div>
+</div>
+
+<div class="performance-container mb-3">
+  <div class="performance-grade">
+    <h2 style="font-size: 70px;"><%= @statistics[:rating] %></h2>
+  </div>
+  <div class="performance-savings">
+    <p class="savings-amount" style="margin-bottom: 3px;">€<%= @statistics[:applied_savings].round(2) %></p>
+    <p class="savings-label"><%= number_with_precision(@statistics[:improvement], precision: 2) %>% than last year</p>
   </div>
 </div>
 

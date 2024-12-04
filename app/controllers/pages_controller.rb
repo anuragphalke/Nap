@@ -51,19 +51,18 @@ class PagesController < ApplicationController
       current_rate = (calculate_current_cost / calculate_total_duration)
 
       improvement = ((current_rate - initial_rate) / initial_rate) * 100
-
-      {
-        rating: rating,
-        applied_savings: applied_savings_this_year,
-        total_savings: applied_savings,
-        consumption: consumption,
-        improvement: improvement
-      }
     end
+    @statistics = {
+      rating: rating,
+      applied_savings: applied_savings_this_year,
+      total_savings: applied_savings,
+      consumption: consumption,
+      improvement: improvement
+    }
   end
 
   private
-  
+
   def calculate_applied_savings
     calculate_savings do |lineage|
       (lineage.first.cost - lineage.last.cost) * 52

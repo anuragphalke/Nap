@@ -41,9 +41,9 @@
           <% if recommendation.starttime == @routine.starttime && @day == @slot %>
             <p>You've already applied the best routine.</p>
           <% elsif recommendation.endtime.hour < recommendation.starttime.hour %>
-            <p>If you set your routine to begin at <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+            <p>If you set your routine to begin at <%= recommendation.starttime.strftime('%H:%M') %> today and end at <%= recommendation.endtime.strftime("%H:%M") %> tomorrow, a <%= @duration %> hour routine will save you €<%= @savings[index].round(2) %> per year.</p>
           <% else %>
-            <p>If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index] %> per year.</p>
+            <p>If you set your routine to begin on <%= @today[index] %> at <%= recommendation.starttime.strftime('%H:%M') %> and end at <%= recommendation.endtime.strftime("%H:%M") %>, a <%= @duration %> hour routine will save you €<%= @savings[index].round(2) %> per year.</p>
           <% end %>
 
           <%= simple_form_for @new_routine do |f| %>

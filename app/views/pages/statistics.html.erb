@@ -1,4 +1,7 @@
-<h1>Stats</h1>
+<h1>Statistics</h1>
 
-<p>Savings this year €<%= @savings_this_year.round(2) %></p>
-<p>Total Savings €<%= @total_savings.round(2) %></p>
+<h2><%= @statistics[:rating] %></h2>
+<h3><%= number_with_precision(@statistics[:improvement], precision: 2) %>% than last year</h3>
+<p>YTD Savings €<%= number_with_precision(@statistics[:applied_savings], precision: 2) %></p>
+<p>Projected Savings (<%= DateTime.now.strftime("%Y") %>) €<%= number_with_precision(@statistics[:total_savings], precision: 2) %></p>
+<p>Annual Consumption <%= number_with_precision(@statistics[:consumption], precision: 2) %> kWh</p>
