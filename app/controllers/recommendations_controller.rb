@@ -44,6 +44,19 @@ class RecommendationsController < ApplicationController
     end
   end
 
+  def all
+    user_appliances = UserAppliance.where(user_id: current_user.id)
+    @latest_routines = Routine
+                        .select("DISTINCT ON (lineage) *")
+                        .where(user_appliance_id: user_appliances.pluck(:id))
+                        .order(:lineage, id: :desc)
+    @recommendations_grouped = @latest_routines.includes(:recommendations).map do |routine|
+      appliance = UserAppliance.find(routine.user_appliance_id)
+      recommendations = routine.recommendations.first(3)
+      { appliance: appliance, routine: routine, recommendations: recommendations }
+    end
+  end
+
   private
 
   def fetch_averages_for_day(day, duration)
@@ -84,21 +97,16 @@ class RecommendationsController < ApplicationController
   def calculate_times(averages, slot, duration)
     start_index = slot[:start_index]
     start_time = averages[start_index].time
-
-    # Calculate end time based on the duration
     end_time = start_time + (duration * 3600)
-
     [start_time, end_time]
   end
 
   def calculate_routine_cost(starttime, endtime, duration)
-    # Calculate the cost of the routine with the given start and end times
     averages = Average.where("time >= ? AND time <= ?", starttime, endtime).order(:time)
     averages.first(duration).sum(&:average)
   end
 
   def calculate_savings(original_cost, recommended_cost)
-    # Calculate the savings per year
     (original_cost - recommended_cost) * 52
   end
 end
