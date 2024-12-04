@@ -1,29 +1,35 @@
-<h2>Sign up</h2>
+<div style="margin-top: 30px;" data-controller="login">
+
+<h1 class="page-title mb-3" style="font-size: 30px;">Sign Up</h1>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
-
-  <div class="form-inputs">
+  <div class="form-container">
+  <div class="routine-form-group">
     <%= f.input :username,
                 required: true,
                 autofocus: true,
-                input_html: { autocomplete: "username" }%>
+                input_html: { class: "routine-form-control", autocomplete: "username" }%>
     <%= f.input :email,
                 required: true,
                 autofocus: true,
-                input_html: { autocomplete: "email" }%>
+                input_html: { class: "routine-form-control", autocomplete: "email" }%>
     <%= f.input :password,
                 required: true,
                 hint: ("8 characters minimum"),
-                input_html: { autocomplete: "new-password" } %>
+                input_html: { class: "routine-form-control", autocomplete: "new-password" } %>
     <%= f.input :password_confirmation,
                 required: true,
-                input_html: { autocomplete: "new-password" } %>
+                input_html: { class: "routine-form-control", autocomplete: "new-password" } %>
   </div>
-
+  </div>
   <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
+    <%= f.button :submit, "Sign up", class: "btn-secondary" %>
   </div>
+  <p class="text-center mt-1" style="margin-bottom: 5px;">or</p>
+
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+</div>

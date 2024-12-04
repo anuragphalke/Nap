@@ -1,5 +1,7 @@
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
+<div class="d-flex justify-content-center">
+  <%= link_to "Log in", new_session_path(resource_name), class: "btn-signup mb-1" %><br />
+  </div>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
