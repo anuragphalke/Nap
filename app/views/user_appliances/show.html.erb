@@ -32,7 +32,7 @@
               <p class="routine-time">
                 From <%= routine.starttime.strftime("%H:%M") %> to <%= routine.endtime.strftime("%H:%M") %>
               </p>
-              <%= link_to user_appliance_path(@user_appliance),
+              <%= link_to routine_path(routine),
               data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
               class: "delete-icon" do %>
               <i class="fas fa-trash"></i>
