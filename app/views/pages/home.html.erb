@@ -4,7 +4,7 @@
   <div class="panel" data-action="click->button#scrollToCenter">
     <% if @price_rn %>
     <button class="btn-price">
-      <%= @price_rn.cost %> € / kWh</button>
+      <%= @price_rn.cost.round(2) %> € / kWh</button>
     <% else %>
       <p>No price data available for this hour.</p>
     <% end %>
@@ -14,23 +14,12 @@
   </div>
 
   <div class="panel" data-action="click->button#scrollToCenter">
-    <% if current_user && @statistics %>
-      <div>
-        <p><%= number_with_precision(@statistics[:improvement], precision: 2) %>% than last year</p>
-      </div>
-      <div>
-        <p>YTD Savings</p>
-        <p>€<%= number_with_precision(@statistics[:applied_savings], precision: 2) %></p>
-      </div>
-      <div>
-        <p>Projected Savings (<%= DateTime.now.strftime("%Y") %>)</p>
-        <p>€<%= number_with_precision(@statistics[:total_savings], precision: 2) %></p>
-      </div>
-      <div>
-        <p>Annual Consumption</p>
-        <p><%= number_with_precision(@statistics[:consumption], precision: 2) %> kWh</p>
-      </div>
+    <% if @statistics[:rating] != "N/A" %>
+    <button class="btn-price"> <%=  @statistics[:consumption].round(2) %>kWh</button>
     <% end %>
+    <p>MIN: €<%= @min_price %>.</p>
+    <p>MAX: €<%= @max_price %>.</p>
+    <div data-controller="comparator-chart" data-comparator-chart-rates-value="<%= @comparator_data %>"></div>
   </div>
 
   <div class="panel" data-action="click->button#scrollToCenter">
@@ -44,7 +33,9 @@
   </div>
   <div class="performance-savings">
     <p class="savings-amount" style="margin-bottom: 3px;">€<%= @statistics[:applied_savings].round(2) %></p>
-    <p class="savings-label"><%= number_with_precision(@statistics[:improvement], precision: 2) %>% than last year</p>
+    <% improvement = @statistics[:improvement] %>
+    <p class="savings-label" style="color: <%= improvement.positive? ? '#AD4A4A' : (improvement.negative? ? '#67A55E' : '#000000') %>;">
+    <%= number_with_precision(improvement, precision: 2) %>% than last year</p>
   </div>
 </div>
 

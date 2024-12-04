@@ -9,7 +9,14 @@
   justify-content: center; /* Center text horizontally */
   align-items: center; /* Center text vertically */
   box-sizing: border-box; /* Include padding in width calculation */
-  transition:  0.5s ease, transform 0.5s ease;
+  // transition:  0.5s ease, transform 0.5s ease;
   z-index: 1000;
+  transition: ease all 0.5s;
+  transform: translate(0px, -60px);
+
+}
+
+.alert-active{
+  transform: translate(0px, 0px);
 
 }
