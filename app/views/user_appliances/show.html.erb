@@ -28,19 +28,19 @@
                 <%= image_tag 'edit.svg', alt: 'Edit Routine', class: "edit-icon" %>
               <% end %>
             </div>
-            <p class="routine-time">
-              From <%= routine.starttime.strftime("%H:%M") %> to <%= routine.endtime.strftime("%H:%M") %>
-            </p>
+            <div class="top">
+              <p class="routine-time">
+                From <%= routine.starttime.strftime("%H:%M") %> to <%= routine.endtime.strftime("%H:%M") %>
+              </p>
+              <%= link_to user_appliance_path(@user_appliance),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "delete-icon" do %>
+              <i class="fas fa-trash"></i>
+              <% end %>
+            </div>
           </div>
         </div>
 
-        <div class="actions">
-          <%= link_to routine_path(routine),
-                      data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
-                      class: "btn btn-link" do %>
-            Delete
-          <% end %>
-        </div>
       </div>
     <% end %>
   <% else %>
@@ -67,7 +67,13 @@
 
 
 <%= link_to user_appliance_path(@user_appliance),
-                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                      class: "btn-secondary" do %>
-                      Delete this Appliance
-                  <% end %>
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+            class: "btn-secondary",
+            style: "position: fixed;
+                    bottom: 120px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    padding: 0 16px;
+                    width: calc(100% - 32px);" do %>
+  Delete this Appliance
+<% end %>
