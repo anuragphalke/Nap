@@ -4,13 +4,13 @@ import ApexCharts from 'apexcharts'
 
 // Connects to data-controller="price-chart"
 export default class extends Controller {
-  static values = { costs: Array }
+  static values = { rates: Array }
   connect() {
     console.log('connected');
-    console.log(this.costsValue);
+    console.log(this.ratesValue);
 
 
-    const data = this.costsValue;
+    const data = this.ratesValue;
 
     const options = {
       "annotations": {},
@@ -20,15 +20,15 @@ export default class extends Controller {
           },
           "background": "#343436",
           "foreColor": "#FFFFFF",
-          "fontFamily": "Roboto",
-          "height": 378,
+          "fontFamily": "Space Grotesk",
+          "height": 200,
           "id": "Zmzmu",
           "stackOnlyBar": true,
           "toolbar": {
               "show": false
           },
           "type": "bar",
-          "width": 389,
+          "width": "100%",
           "zoom": {
               "allowMouseWheelZoom": true
           }
@@ -139,16 +139,7 @@ export default class extends Controller {
       "series": [
           {
               "name": "Column",
-              "data": [
-                  {
-                      "x": "Item 1",
-                      "y": 10
-                  },
-                  {
-                      "x": "Item 2",
-                      "y": 20
-                  }
-              ],
+              "data": data,
               "group": "apexcharts-axis-0"
           }
       ],
