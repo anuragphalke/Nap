@@ -15,15 +15,12 @@ class PricesController < ApplicationController
     end
   end
 
-
   def average_prices
     # Execute the query to get the average price by day and hour
     @average_prices = Price
       .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
       .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
       .order("day, hour")
-
-      
   end
 
   private
