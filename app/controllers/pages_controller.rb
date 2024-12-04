@@ -25,6 +25,7 @@ class PagesController < ApplicationController
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
     @statistics = statistics
+    @comparator_data = [ { x: "initial rate", y: statistics[:initial_rate] }, { x: "current rate", y: statistics[:current_rate] } ].to_json
     @formatted_data = formatted_data.to_json
   end
 
@@ -40,7 +41,7 @@ class PagesController < ApplicationController
   end
 
   def statistics
-    if current_user
+    if current_user && current_user.user_appliances.exists?
       applied_savings = calculate_applied_savings
       potential_savings = calculate_potential_savings
       consumption = calculate_current_consumption
@@ -51,14 +52,27 @@ class PagesController < ApplicationController
       current_rate = (calculate_current_cost / calculate_total_duration)
 
       improvement = ((current_rate - initial_rate) / initial_rate) * 100
+
+      @statistics = {
+        rating: rating,
+        applied_savings: applied_savings_this_year,
+        total_savings: applied_savings,
+        consumption: consumption,
+        improvement: improvement,
+        initial_rate: initial_rate,
+        current_rate: current_rate
+      }
+    else
+      @statistics = {
+        rating: "N/A",
+        applied_savings: 0.0,
+        total_savings: 0.0,
+        consumption: 0.0,
+        improvement: 0.0,
+        initial_rate: 0.0,
+        current_rate: 0.0
+      }
     end
-    @statistics = {
-      rating: rating,
-      applied_savings: applied_savings_this_year,
-      total_savings: applied_savings,
-      consumption: consumption,
-      improvement: improvement
-    }
   end
 
   private
