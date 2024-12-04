@@ -11,15 +11,11 @@ body.articles-show {
   height: 210px;
   background-position: center;
   background-size: cover;
-  width: 80%;
+  width: 73%;
 }
 
 #article-left{
   padding-left: 2px;
-}
-
-#article-bottom{
-  margin-bottom: 63px !important;
 }
 
 .article-title {
@@ -30,8 +26,7 @@ body.articles-show {
   font-size: 16px; /* Başlık boyutunu ayarlayın */
   padding: 5px;
 }
-.article-subtitle{
-  padding-left: 40px;
+.article-subtitle {
   color:#9C9C9C;
   width: 80%;
 }
@@ -163,3 +158,9 @@ body.articles-show {
     filter: brightness(0) invert(1);
   }
 }
+
+  .italic-button {
+    background-color: #1A1628;
+    color: white;
+    font-style: italic;
+  }
