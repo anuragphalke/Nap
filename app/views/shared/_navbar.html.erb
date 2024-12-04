@@ -4,27 +4,27 @@
       <% if user_signed_in? %>
         <li>
           <%= link_to root_path, class: "nav-link #{'active' if current_page?(root_path)}" do %>
-            <i class="fas fa-home"></i>
+            <%= image_tag "icon-home.svg" %>
           <% end %>
         </li>
         <li>
           <%= link_to recommendations_path, class: "nav-link #{'active' if current_page?(recommendations_path)}" do %>
-            <i class="fas fa-heart"></i>
+            <%= image_tag "icon-recommendation.svg" %>
           <% end %>
         </li>
         <li>
           <%= link_to user_appliances_path, class: "nav-link #{'active' if current_page?(user_appliances_path)}" do %>
-            <i class="fas fa-sliders-h"></i>
+            <%= image_tag "icon-appliance.svg" %>
           <% end %>
         </li>
         <li>
           <%= link_to statistics_path, class: "nav-link #{'active' if current_page?(statistics_path)}" do %>
-            <i class="fas fa-chart-bar"></i>
+            <%= image_tag "icon-stat.svg" %>
           <% end %>
         </li>
         <li>
           <%= link_to articles_path, class: "nav-link #{'active' if current_page?(articles_path)}" do %>
-            <i class="fas fa-lightbulb"></i>
+            <%= image_tag "icon-article.svg" %>
           <% end %>
         </li>
         <%# <li> %>
