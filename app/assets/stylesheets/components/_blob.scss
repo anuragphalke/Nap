@@ -8,6 +8,8 @@
   background-color: rgba(9, 15, 20, 0.2); /* Color 090F14 with 20% opacity */
   backdrop-filter: blur(70px); /* Apply background blur */
   z-index: -1; /* Ensure the overlay is below the content but above the blob */
+  border-bottom-right-radius: 6%;
+  border-bottom-left-radius: 6%;
 }
 
 .blob {
@@ -15,4 +17,54 @@
   bottom: -20%;
   left: -45%;
   z-index: -2; /* Ensure blob is behind the overlay and content */
+}
+
+.blob-login {
+  opacity: 0.4;
+  position: fixed;
+  bottom: -20%;
+  left: -45%;
+  z-index: -2; /* Ensure blob is behind the overlay and content */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.blob-login-active {
+  opacity: 1;
+  position: fixed;
+  bottom: -20%;
+  left: -45%;
+  z-index: -2; /* Ensure blob is behind the overlay and content */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+}
+
+
+.svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.svg {
+  filter: drop-shadow(0 0 5px #EBFF57);
+
+
+}
+
+.path-animation {
+  stroke: #F4FFA1;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 2.5s ease-out;
+}
+
+.path-animation-leave {
+  stroke: #F4FFA1;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+
+.path-animation-play {
+  stroke-dashoffset: 0;
 }

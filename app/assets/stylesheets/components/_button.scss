@@ -9,9 +9,26 @@
   justify-content: center; /* Center text horizontally */
   align-items: center; /* Center text vertically */
   box-sizing: border-box; /* Include padding in width calculation */
+  transition:  0.5s ease, transform 0.5s ease;
+
 }
 
-
+.btn-signup {
+  width: 200px;
+  background-color: #090f1437;
+  padding: 0 10px;
+  font-style: italic;
+  text-align: center;
+  text-decoration: none;
+  height: 43px;
+  border-radius: 21.5px;
+  border: 1px solid rgba(255, 255, 255, 0.588);
+  color: white;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
 
 .btn-secondary {
   background-color: #090f1437;
@@ -28,6 +45,8 @@
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   box-sizing: border-box; /* Include padding in width calculation */
+  transition:  0.5s ease, transform 0.5s ease;
+
 }
 
 .btn-secondary, .btn-secondary:hover, .btn-secondary:focus {

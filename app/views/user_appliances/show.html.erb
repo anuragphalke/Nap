@@ -10,6 +10,7 @@
   </div>
 </div>
 
+<p style="font-size: 20px; padding-left: 9px; margin-bottom: 5px;">Routines</p>
 <div class="routines-container">
   <% if @routines.present? %>
     <% @routines.each do |routine| %>
@@ -34,11 +35,11 @@
         </div>
 
         <div class="actions">
-          <%#= link_to routine_path(routine),
+          <%= link_to routine_path(routine),
                       data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete your routine?" },
                       class: "btn btn-link" do %>
-            <%# Delete %>
-          <%# end %>
+            Delete
+          <% end %>
         </div>
       </div>
     <% end %>
@@ -54,8 +55,15 @@
 
 <%#= link_to 'Edit Applaince', edit_user_appliance_path(@user_appliance), class: 'btn btn-warning' %>
 <% performance = @user_appliance.performance_and_savings_this_year %>
-<h2><%= performance[:rating] %></h2>
-<p>Saved so far: €<%= performance[:applied_savings].round(2) %></p>
+<div class="performance-container mb-3">
+  <div class="performance-grade">
+    <h2 style="font-size: 70px;"><%= performance[:rating] %></h2>
+  </div>
+  <div class="performance-savings">
+    <p class="savings-amount" style="margin-bottom: 5px;">€<%= performance[:applied_savings].round(2) %></p>
+    <p class="savings-label">Saved This Year</p>
+  </div>
+</div>
 
 
 <%= link_to user_appliance_path(@user_appliance),

@@ -23,7 +23,90 @@
   }
 }
 
+.all-rec-container {
+  border-radius: 20px;
+  overflow: hidden;
+}
 
+
+.all-rec-header {
+  background-color: $dark-yellow;
+  border-radius: 20px 20px 0 0;
+  padding: 10px 10px 2px 10px;
+
+  h2 {
+    color: $button-active;
+    padding-left: 10px;
+    font-family: 'Space Mono', monospace;
+  }
+}
+.all-rec-r {
+  background-color: $element;
+  padding: 10px 10px 2px 10px;
+  p a {
+    // margin-bottom: 5px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.all-rec-bg {
+  background-color: #262629;
+}
+
+.accordion-button {
+  background-color: $element!important;
+  color: white;
+  border: none !important; /* Remove border around the button */
+  box-shadow: none !important; /* Remove any box shadow */
+  // padding: 10px 10px 2px 10px;
+}
+
+.accordion-button:not(.collapsed) {
+  color: white;
+  background-color: $element;
+}
+.accordion-item {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.accordion-button::after {
+
+  filter: brightness(0) invert(1);  /* Makes it white */
+}
+
+.accordion-button:focus {
+
+  box-shadow: none;
+}
+
+/* Remove the default white background and borders from the accordion */
+
+
+
+
+
+.accordion-body {
+  background-color: #262629 !important; /* Remove body background */
+  border: none !important; /* Remove borders */
+  padding: 1rem; /* Adjust padding if needed */
+  color: white;
+}
+
+/* Remove bullets from list items */
+.accordion-body ul {
+  list-style-type: none;
+  padding-left: 0; /* Remove any default padding */
+}
+
+/* Style the list items */
+.accordion-body li {
+  margin-bottom: 10px; /* Add space between each list item */
+  padding-bottom: 10px; /* Add space below each list item */
+  border-bottom: 1px solid #e0e0e0; /* Add a light line under each list item */
+}
 
 
 // .rec-container {

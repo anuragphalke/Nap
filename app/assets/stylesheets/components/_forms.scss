@@ -73,3 +73,13 @@
 .routine-form-actions {
   text-align: center;
 }
+
+
+.forgot-password-link {
+  font-family: 'Space Mono', monospace;
+  color: rgba(255, 255, 255, 0.715);              /* White text */
+  text-align: center;        /* Centering text */
+  text-decoration: none;     /* No underline */
+  display: block;            /* Makes link behave like a block for centering */
+  margin: 0 auto;            /* Centers the block horizontally */
+}
