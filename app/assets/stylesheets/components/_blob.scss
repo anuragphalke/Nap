@@ -8,6 +8,8 @@
   background-color: rgba(9, 15, 20, 0.2); /* Color 090F14 with 20% opacity */
   backdrop-filter: blur(70px); /* Apply background blur */
   z-index: -1; /* Ensure the overlay is below the content but above the blob */
+  border-bottom-right-radius: 6%;
+  border-bottom-left-radius: 6%;
 }
 
 .blob {
