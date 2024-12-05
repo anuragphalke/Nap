@@ -131,7 +131,7 @@ class UserAppliancesController < ApplicationController
     escaped_response = cleaned_response.gsub(/(?<!\\)"/, '\"')
 
     # Replace Ruby-like hash syntax with JSON-compatible syntax (if necessary)
-    json_response = escaped_response.gsub(/(\w+):/, '"\1":')
+    # json_response = escaped_response.gsub(/(\w+):/, '"\1":')
 
     # Parse the JSON response
     parsed_response = JSON.parse(cleaned_response)
