@@ -25,7 +25,15 @@
   </div>
 
   <div class="panel" data-action="click->button#scrollToCenter">
-    <div>nana</div>
+    <% if @statistics[:potential_savings] - @statistics[:applied_savings] == 0 || @statistics[:potential_savings] == 0 %>
+      <button class="btn-price">100% Optimised</button>
+    <% else %>
+      <button class="btn-price">
+        <%= ((@statistics[:applied_savings] / @statistics[:potential_savings]) * 100).round(0) %>% Optimised</button>
+    <% end %>
+    <p>Applied: €<%= @statistics[:applied_savings].round(2) %></p>
+    <p>Potential: €<%= @statistics[:potential_savings].round(2) %></p>
+    <div data-controller="potential-chart" data-potential-chart-savings-value="<%= @potential_data %>"></div>
   </div>
 </div>
 
