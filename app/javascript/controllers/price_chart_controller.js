@@ -5,7 +5,7 @@ import ApexCharts from 'apexcharts'
 // Connects to data-controller="price-chart"
 export default class extends Controller {
   static values = { costs: Array }
-  connect() {
+  connect() { 
     console.log('connected');
     console.log(this.costsValue);
 

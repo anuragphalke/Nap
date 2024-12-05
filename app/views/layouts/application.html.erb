@@ -13,11 +13,11 @@
   </head>
 
   <body class="<%= "#{controller.controller_name}-#{controller.action_name}" %>">
-    <% unless current_page?(landing_path) || current_page?(new_user_session_path) %><%= render "shared/navbar" %><% end %>
+    <% unless current_page?(landing_path) || current_page?(new_user_session_path) || current_page?(new_user_registration_path) %><%= render "shared/navbar" %><% end %>
 
     <%= render "shared/flashes" %>
 
-    <% unless current_page?(landing_path) || current_page?(new_user_session_path) %>
+    <% unless current_page?(landing_path) || current_page?(new_user_session_path) || current_page?(new_user_registration_path) %>
     <div class="my-own-space">
       <%= link_to profile_path, class: "yellow-circle on-top" do %>
         <%= image_tag 'spark.svg' %>

@@ -25,8 +25,11 @@ class PagesController < ApplicationController
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
     @statistics = statistics
-    @comparator_data = [ { x: "Initial", y: statistics[:initial_rate] }, { x: "Current", y: statistics[:current_rate] } ].to_json
+    
+    @comparator_data = statistics
     @formatted_data = formatted_data.to_json
+
+
   end
 
   def price_today
@@ -73,6 +76,9 @@ class PagesController < ApplicationController
         current_rate: 0.0
       }
     end
+    @comparator_data = [ { x: "Initial", y: @statistics[:initial_rate] }, { x: "Current", y: @statistics[:current_rate] } ].to_json
+
+
   end
 
   private
