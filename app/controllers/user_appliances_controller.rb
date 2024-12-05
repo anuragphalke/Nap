@@ -1,21 +1,21 @@
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Layout/LineLength
+# rubocop:disable Metrics/ClassLength
 class UserAppliancesController < ApplicationController
   before_action :set_user_appliance, only: %i[show edit update destroy]
 
-
   def index
     @categories = current_user.user_appliances
-                  .joins(:all_appliance)
-                  .distinct
-                  .pluck('all_appliances.category')
+                                              .joins(:all_appliance)
+                                              .distinct
+                                              .pluck('all_appliances.category')
 
     @user_appliances = if params[:category]
-      current_user.user_appliances.joins(:all_appliance)
-      .where(all_appliances: { category: params[:category] })
-    else
-      current_user.user_appliances
-    end
+                         current_user.user_appliances.joins(:all_appliance)
+                                                     .where(all_appliances: { category: params[:category] })
+                       else
+                         current_user.user_appliances
+                       end
 
     @average_prices = Price
                            .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
@@ -61,12 +61,10 @@ class UserAppliancesController < ApplicationController
     articles = Article.where(subcategory: device)
 
     if @user_appliance.save
-      if articles.empty?
-        create_article(@user_appliance)
-      end
+      create_article(@user_appliance) if articles.empty?
 
       if current_user.user_appliances.count == 1
-        redirect_to  new_user_appliance_routine_path(@user_appliance)
+        redirect_to new_user_appliance_routine_path(@user_appliance)
       else
         redirect_to @user_appliance, notice: "Appliance was successfully created."
       end
@@ -116,11 +114,11 @@ class UserAppliancesController < ApplicationController
   def create_article(user_appliance)
     client = OpenAI::Client.new
     chatgpt_response = client.chat(parameters: {
-      model: "gpt-4o-mini",
-      messages: [{
-        role: "user",
-        content: "Please write me an article about saving money and energy while using #{user_appliance.all_appliance.subcategory}. Provide the response as valid JSON with quoted keys 'title' and 'content', and nothing else."
-      }]
+                                                  model: "gpt-4o-mini",
+                                                  messages: [{
+                                                    role: "user",
+                                                    content: "Please write me an article about saving money and energy while using #{user_appliance.all_appliance.subcategory}. Provide the response as valid JSON with quoted keys 'title' and 'content', and nothing else."
+                                                    }]
     })
 
     # Extract the raw response content
@@ -133,14 +131,13 @@ class UserAppliancesController < ApplicationController
     escaped_response = cleaned_response.gsub(/(?<!\\)"/, '\"')
 
     # Replace Ruby-like hash syntax with JSON-compatible syntax (if necessary)
-    json_response = escaped_response.gsub(/(\w+):/, '"\1":')
+    # json_response = escaped_response.gsub(/(\w+):/, '"\1":')
 
     # Parse the JSON response
     parsed_response = JSON.parse(cleaned_response)
 
     # Create the article using the parsed data
 
-    #
     article = Article.create(
       title: parsed_response["title"],
       content: parsed_response["content"].gsub(/(?=\b\d+\.)/, "<br>"),
@@ -161,8 +158,7 @@ class UserAppliancesController < ApplicationController
   def appliance_params
     params.require(:user_appliance).permit(:all_appliance_id, :brand, :nickname)
   end
-
-
 end
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Layout/LineLength
+# rubocop:enable Metrics/ClassLength

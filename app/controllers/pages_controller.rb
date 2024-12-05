@@ -1,3 +1,8 @@
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Layout/LineLength
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Style/RedundantAssignment
+# rubocop:disable Style/HashSyntax
 class PagesController < ApplicationController
   require 'date'
 
@@ -25,7 +30,7 @@ class PagesController < ApplicationController
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
     @statistics = statistics
-    
+
     @comparator_data = statistics
     @formatted_data = formatted_data.to_json
 
@@ -44,7 +49,7 @@ class PagesController < ApplicationController
   end
 
   def statistics
-    if current_user && current_user.user_appliances.exists?
+    if current_user&.user_appliances&.exists?
       applied_savings = calculate_applied_savings
       potential_savings = calculate_potential_savings
       consumption = calculate_current_consumption
@@ -138,8 +143,6 @@ class PagesController < ApplicationController
     end
   end
 
-  private
-
   # Shared query logic for routines grouped by lineage
   def fetch_routines(order_by)
     Routine.joins(user_appliance: :user)
@@ -174,3 +177,8 @@ class PagesController < ApplicationController
     (routine.endtime - routine.starttime) / 1.hour
   end
 end
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Layout/LineLength
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Style/RedundantAssignment
+# rubocop:enable Style/HashSyntax

@@ -20,7 +20,7 @@ export default class extends Controller {
           },
           "background": "#343436",
           "foreColor": "#FFFFFF",
-          "fontFamily": "Space Grotesk",
+          "fontFamily": "Space Mono, monospace",
           "height": 200,
           "id": "Zmzmu",
           "stackOnlyBar": true,
@@ -124,16 +124,8 @@ export default class extends Controller {
               "left": 15
           }
       },
-      "legend": {
-          "fontSize": 14,
-          "offsetY": 0,
-          "markers": {
-              "size": 7,
-              "shape": "square"
-          },
-          "itemMargin": {
-              "vertical": 0
-          }
+      legend: {
+        show: false,
       },
       "markers": {},
       "series": [
@@ -181,7 +173,10 @@ export default class extends Controller {
       "xaxis": {
           "labels": {
               "trim": true,
-              "style": {}
+              "style": {
+                "fontFamily": "Space Mono, monospace",
+                "fontSize": "10px",
+              }
           },
           "group": {
               "groups": [],
@@ -203,19 +198,21 @@ export default class extends Controller {
           }
       },
       "yaxis": {
-          "tickAmount": 5,
-          "labels": {
-              "showDuplicates": false,
-              "style": {}
+        "tickAmount": 5,
+        "labels": {
+          "showDuplicates": false,
+          "formatter": function(value) {
+            return value.toFixed(3);
           },
-          "title": {
-              "style": {
-                  "fontWeight": 700
-              }
+          "style": {
+            "fontFamily": "Space Mono, monospace"
           }
-      },
-      "theme": {
-          "palette": "palette2"
+        },
+        "title": {
+          "style": {
+            "fontWeight": 700
+          }
+        }
       }
   }
 
