@@ -1,15 +1,15 @@
 <%# Overview of all articles %>
 <div class="d-flex mt-3 mb-2">
-  <input type="button" value="All" class= "border-0 shadow-none" style="background-color:#EBFF57; width:50%;">
-  <input type="button" value="Favorites" class="btn border-0 shadow-none italic-button" style="width:50%;">
+  <input type="button" value="All" class= "border-0 shadow-none" style="background-color:#EBFF57; width:50%; ; border-radius: 4px; margin-right: 3px;">
+  <input type="button" value="Favorites" class="btn border-0 shadow-none italic-button" style="width:50%; border-radius: 4px;margin-left: 3px;">
 </div>
 <div class="tree-icon ml-3 d-flex">
   <%= image_tag "tree.svg", alt: "Tree" %>
-  <div class="mt-1 ms-2 flex-grow-1" style="font-size: 1em;"><p> Sustainable life<p></div>
+  <div class="mt-1 ms-2 flex-grow-1" style="font-size: 20px;"><p> Sustainable life<p></div>
     <%= image_tag "showmore.svg", alt: "Tree" %>
 </div>
 <div class="article-subtitle mb-2">
-  <p> Let's explore efficiency.</p>
+  <p style="margin-left: 9px;"> Read more about sustainability</p>
 </div>
 
 <div class="panel-container" id="article-left" >
@@ -30,11 +30,11 @@
 
 <div class="tree-icon ml-3 d-flex">
   <%= image_tag "tree.svg", alt: "Tree" %>
-  <div class="mt-1 ms-2 flex-grow-1"><p>Tips & Tricks</p></div>
+  <div class="mt-1 ms-2 flex-grow-1" style="font-size: 20px;"><p>Tips & Tricks</p></div>
   <%= image_tag "showmore.svg", alt: "Tree" %>
 </div>
 <div class="article-subtitle mb-2">
-  <p> Let's read more with tips.</p>
+  <p style="margin-left: 9px;"> Articles, special for <%= current_user.username %></p>
 </div>
 
 <div class="panel-container" id="article-left">
@@ -47,7 +47,7 @@
         <%= image_tag "star.svg", alt: "Star" %>
       </div>
     <div class="article-title">
-    <p><%= link_to article.title, article_path(article) %></p>
+      <p><%= link_to article.title.truncate(40), article_path(article) %></p>
     </div>
   </div>
 <% end %>
