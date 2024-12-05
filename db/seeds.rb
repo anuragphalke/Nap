@@ -45,13 +45,13 @@ puts "All Appliances seeded!"
 
 user_appliance1 = UserAppliance.create!(
   user: user1,
-  all_appliance: AllAppliance.find(24),
+  all_appliance: AllAppliance.first(24).last,
   nickname: "Volvo XC90"
 )
 
 user_appliance2 = UserAppliance.create!(
   user: user1,
-  all_appliance: AllAppliance.find(1936),
+  all_appliance: AllAppliance.first(1935).last,
   nickname: "Washer"
 )
 
