@@ -138,7 +138,8 @@
 .routines-container {
 
     overflow-y: auto;
-    max-height: 300px;
+    max-height: calc(100vh - 559px);
+    margin-bottom: 19px;
 
   .card-routine {
     background-color: $element;

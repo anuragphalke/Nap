@@ -4,7 +4,7 @@
   color: black;
   border-radius: 21.5px;
   text-decoration: none;
-  width: 100%; /* Stretch to full width */
+  width: 90%; /* Stretch to full width */
   display: flex;
   justify-content: center; /* Center text horizontally */
   align-items: center; /* Center text vertically */
@@ -12,7 +12,8 @@
   // transition:  0.5s ease, transform 0.5s ease;
   z-index: 1000;
   transition: ease all 0.5s;
-  transform: translate(0px, -60px);
+  transform: translate(0px, -70px);
+  position: absolute;
 
 }
 
