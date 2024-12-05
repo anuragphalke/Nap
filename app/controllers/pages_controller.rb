@@ -30,10 +30,11 @@ class PagesController < ApplicationController
     formatted_data = costs.map do |hour|
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
+    @condition = current_user&.user_appliances&.any? { |appliance| appliance.routines.exists? }
     @statistics = statistics
-    @potential_data = [{ x: "Current", y: statistics[:applied_savings] }, { x: "Potential", y: statistics[:potential_savings] }].to_json
     @comparator_data = statistics
     @formatted_data = formatted_data.to_json
+    @potential_data = [{ x: "Current", y: @statistics[:applied_savings] }, { x: "Potential", y: @statistics[:potential_savings] }].to_json if @condition
   end
 
   def price_today
@@ -48,7 +49,7 @@ class PagesController < ApplicationController
   end
 
   def statistics
-    if current_user&.user_appliances&.exists?
+    if @condition
       applied_savings = calculate_applied_savings
       potential_savings = calculate_potential_savings
       consumption = calculate_current_consumption
@@ -70,6 +71,27 @@ class PagesController < ApplicationController
         initial_rate: initial_rate,
         current_rate: current_rate
       }
+    elsif current_user&.user_appliances&.exists?
+      applied_savings = calculate_applied_savings
+      consumption = calculate_current_consumption
+      applied_savings_this_year = prorate_savings(applied_savings)
+      rating = calculate_rating(applied_savings, potential_savings)
+
+      initial_rate = (calculate_initial_cost / calculate_total_duration)
+      current_rate = (calculate_current_cost / calculate_total_duration)
+
+      improvement = ((current_rate - initial_rate) / initial_rate) * 100
+
+      @statistics = {
+        rating: rating,
+        applied_savings: applied_savings_this_year,
+        potential_savings: 0.0,
+        total_savings: applied_savings,
+        consumption: consumption,
+        improvement: improvement,
+        initial_rate: initial_rate,
+        current_rate: current_rate
+      }
     else
       @statistics = {
         rating: "N/A",
@@ -82,9 +104,7 @@ class PagesController < ApplicationController
         current_rate: 0.0
       }
     end
-    @comparator_data = [ { x: "Initial", y: @statistics[:initial_rate] }, { x: "Current", y: @statistics[:current_rate] } ].to_json
-
-
+    @comparator_data = [{ x: "Initial", y: @statistics[:initial_rate] }, { x: "Current", y: @statistics[:current_rate] }].to_json
   end
 
   private
