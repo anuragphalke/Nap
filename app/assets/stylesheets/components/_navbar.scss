@@ -26,10 +26,18 @@
 /* Navbar Links */
 .navbar-links {
   list-style: none; /* Removes bullet points */
-  display: flex; /* Aligns links horizontally */
+  display: grid; /* Aligns links horizontally */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 1.5rem; /* Adds space between links */
   margin: 0;
   padding: 0;
+  width: 100%;
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 /* Individual Links */
@@ -39,15 +47,17 @@
   font-size: 24px; /* Increases the size of the icons */
 
   text-decoration: none;
-  padding: 0.5rem 0.8rem;
   display: flex;
   align-items: center;
+/*
+  img {
+    position: absolute;
+  } */
 }
-
-.nav-link.active {
-  color: white; /* Change icon color to white */
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* White glow effect */
-}
+/*
+.nav-link.active > img {
+  transform: translate(-9px, 2px);
+} */
 
 /* Smooth color and glow transition */
 .nav-link i {

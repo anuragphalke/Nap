@@ -5,3 +5,4 @@
 <p>YTD Savings €<%= number_with_precision(@statistics[:applied_savings], precision: 2) %></p>
 <p>Projected Savings (<%= DateTime.now.strftime("%Y") %>) €<%= number_with_precision(@statistics[:total_savings], precision: 2) %></p>
 <p>Annual Consumption <%= number_with_precision(@statistics[:consumption], precision: 2) %> kWh</p>
+

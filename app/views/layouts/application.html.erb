@@ -13,23 +13,25 @@
   </head>
 
   <body class="<%= "#{controller.controller_name}-#{controller.action_name}" %>">
-    <% unless current_page?(landing_path) || current_page?(new_user_session_path) %><%= render "shared/navbar" %><% end %>
+    <div>
+      <% unless current_page?(landing_path) || current_page?(new_user_session_path) %><%= render "shared/navbar" %><% end %>
 
-    <%= render "shared/flashes" %>
+      <%= render "shared/flashes" %>
 
-    <% unless current_page?(landing_path) || current_page?(new_user_session_path) %>
-    <div class="my-own-space">
-      <%= link_to profile_path, class: "yellow-circle on-top" do %>
-        <%= image_tag 'spark.svg' %>
+      <% unless current_page?(landing_path) || current_page?(new_user_session_path) %>
+      <div class="my-own-space">
+        <%= link_to profile_path, class: "yellow-circle on-top" do %>
+          <%= image_tag 'spark.svg' %>
+        <% end %>
+      </div>
+      <% end %>
+
+      <div class="on-top"><%= yield %></div>
+
+      <% unless current_page?(new_user_session_path) %>
+        <div class="overlay"></div>
+        <%= image_tag 'blob.svg', class: "blob" %>
       <% end %>
     </div>
-    <% end %>
-
-    <div class="on-top"><%= yield %></div>
-
-  <% unless current_page?(new_user_session_path) %>
-    <div class="overlay"></div>
-    <%= image_tag 'blob.svg', class: "blob" %>
-    <% end %>
   </body>
 </html>
