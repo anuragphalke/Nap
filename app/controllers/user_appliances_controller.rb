@@ -61,7 +61,7 @@ class UserAppliancesController < ApplicationController
     articles = Article.where(subcategory: device)
 
     if @user_appliance.save
-      create_article(@user_appliance) if articles.empty?
+      LaunchJob.perform_later(@user_appliance) if articles.empty?
 
       if current_user.user_appliances.count == 1
         redirect_to new_user_appliance_routine_path(@user_appliance)
