@@ -32,8 +32,8 @@ class PagesController < ApplicationController
     end
     @statistics = statistics
     @potential_data = [{ x: "Current", y: statistics[:applied_savings] }, { x: "Potential", y: statistics[:potential_savings] }].to_json
-    @comparator_data = [{ x: "Initial", y: statistics[:initial_rate] }, { x: "Current", y: statistics[:current_rate] }].to_json
-    @formatted_data = formatted_data.to_json  # Ensure formatted data is in the correct format
+    @comparator_data = statistics
+    @formatted_data = formatted_data.to_json
   end
 
   def price_today
@@ -82,6 +82,9 @@ class PagesController < ApplicationController
         current_rate: 0.0
       }
     end
+    @comparator_data = [ { x: "Initial", y: @statistics[:initial_rate] }, { x: "Current", y: @statistics[:current_rate] } ].to_json
+
+
   end
 
   private
