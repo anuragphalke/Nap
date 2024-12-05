@@ -31,11 +31,13 @@
             <ul>
               <% group[:recommendations].each do |recommendation| %>
                 <% if recommendation.starttime == recommendation.routine.starttime %>
-                  <p>You've already applied the best routine</p>
+                  <p>
+                    <%= link_to "You've already applied the best routine", user_appliance_path(recommendation.routine.user_appliance) %>
+                  </p>
                   <% break %>
                 <% else %>
                   <li>
-                    Change to <%= recommendation.starttime.strftime('%A') %> <%= recommendation.starttime.strftime("%H:%M") %> to <%= recommendation.endtime.strftime("%H:%M") %><br>
+                    <%= link_to "Change to #{recommendation.starttime.strftime('%A')} #{recommendation.starttime.strftime('%H:%M')} to #{recommendation.endtime.strftime('%H:%M')}", user_appliance_path(recommendation.routine.user_appliance) %>
                   </li>
                 <% end %>
               <% end %>
