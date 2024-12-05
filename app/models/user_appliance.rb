@@ -17,7 +17,7 @@ class UserAppliance < ApplicationRecord
       model: "gpt-4o-mini",
       messages: [{
         role: "user",
-        content: "Please write me an article about saving money and energy while using #{self.all_appliance.subcategory}. Provide the response as valid JSON with quoted keys 'title' and 'content', and nothing else."
+        content: "Please write me an article about saving money and energy while using #{self.all_appliance.subcategory}. Provide the response as valid JSON with quoted keys 'title' (max 40 characters) and 'content', and nothing else."
         }]
       })
 

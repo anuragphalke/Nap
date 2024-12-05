@@ -5,7 +5,7 @@ import ApexCharts from 'apexcharts'
 // Connects to data-controller="price-chart"
 export default class extends Controller {
   static values = { costs: Array }
-  connect() {
+  connect() { 
     console.log('connected');
     console.log(this.costsValue);
 
@@ -180,26 +180,31 @@ export default class extends Controller {
           "hideEmptySeries": false
       },
       "xaxis": {
-          "type": "numeric",
-          "labels": {
-              "trim": true,
-              "style": {}
+        "type": "numeric",
+        "labels": {
+          "trim": true,
+          "style": {
+            "fontFamily": "Space Mono, monospace",
+            "fontSize": "10px",
           },
-          "group": {
-              "groups": [],
-              "style": {
-                  "colors": [],
-                  "fontSize": "12px",
-                  "fontWeight": 400,
-                  "cssClass": ""
-              }
-          },
-          "tickAmount": 2,
-          "title": {
-              "style": {
-                  "fontWeight": 700
-              }
+          "formatter": function(value) {
+            // Display labels for 00, 06, 12, 18, 24
+            if (value === 0) return '00';
+            if (value === 6) return '06';
+            if (value === 12) return '12';
+            if (value === 18) return '18';
+            if (value === 24) return '24';
+            return '';  // Empty string for any other values
           }
+        },
+        "tickAmount": 5, // Ensure five tick marks for 00, 06, 12, 18, and 24
+        "min": 0, // Set the minimum value on the x-axis
+        "max": 24, // Set the maximum value on the x-axis
+        "title": {
+          "style": {
+            "fontWeight": 700
+          }
+        }
       },
       "yaxis": {
           "show": false,

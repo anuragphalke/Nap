@@ -1,7 +1,22 @@
-<h1>Statistics</h1>
-
-<h2><%= @statistics[:rating] %></h2>
-<h3><%= number_with_precision(@statistics[:improvement], precision: 2) %>% than last year</h3>
-<p>YTD Savings €<%= number_with_precision(@statistics[:applied_savings], precision: 2) %></p>
-<p>Projected Savings (<%= DateTime.now.strftime("%Y") %>) €<%= number_with_precision(@statistics[:total_savings], precision: 2) %></p>
-<p>Annual Consumption <%= number_with_precision(@statistics[:consumption], precision: 2) %> kWh</p>
+<div class="statistics-overview">
+  <h1>Statistics Overview</h1>
+  <div class="statistics-grid">
+    <div class="stat-item">
+      <p>YTD Savings:</p>
+      <div data-controller="comparator-chart" data-comparator-chart-rates-value="<%= @comparator_data %>"></div>
+      <h2>€<%= number_with_precision(@statistics[:applied_savings], precision: 2) %></h2>
+    </div>
+    <div class="stat-item">
+      <p>Projected Savings (<%= DateTime.now.year %>):</p>
+      <h2>€<%= number_with_precision(@statistics[:total_savings], precision: 2) %></h2>
+    </div>
+    <div class="stat-item">
+      <p>Annual Consumption:</p>
+      <h2><%= number_with_precision(@statistics[:consumption], precision: 2) %> kWh</h2>
+    </div>
+    <div class="stat-item">
+      <p>Improvement:</p>
+      <h2><%= (number_with_precision(@statistics[:improvement], precision: 2)).to_f * -1 %>%</h2>
+    </div>
+  </div>
+</div>

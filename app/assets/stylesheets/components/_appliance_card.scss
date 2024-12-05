@@ -3,6 +3,12 @@
   grid-template-columns: repeat(2, 1fr); /* Defines 12 equal-width columns */
   gap: 16px; /* Defines the gutter size between columns */
   padding-bottom: 25px;
+  overflow-y: auto;
+  max-height: calc(100vh - 370px);
+}
+
+.grid-2::-webkit-scrollbar {
+  display: none;
 }
 .tag-auto {
   color: #8EEBFF;
@@ -130,6 +136,11 @@
 
 
 .routines-container {
+
+    overflow-y: auto;
+    max-height: calc(100vh - 559px);
+    margin-bottom: 19px;
+
   .card-routine {
     background-color: $element;
     border-radius: 20px;
@@ -139,6 +150,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+
 
     .routine-header {
       display: flex;

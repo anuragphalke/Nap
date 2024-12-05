@@ -1,3 +1,8 @@
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Layout/LineLength
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Style/RedundantAssignment
+# rubocop:disable Style/HashSyntax
 class PagesController < ApplicationController
   require 'date'
 
@@ -14,19 +19,22 @@ class PagesController < ApplicationController
     @min_price = Price.where(datetime: today_start..today_end).minimum(:cost)
 
     @price_rn = Price.find_by(datetime: current_time)
-    @average_prices = Price # TODO: This needs to change to Average.all
+    @average_prices = Price
                         .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
                         .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
                         .order("day, hour")
 
     costs = Price.where(datetime: Date.today.all_day)
+
     # Format the data into the required format: [{ x: hour, y: cost }]
     formatted_data = costs.map do |hour|
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
+    @condition = current_user&.user_appliances&.any? { |appliance| appliance.routines.exists? }
     @statistics = statistics
-    @comparator_data = [ { x: "Initial", y: statistics[:initial_rate] }, { x: "Current", y: statistics[:current_rate] } ].to_json
+    @comparator_data = statistics
     @formatted_data = formatted_data.to_json
+    @potential_data = [{ x: "Current", y: @statistics[:applied_savings] }, { x: "Potential", y: @statistics[:potential_savings] }].to_json if @condition
   end
 
   def price_today
@@ -41,7 +49,7 @@ class PagesController < ApplicationController
   end
 
   def statistics
-    if current_user && current_user.user_appliances.exists?
+    if @condition
       applied_savings = calculate_applied_savings
       potential_savings = calculate_potential_savings
       consumption = calculate_current_consumption
@@ -56,6 +64,28 @@ class PagesController < ApplicationController
       @statistics = {
         rating: rating,
         applied_savings: applied_savings_this_year,
+        potential_savings: potential_savings,
+        total_savings: applied_savings,
+        consumption: consumption,
+        improvement: improvement,
+        initial_rate: initial_rate,
+        current_rate: current_rate
+      }
+    elsif current_user&.user_appliances&.exists?
+      applied_savings = calculate_applied_savings
+      consumption = calculate_current_consumption
+      applied_savings_this_year = prorate_savings(applied_savings)
+      rating = calculate_rating(applied_savings, potential_savings)
+
+      initial_rate = (calculate_initial_cost / calculate_total_duration)
+      current_rate = (calculate_current_cost / calculate_total_duration)
+
+      improvement = ((current_rate - initial_rate) / initial_rate) * 100
+
+      @statistics = {
+        rating: rating,
+        applied_savings: applied_savings_this_year,
+        potential_savings: 0.0,
         total_savings: applied_savings,
         consumption: consumption,
         improvement: improvement,
@@ -66,6 +96,7 @@ class PagesController < ApplicationController
       @statistics = {
         rating: "N/A",
         applied_savings: 0.0,
+        potential_savings: 0.0,
         total_savings: 0.0,
         consumption: 0.0,
         improvement: 0.0,
@@ -73,6 +104,7 @@ class PagesController < ApplicationController
         current_rate: 0.0
       }
     end
+    @comparator_data = [{ x: "Initial", y: @statistics[:initial_rate] }, { x: "Current", y: @statistics[:current_rate] }].to_json
   end
 
   private
@@ -120,7 +152,9 @@ class PagesController < ApplicationController
   end
 
   def calculate_rating(applied_savings, potential_savings)
-    return 'N/A' if potential_savings.zero?
+    if potential_savings.nil? || potential_savings.zero?
+      return 'N/A'
+    end
 
     score = (applied_savings / potential_savings) * 100
     case score
@@ -131,8 +165,6 @@ class PagesController < ApplicationController
     else 'C'
     end
   end
-
-  private
 
   # Shared query logic for routines grouped by lineage
   def fetch_routines(order_by)
@@ -168,3 +200,8 @@ class PagesController < ApplicationController
     (routine.endtime - routine.starttime) / 1.hour
   end
 end
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Layout/LineLength
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Style/RedundantAssignment
+# rubocop:enable Style/HashSyntax
