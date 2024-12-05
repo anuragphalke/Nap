@@ -4,13 +4,13 @@ import ApexCharts from 'apexcharts'
 
 // Connects to data-controller="price-chart"
 export default class extends Controller {
-  static values = { rates: Array }
+  static values = { savings: Array }
   connect() {
     console.log('connected');
-    console.log(this.ratesValue);
+    console.log(this.savingsValue);
 
 
-    const data = this.ratesValue;
+    const data = this.savingsValue;
 
     const options = {
       "annotations": {},
@@ -55,7 +55,7 @@ export default class extends Controller {
                       "offsetX": 0,
                       "offsetY": 0,
                       "style": {
-                          "color": "#373d3f",
+                          "color": "#373d3f", // TODO
                           "fontSize": "12px",
                           "fontWeight": 600
                       }
@@ -100,8 +100,8 @@ export default class extends Controller {
           }
       },
       "colors": [
-          "#0097B8",
           "#EBFF57",
+          "#0097B8",
           "#4caf50",
           "#f9ce1d",
           "#FF9800"
@@ -120,8 +120,8 @@ export default class extends Controller {
       },
       "grid": {
           "padding": {
-              "right": 25,
-              "left": 15
+              "right": 10,
+              "left": 10
           }
       },
       legend: {
@@ -202,7 +202,7 @@ export default class extends Controller {
         "labels": {
           "showDuplicates": false,
           "formatter": function(value) {
-            return value.toFixed(3);
+            return value.toFixed(0).padStart(2, '0') + '%';
           },
           "style": {
             "fontFamily": "Space Mono, monospace"

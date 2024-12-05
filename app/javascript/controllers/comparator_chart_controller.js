@@ -120,8 +120,8 @@ export default class extends Controller {
       },
       "grid": {
           "padding": {
-              "right": 25,
-              "left": 15
+              "right": 10,
+              "left": 10
           }
       },
       legend: {
@@ -202,7 +202,7 @@ export default class extends Controller {
         "labels": {
           "showDuplicates": false,
           "formatter": function(value) {
-            return value.toFixed(3);
+            return '€' + value.toFixed(2);
           },
           "style": {
             "fontFamily": "Space Mono, monospace"

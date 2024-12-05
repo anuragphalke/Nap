@@ -19,19 +19,21 @@ class PagesController < ApplicationController
     @min_price = Price.where(datetime: today_start..today_end).minimum(:cost)
 
     @price_rn = Price.find_by(datetime: current_time)
-    @average_prices = Price # TODO: This needs to change to Average.all
+    @average_prices = Price
                         .select("EXTRACT(HOUR FROM datetime) AS hour, EXTRACT(DOW FROM datetime) AS day, AVG(cost) AS average_price")
                         .group("EXTRACT(HOUR FROM datetime), EXTRACT(DOW FROM datetime)")
                         .order("day, hour")
 
     costs = Price.where(datetime: Date.today.all_day)
+
     # Format the data into the required format: [{ x: hour, y: cost }]
     formatted_data = costs.map do |hour|
       { x: hour.datetime.strftime("%H").to_i, y: hour.cost.round(4) }
     end
     @statistics = statistics
+    @potential_data = [{ x: "Current", y: statistics[:applied_savings] }, { x: "Potential", y: statistics[:potential_savings] }].to_json
     @comparator_data = [{ x: "Initial", y: statistics[:initial_rate] }, { x: "Current", y: statistics[:current_rate] }].to_json
-    @formatted_data = formatted_data.to_json
+    @formatted_data = formatted_data.to_json  # Ensure formatted data is in the correct format
   end
 
   def price_today
@@ -61,6 +63,7 @@ class PagesController < ApplicationController
       @statistics = {
         rating: rating,
         applied_savings: applied_savings_this_year,
+        potential_savings: potential_savings,
         total_savings: applied_savings,
         consumption: consumption,
         improvement: improvement,
@@ -71,6 +74,7 @@ class PagesController < ApplicationController
       @statistics = {
         rating: "N/A",
         applied_savings: 0.0,
+        potential_savings: 0.0,
         total_savings: 0.0,
         consumption: 0.0,
         improvement: 0.0,
