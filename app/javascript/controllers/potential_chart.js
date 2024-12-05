@@ -4,13 +4,13 @@ import ApexCharts from 'apexcharts'
 
 // Connects to data-controller="price-chart"
 export default class extends Controller {
-  static values = { costs: Array }
+  static values = { rates: Array }
   connect() {
     console.log('connected');
-    console.log(this.costsValue);
+    console.log(this.ratesValue);
 
 
-    const data = this.costsValue;
+    const data = this.ratesValue;
 
     const options = {
       "annotations": {},
@@ -20,18 +20,18 @@ export default class extends Controller {
           },
           "background": "#343436",
           "foreColor": "#FFFFFF",
-          "fontFamily": "Space Grotesk",
+          "fontFamily": "Space Mono, monospace",
           "height": 200,
-          "id": "Cvklo",
+          "id": "Zmzmu",
           "stackOnlyBar": true,
           "toolbar": {
               "show": false
           },
+          "type": "bar",
           "width": "100%",
           "zoom": {
               "allowMouseWheelZoom": true
-          },
-          "fontUrl": null
+          }
       },
       "plotOptions": {
           "line": {
@@ -41,6 +41,7 @@ export default class extends Controller {
               }
           },
           "bar": {
+              "distributed": true,
               "borderRadius": 10,
               "borderRadiusApplication": "end",
               "borderRadiusWhenStacked": "last",
@@ -100,10 +101,10 @@ export default class extends Controller {
       },
       "colors": [
           "#0097B8",
-          "#c7f464",
-          "#81D4FA",
-          "#fd6a6a",
-          "#546E7A"
+          "#EBFF57",
+          "#4caf50",
+          "#f9ce1d",
+          "#FF9800"
       ],
       "dataLabels": {
           "enabled": false,
@@ -111,39 +112,27 @@ export default class extends Controller {
               "fontWeight": 700
           },
           "background": {
-              "foreColor": "#FFFFFF",
               "dropShadow": {}
           }
       },
+      "fill": {
+          "opacity": 1
+      },
       "grid": {
-          "show": false,
           "padding": {
-              "right": 31,
-              "left": 31
+              "right": 25,
+              "left": 15
           }
       },
-      "legend": {
-          "fontSize": 14,
-          "offsetY": 0,
-          "markers": {
-              "size": 7
-          },
-          "itemMargin": {
-              "vertical": 0
-          }
+      legend: {
+        show: false,
       },
-      "markers": {
-          "hover": {
-              "size": 0,
-              "sizeOffset": 6
-          }
-      },
+      "markers": {},
       "series": [
           {
-              "name": "Price",
+              "name": "Column",
               "data": data,
-              "group": "apexcharts-axis-0",
-              "zIndex": 0
+              "group": "apexcharts-axis-0"
           }
       ],
       "states": {
@@ -155,8 +144,8 @@ export default class extends Controller {
           }
       },
       "stroke": {
-          "curve": "straight",
-          "width": 4,
+          "lineCap": "round",
+          "width": 0,
           "fill": {
               "type": "solid",
               "opacity": 0.85,
@@ -177,47 +166,53 @@ export default class extends Controller {
           }
       },
       "tooltip": {
-          "hideEmptySeries": false
+          "shared": false,
+          "hideEmptySeries": false,
+          "intersect": true
       },
       "xaxis": {
-        "type": "numeric",
-        "labels": {
-          "trim": true,
-          "style": {
-            "fontFamily": "Space Mono, monospace",
-            "fontSize": "10px",
+          "labels": {
+              "trim": true,
+              "style": {
+                "fontFamily": "Space Mono, monospace",
+                "fontSize": "10px",
+              }
           },
+          "group": {
+              "groups": [],
+              "style": {
+                  "colors": [],
+                  "fontSize": "12px",
+                  "fontWeight": 400,
+                  "cssClass": ""
+              }
+          },
+          "tickPlacement": "between",
+          "title": {
+              "style": {
+                  "fontWeight": 700
+              }
+          },
+          "tooltip": {
+              "enabled": false
+          }
+      },
+      "yaxis": {
+        "tickAmount": 5,
+        "labels": {
+          "showDuplicates": false,
           "formatter": function(value) {
-            // Display labels for 00, 06, 12, 18, 24
-            if (value === 0) return '00';
-            if (value === 6) return '06';
-            if (value === 12) return '12';
-            if (value === 18) return '18';
-            if (value === 24) return '24';
-            return '';  // Empty string for any other values
+            return value.toFixed(3);
+          },
+          "style": {
+            "fontFamily": "Space Mono, monospace"
           }
         },
-        "tickAmount": 5, // Ensure five tick marks for 00, 06, 12, 18, and 24
-        "min": 0, // Set the minimum value on the x-axis
-        "max": 24, // Set the maximum value on the x-axis
         "title": {
           "style": {
             "fontWeight": 700
           }
         }
-      },
-      "yaxis": {
-          "show": false,
-          "tickAmount": 5,
-          "labels": {
-              "showDuplicates": false,
-              "style": {}
-          },
-          "title": {
-              "style": {
-                  "fontWeight": 700
-              }
-          }
       }
   }
 
