@@ -152,7 +152,9 @@ class PagesController < ApplicationController
   end
 
   def calculate_rating(applied_savings, potential_savings)
-    return 'N/A' if potential_savings.zero?
+    if potential_savings.nil? || potential_savings.zero?
+      return 'N/A'
+    end
 
     score = (applied_savings / potential_savings) * 100
     case score
