@@ -43,15 +43,16 @@ end
 
 puts "All Appliances seeded!"
 
-# Seed user appliances (Associating appliances with users)
 user_appliance1 = UserAppliance.create!(
   user: user1,
-  all_appliance: AllAppliance.first # Just linking to the first appliance created
+  all_appliance: AllAppliance.find(24),
+  nickname: "Volvo XC90"
 )
 
 user_appliance2 = UserAppliance.create!(
-  user: user2,
-  all_appliance: AllAppliance.second # Just linking to the second appliance created
+  user: user1,
+  all_appliance: AllAppliance.find(1936),
+  nickname: "Washer"
 )
 
 puts "User Appliances seeded!"
@@ -84,7 +85,6 @@ puts "Prices seeded!"
 
 # Seed articles (Adding some example articles)
 # db/seeds.rb
-
 
 file_path = Rails.root.join('db', 'seeds', 'articles.json')
 
@@ -130,18 +130,18 @@ puts "Averages seeded!"
 
 # Seed routines
 Routine.create!(
-  name: "Morning Wash Cycle",
-  starttime: DateTime.new(2024, 11, 27, 10, 0, 0),
-  endtime: DateTime.new(2024, 11, 27, 12, 0, 0),
+  name: "Overnight Charge",
+  starttime: DateTime.new(2024, 11, 27, 1, 0, 0),
+  endtime: DateTime.new(2024, 11, 27, 8, 0, 0),
   day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1,
   user_appliance: user_appliance1
 )
 puts "Routine cost after creation: #{Routine.last.cost}"
 
 Routine.create!(
-  name: "Evening Heating",
-  starttime: DateTime.new(2024, 12, 1, 10, 0, 0),
-  endtime: DateTime.new(2024, 12, 1, 12, 0, 0),
+  name: "Evening Wash Cycle",
+  starttime: DateTime.new(2024, 12, 1, 18, 0, 0),
+  endtime: DateTime.new(2024, 12, 1, 20, 0, 0),
   day: (DateTime.new(2024, 11, 27, 10, 0, 0).wday % 7) + 1,
   user_appliance: user_appliance2
 )
