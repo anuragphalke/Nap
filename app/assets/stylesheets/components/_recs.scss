@@ -136,3 +136,57 @@
 //   font-size: 14px;
 //   color: white;
 // }
+
+
+.statistics-overview {
+  background-color: $background;
+  padding: 20px;
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+  max-width: 100%;
+
+  h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    color: $button-active;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+}
+
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Webkit scrollbar for Chrome, Safari */
+.statistics-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.stat-item {
+  background-color: $element;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.stat-item p {
+  color: $innactive-el;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.stat-item h2 {
+  font-size: 2rem;
+  color: $button-active;
+}
