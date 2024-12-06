@@ -100,8 +100,8 @@ export default class extends Controller {
           }
       },
       "colors": [
-          "#EBFF57",
           "#0097B8",
+          "#EBFF57",
           "#4caf50",
           "#f9ce1d",
           "#FF9800"
